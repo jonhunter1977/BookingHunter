@@ -1,0 +1,9 @@
+Master			Child			Relationship
+------			-----			------------
+Customer		Address			1 to 1
+Location		Address			1 to 1
+Facility		FacilitySchedule	1 to 1
+Facility		Court 			1 to many
+Court			CourtBookingSheet 	1 to many
+CourtBookingSheet	BookingRecord 		1 to many
+BookingRecord		MemberRecord 		1 to 1
