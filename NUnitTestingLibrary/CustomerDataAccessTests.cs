@@ -171,7 +171,6 @@ namespace NUnitTestingLibrary
                 _customer.Id,
                 LinkType.Address);
 
-            //Search for the object using LINQ
             _linkObject = linkObjectList.Find(x => x.MasterLinkId == _customer.Id);
 
             _linkObjectId = _linkObject.Id;
@@ -189,7 +188,6 @@ namespace NUnitTestingLibrary
                 _customer.Id,
                 LinkType.Address);
 
-            //Search for the object using LINQ
             _linkObject = linkObjectList.Find(x => x.MasterLinkId == _customer.Id);
 
             _address = _da.Address.GetById(_linkObject.ChildLinkId);
@@ -225,7 +223,6 @@ namespace NUnitTestingLibrary
                 _customer.Id,
                 LinkType.Address);
 
-            //Search for the object using LINQ
             _linkObject = linkObjectList.Find(x => x.MasterLinkId == _customer.Id);
 
             Assert.That(_linkObject.MasterLinkId, Is.EqualTo(null));
