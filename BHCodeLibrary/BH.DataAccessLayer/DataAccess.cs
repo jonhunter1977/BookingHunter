@@ -37,7 +37,7 @@ namespace BH.DataAccessLayer
         //---------------------------------------------------
 
         /// <summary>
-        /// Database access for courts
+        /// Database access for booking records
         /// </summary>
         public IBookingRecordRepository BookingRecord
         {
@@ -47,6 +47,22 @@ namespace BH.DataAccessLayer
                 {
                     case DataAccessType.SqlServer:
                         return new BookingRecordRepositorySqlServer(BookingConnectionString);
+                    default: throw new NotImplementedException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Database access for court booking sheets
+        /// </summary>
+        public ICourtBookingSheetRepository CourtBookingSheet
+        {
+            get
+            {
+                switch (AccessType)
+                {
+                    case DataAccessType.SqlServer:
+                        return new CourtBookingSheetRepositorySqlServer(BookingConnectionString);
                     default: throw new NotImplementedException();
                 }
             }

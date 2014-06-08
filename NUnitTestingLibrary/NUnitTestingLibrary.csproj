@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookingRecordDataAccessTests.cs" />
+    <Compile Include="CourtBookingSheetDataAccessTests.cs" />
     <Compile Include="CourtDataAccessTests.cs" />
     <Compile Include="FacilityDataAccessTests.cs" />
     <Compile Include="LocationDataAccessTests.cs" />

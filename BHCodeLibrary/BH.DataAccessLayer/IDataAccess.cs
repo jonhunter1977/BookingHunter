@@ -18,6 +18,11 @@
         /// </summary>
         IBookingRecordRepository BookingRecord { get; }
 
+        /// <summary>
+        /// Database access for court booking sheets
+        /// </summary>
+        ICourtBookingSheetRepository CourtBookingSheet { get; }
+
         //---------------------------------------------------
         //SYS_CFG DATABASE TABLES
         //---------------------------------------------------
