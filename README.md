@@ -7,13 +7,13 @@ Living quite a distance from the club this is a pain for me so I've offered to w
 
 The way I'm planning on approaching this at the moment is as follows:
 
-1) Build a DLL with the following layers:
+1) Build a DLL with the following layers
   a) Data access layer
   b) Business logic layer
   
 2) Use the Microsoft Web API to offer the business logic layer via RESTFul web services in a variety of data formats (XML, JSON etc)
 
-I'd like to deliver the following functionality:
+I'd like to deliver the following functionality
 
 1) An administration section to create Clubs/Locations.  Facilities (e.g. Squash/Tennis) can be created against a location.  Courts can then be created for these facilities.
 2) A website where members can register, view available courts and make bookings
