@@ -190,7 +190,7 @@ namespace NUnitTestingLibrary
 
             _linkObject = linkObjectList.Find(x => x.MasterLinkId == _customer.Id);
 
-            _address = _da.Address.GetById(_linkObject.ChildLinkId);
+            _address = _da.Address.GetById(_linkObject.ChildLinkId.Value);
 
             Assert.AreEqual(_address.Address1, "Station Road");
         }
@@ -214,9 +214,9 @@ namespace NUnitTestingLibrary
         [Test]
         public void RemoveCustomerAddressLinkObject()
         {
-            _linkObject = new LinkObjectMaster();
-
             _da.Link.Delete(_linkObject);
+
+            _linkObject = new LinkObjectMaster();
 
             var linkObjectList = _da.Link.GetChildLinkObjectId(
                 LinkType.Customer,

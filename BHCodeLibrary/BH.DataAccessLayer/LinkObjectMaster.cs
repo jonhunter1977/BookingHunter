@@ -23,7 +23,7 @@ namespace BH.DataAccessLayer
         /// <summary>
         /// Link type 1 record ID
         /// </summary>
-        public int MasterLinkId { get; set; }
+        public int? MasterLinkId { get; set; }
 
         /// <summary>
         /// Link type id 2 link type
@@ -33,6 +33,6 @@ namespace BH.DataAccessLayer
         /// <summary>
         /// Link type 2 record ID
         /// </summary>
-        public int ChildLinkId { get; set; }
+        public int? ChildLinkId { get; set; }
     }
 }

@@ -14,6 +14,15 @@
         //---------------------------------------------------
 
         /// <summary>
+        /// Database access for bookings
+        /// </summary>
+        IBookingRecordRepository BookingRecord { get; }
+
+        //---------------------------------------------------
+        //SYS_CFG DATABASE TABLES
+        //---------------------------------------------------
+
+        /// <summary>
         /// Database access for courts
         /// </summary>
         ICourtRepository Court { get; }

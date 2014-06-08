@@ -8,6 +8,11 @@ namespace BH.DataAccessLayer
     public struct DataAccess : IDataAccess
     {
         /// <summary>
+        /// Connection string for the bookings data source
+        /// </summary>
+        public string BookingConnectionString { get; set; }
+
+        /// <summary>
         /// Connection string for the configuration data source
         /// </summary>
         public string CfgConnectionString { get; set; }
@@ -26,6 +31,26 @@ namespace BH.DataAccessLayer
         /// Data access type being used
         /// </summary>
         public DataAccessType AccessType;
+
+        //---------------------------------------------------
+        //SYS_BOOKING DATABASE TABLES
+        //---------------------------------------------------
+
+        /// <summary>
+        /// Database access for courts
+        /// </summary>
+        public IBookingRecordRepository BookingRecord
+        {
+            get
+            {
+                switch (AccessType)
+                {
+                    case DataAccessType.SqlServer:
+                        return new BookingRecordRepositorySqlServer(BookingConnectionString);
+                    default: throw new NotImplementedException();
+                }
+            }
+        }
 
         //---------------------------------------------------
         //SYS_CFG DATABASE TABLES

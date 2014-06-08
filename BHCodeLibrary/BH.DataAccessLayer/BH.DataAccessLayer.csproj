@@ -43,6 +43,9 @@
   <ItemGroup>
     <Compile Include="Address.cs" />
     <Compile Include="AddressRepositorySqlServer.cs" />
+    <Compile Include="BookingRecord.cs" />
+    <Compile Include="BookingRecordRepositorySqlServer.cs" />
+    <Compile Include="IBookingRecordRepository.cs" />
     <Compile Include="CourtRepositorySqlServer.cs" />
     <Compile Include="ICourtRepository.cs" />
     <Compile Include="Court.cs" />

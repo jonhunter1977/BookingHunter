@@ -114,9 +114,9 @@ namespace BH.DataAccessLayer
             {
                 Id = int.Parse(_dataEngine.Dr["Id"].ToString()),
                 MasterLinkType = (LinkType)int.Parse(_dataEngine.Dr["MasterLinkTypeId"].ToString()),
-                MasterLinkId = int.Parse(_dataEngine.Dr["MasterLinkId"].ToString()),
+                MasterLinkId = _dataEngine.Dr["MasterLinkTypeId"] == DBNull.Value ? (int?)null : int.Parse(_dataEngine.Dr["MasterLinkId"].ToString()),
                 ChildLinkType = (LinkType)int.Parse(_dataEngine.Dr["ChildLinkTypeId"].ToString()),
-                ChildLinkId = int.Parse(_dataEngine.Dr["ChildLinkId"].ToString())
+                ChildLinkId = _dataEngine.Dr["ChildLinkId"] == DBNull.Value ? (int?)null : int.Parse(_dataEngine.Dr["ChildLinkId"].ToString())
             };
 
             return linkObject;
