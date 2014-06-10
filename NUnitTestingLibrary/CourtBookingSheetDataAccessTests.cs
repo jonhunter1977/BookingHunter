@@ -7,7 +7,7 @@ using System.Data.Common;
 
 namespace NUnitTestingLibrary
 {
-    class CourtBookingSheetAccessTests
+    class CourtBookingSheetDataAccessTests
     {
         private readonly SqlConnectionStringBuilder _bookingConnection =
             new SqlConnectionStringBuilder("Data Source=127.0.0.1\\SQLEXPRESS2012;Initial Catalog=sys_booking;User Id=sa;Password=info51987!;");
@@ -23,7 +23,7 @@ namespace NUnitTestingLibrary
             _da = new DataAccess
             {
                 BookingConnectionString = _bookingConnection.ConnectionString,
-                AccessType = DataAccessType.SqlServer
+                AccessType = DataAccessType.SqlServer           
             };
         }
 

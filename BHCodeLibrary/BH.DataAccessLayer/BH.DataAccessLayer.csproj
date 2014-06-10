@@ -45,6 +45,9 @@
     <Compile Include="AddressRepositorySqlServer.cs" />
     <Compile Include="BookingRecord.cs" />
     <Compile Include="BookingRecordRepositorySqlServer.cs" />
+    <Compile Include="IMemberRepository.cs" />
+    <Compile Include="MemberRepositorySqlServer.cs" />
+    <Compile Include="Member.cs" />
     <Compile Include="CourtBookingSheetRepositorySqlServer.cs" />
     <Compile Include="DataFormatting.cs" />
     <Compile Include="ICourtBookingSheetRepository.cs" />

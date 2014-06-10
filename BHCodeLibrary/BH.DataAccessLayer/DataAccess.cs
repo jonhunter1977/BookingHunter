@@ -28,6 +28,11 @@ namespace BH.DataAccessLayer
         public string LinksConnectionString { get; set; }
 
         /// <summary>
+        /// Connection string for the links data source
+        /// </summary>
+        public string MemberConnectionString { get; set; }
+
+        /// <summary>
         /// Data access type being used
         /// </summary>
         public DataAccessType AccessType;
@@ -187,6 +192,26 @@ namespace BH.DataAccessLayer
                 {
                     case DataAccessType.SqlServer:
                         return new LinkRepositorySqlServer(LinksConnectionString);
+                    default: throw new NotImplementedException();
+                }
+            }
+        }
+
+        //---------------------------------------------------
+        //SYS_MEMBER DATABASE TABLES
+        //---------------------------------------------------
+
+        /// <summary>
+        /// Database access for members
+        /// </summary>
+        public IMemberRepository Member
+        {
+            get
+            {
+                switch (AccessType)
+                {
+                    case DataAccessType.SqlServer:
+                        return new MemberRepositorySqlServer(MemberConnectionString);
                     default: throw new NotImplementedException();
                 }
             }

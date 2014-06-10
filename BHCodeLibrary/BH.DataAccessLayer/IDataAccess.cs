@@ -69,5 +69,14 @@
         /// Database access for links
         /// </summary>
         ILinkRepository Link { get; }
+
+        //---------------------------------------------------
+        //SYS_MEMBER DATABASE TABLES
+        //---------------------------------------------------
+
+        /// <summary>
+        /// Database access for members
+        /// </summary>
+        IMemberRepository Member { get; }
     }
 }
