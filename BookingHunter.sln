@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTestingLibrary", "NUni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BH.DataAccessLayer", "BHCodeLibrary\BH.DataAccessLayer\BH.DataAccessLayer.csproj", "{3120AC73-D8EA-4126-AAE8-8937461EB0FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BH.DataAccessLayer.SQLServer", "BHCodeLibrary\BH.DataAcessLayer.SQLServer\BH.DataAccessLayer.SQLServer.csproj", "{29F7AC70-3993-4DC1-8080-78C49C7F08A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{3120AC73-D8EA-4126-AAE8-8937461EB0FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3120AC73-D8EA-4126-AAE8-8937461EB0FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3120AC73-D8EA-4126-AAE8-8937461EB0FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29F7AC70-3993-4DC1-8080-78C49C7F08A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29F7AC70-3993-4DC1-8080-78C49C7F08A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29F7AC70-3993-4DC1-8080-78C49C7F08A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29F7AC70-3993-4DC1-8080-78C49C7F08A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

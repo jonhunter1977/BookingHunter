@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BH.DataAccessLayer
+namespace BH.DataAccessLayer.SqlServer
 {
     /// <summary>
     /// Class for getting location data from the database
     /// </summary>
-    internal class LocationRepositorySqlServer : ILocationRepository
+    internal class LocationRepository : ILocationRepository
     {
         private readonly DataQuerySqlServer _dataEngine;
         private string _sqlToExecute;
 
-        public LocationRepositorySqlServer(string cfgConnectionString)
+        public LocationRepository(string cfgConnectionString)
         {
             if (cfgConnectionString != null) 
                 _dataEngine = new DataQuerySqlServer(cfgConnectionString);

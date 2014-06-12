@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace BH.DataAccessLayer
 {
@@ -10,32 +11,128 @@ namespace BH.DataAccessLayer
         /// <summary>
         /// Connection string for the bookings data source
         /// </summary>
-        public string BookingConnectionString { get; set; }
+        private string _bookingConnectionString;
+        public string BookingConnectionString
+        {
+            set
+            {
+                if (value == null || value.Equals(string.Empty)) throw new Exception("Booking Connection string is empty");
+                _bookingConnectionString = value;
+            }
+            get
+            {
+                return _bookingConnectionString;
+            }
+        }
 
         /// <summary>
         /// Connection string for the configuration data source
         /// </summary>
-        public string CfgConnectionString { get; set; }
+        private string _cfgConnectionString;
+        public string CfgConnectionString
+        {
+            set
+            {
+                if (value == null || value.Equals(string.Empty)) throw new Exception("Configuration Connection string is empty");
+                _cfgConnectionString = value;
+            }
+            get
+            {
+                return _cfgConnectionString;
+            }
+        }
 
         /// <summary>
         /// Connection string for the contact data source
         /// </summary>
-        public string ContactConnectionString { get; set; }
+        private string _contactConnectionString;
+        public string ContactConnectionString
+        {
+            set
+            {
+                if (value == null || value.Equals(string.Empty)) throw new Exception("Contact Connection string is empty");
+                _contactConnectionString = value;
+            }
+            get
+            {
+                return _contactConnectionString;
+            }
+        }
 
         /// <summary>
         /// Connection string for the links data source
         /// </summary>
-        public string LinksConnectionString { get; set; }
+        private string _linksConnectionString;
+        public string LinksConnectionString
+        {
+            set
+            {
+                if (value == null || value.Equals(string.Empty)) throw new Exception("Links Connection string is empty");
+                _linksConnectionString = value;
+            }
+            get
+            {
+                return _linksConnectionString;
+            }
+        }
 
         /// <summary>
         /// Connection string for the links data source
         /// </summary>
-        public string MemberConnectionString { get; set; }
+        private string _memberConnectionString;
+        public string MemberConnectionString
+        {
+            set
+            {
+                if (value == null || value.Equals(string.Empty)) throw new Exception("Member Connection string is empty");
+                _memberConnectionString = value;
+            }
+            get
+            {
+                return _memberConnectionString;
+            }
+        }
 
         /// <summary>
         /// Data access type being used
         /// </summary>
         public DataAccessType AccessType;
+
+        private string _dataAccessNameSpace
+        {
+            get
+            {
+                switch (AccessType)
+                {
+                    case DataAccessType.SqlServer:
+                        return "BH.DataAccessLayer.SqlServer.";
+                    default:
+                        return "BH.DataAccessLayer.SqlServer.";
+                }
+            }
+        }
+
+        /// <summary>
+        /// The assembly to reference for data access based on the data access type
+        /// </summary>
+        private Assembly _assembly
+        {
+            get
+            {
+                switch (AccessType)
+                {
+                    case DataAccessType.SqlServer:
+                        return Assembly.LoadFrom(_dataAccessNameSpace + "dll");
+                    default :
+                        return Assembly.LoadFrom(_dataAccessNameSpace + "dll");
+                }
+            }
+        }
+
+        /// <summary>
+        /// The type to use for data access
+        /// </summary>
+        private Type _type;
 
         //---------------------------------------------------
         //SYS_BOOKING DATABASE TABLES
@@ -48,12 +145,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                switch (AccessType)
-                {
-                    case DataAccessType.SqlServer:
-                        return new BookingRecordRepositorySqlServer(BookingConnectionString);
-                    default: throw new NotImplementedException();
-                }
+                _type = _assembly.GetType(_dataAccessNameSpace + "BookingRecordRepository");
+                return (IBookingRecordRepository)Activator.CreateInstance(_type, BookingConnectionString);
             }
         }
 
@@ -64,12 +157,14 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                switch (AccessType)
-                {
-                    case DataAccessType.SqlServer:
-                        return new CourtBookingSheetRepositorySqlServer(BookingConnectionString);
-                    default: throw new NotImplementedException();
-                }
+                //switch (AccessType)
+                //{
+                    //case DataAccessType.SqlServer:
+                    //    return new CourtBookingSheetRepositorySqlServer(BookingConnectionString);
+                    //default: throw new NotImplementedException();
+                //}
+                _type = _assembly.GetType(_dataAccessNameSpace + "CourtBookingSheetRepository");
+                return (ICourtBookingSheetRepository)Activator.CreateInstance(_type, BookingConnectionString);
             }
         }
 
@@ -84,12 +179,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                switch (AccessType)
-                {
-                    case DataAccessType.SqlServer:
-                        return new CourtRepositorySqlServer(CfgConnectionString);
-                    default: throw new NotImplementedException();
-                }
+                _type = _assembly.GetType(_dataAccessNameSpace + "CourtRepository");
+                return (ICourtRepository)Activator.CreateInstance(_type, CfgConnectionString);
             }
         }
 
@@ -100,12 +191,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                switch (AccessType)
-                {
-                    case DataAccessType.SqlServer:
-                        return new CustomerRepositorySqlServer(CfgConnectionString);
-                    default: throw new NotImplementedException();
-                }
+                _type = _assembly.GetType(_dataAccessNameSpace + "CustomerRepository");
+                return (ICustomerRepository)Activator.CreateInstance(_type, CfgConnectionString);
             }
         }
 
@@ -116,12 +203,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                switch (AccessType)
-                {
-                    case DataAccessType.SqlServer:
-                        return new FacilityRepositorySqlServer(CfgConnectionString);
-                    default: throw new NotImplementedException();
-                }
+                _type = _assembly.GetType(_dataAccessNameSpace + "FacilityRepository");
+                return (IFacilityRepository)Activator.CreateInstance(_type, CfgConnectionString);
             }
         }
 
@@ -132,12 +215,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                switch (AccessType)
-                {
-                    case DataAccessType.SqlServer:
-                        return new FacilityScheduleRepositorySqlServer(CfgConnectionString);
-                    default: throw new NotImplementedException();
-                }
+                _type = _assembly.GetType(_dataAccessNameSpace + "FacilityScheduleRepository");
+                return (IFacilityScheduleRepository)Activator.CreateInstance(_type, CfgConnectionString);
             }
         }
 
@@ -148,12 +227,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                switch (AccessType)
-                {
-                    case DataAccessType.SqlServer:
-                        return new LocationRepositorySqlServer(CfgConnectionString);
-                    default: throw new NotImplementedException();
-                }
+                _type = _assembly.GetType(_dataAccessNameSpace + "LocationRepository");
+                return (ILocationRepository)Activator.CreateInstance(_type, CfgConnectionString);
             }
         }
 
@@ -168,12 +243,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                switch (AccessType)
-                {
-                    case DataAccessType.SqlServer:
-                        return new AddressRepositorySqlServer(ContactConnectionString);
-                    default: throw new NotImplementedException();
-                }
+                _type = _assembly.GetType(_dataAccessNameSpace + "AddressRepository");
+                return (IAddressRepository)Activator.CreateInstance(_type, ContactConnectionString);
             }
         }
 
@@ -188,12 +259,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                switch (AccessType)
-                {
-                    case DataAccessType.SqlServer:
-                        return new LinkRepositorySqlServer(LinksConnectionString);
-                    default: throw new NotImplementedException();
-                }
+                _type = _assembly.GetType(_dataAccessNameSpace + "LinkRepository");
+                return (ILinkRepository)Activator.CreateInstance(_type, LinksConnectionString);
             }
         }
 
@@ -208,12 +275,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                switch (AccessType)
-                {
-                    case DataAccessType.SqlServer:
-                        return new MemberRepositorySqlServer(MemberConnectionString);
-                    default: throw new NotImplementedException();
-                }
+                _type = _assembly.GetType(_dataAccessNameSpace + "MemberRepository");
+                return (IMemberRepository)Activator.CreateInstance(_type, MemberConnectionString);
             }
         }
     }

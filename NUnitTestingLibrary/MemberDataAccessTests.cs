@@ -9,22 +9,13 @@ namespace NUnitTestingLibrary
 {
     class MemberDataAccessTests
     {
-        private readonly SqlConnectionStringBuilder _memberConnection =
-            new SqlConnectionStringBuilder("Data Source=127.0.0.1\\SQLEXPRESS2012;Initial Catalog=sys_member;User Id=sa;Password=info51987!;");
-
-        private DataAccess _da;
-
         private Member _member;
         private int _currentMemberRecordId;
 
         [SetUp]
         public void SetUp()
         {
-            _da = new DataAccess
-            {
-                MemberConnectionString = _memberConnection.ConnectionString,
-                AccessType = DataAccessType.SqlServer           
-            };
+            BHDataAccess.InitialiseDataAccess();
         }
 
         [Test]
@@ -39,9 +30,9 @@ namespace NUnitTestingLibrary
                 MembershipNumber = "123456789"
             };
 
-            _da.Member.Save(member);
+            BHDataAccess._da.Member.Save(member);
 
-            var memberList = _da.Member.GetAll();
+            var memberList = BHDataAccess._da.Member.GetAll();
 
             if (memberList.Count == 0)
             {
@@ -61,8 +52,8 @@ namespace NUnitTestingLibrary
         [Test]
         public void RemoveCourtBookingSheetRecordFromDatabase()
         {
-            _da.Member.Delete(_member);
-            var ex = Assert.Throws<Exception>(() => _da.Member.GetById(_currentMemberRecordId));
+            BHDataAccess._da.Member.Delete(_member);
+            var ex = Assert.Throws<Exception>(() => BHDataAccess._da.Member.GetById(_currentMemberRecordId));
             Assert.That(ex.Message, Is.EqualTo("Member Id " + _currentMemberRecordId + " does not exist in database"));
         }
     }

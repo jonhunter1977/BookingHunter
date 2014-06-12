@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BH.DataAccessLayer
+namespace BH.DataAccessLayer.SqlServer
 {
     /// <summary>
     /// Class for getting address data from the database
     /// </summary>
-    internal class AddressRepositorySqlServer : IAddressRepository
+    internal class AddressRepository : IAddressRepository
     {
         private readonly DataQuerySqlServer _dataEngine;
         private string _sqlToExecute;
 
-        public AddressRepositorySqlServer(string contactConnectionString)
+        public AddressRepository(string contactConnectionString)
         {
             if (contactConnectionString != null) 
                 _dataEngine = new DataQuerySqlServer(contactConnectionString);

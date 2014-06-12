@@ -9,22 +9,13 @@ namespace NUnitTestingLibrary
 {
     class LocationDataAccessTests
     {
-        private readonly SqlConnectionStringBuilder _cfgConnection =
-            new SqlConnectionStringBuilder("Data Source=127.0.0.1\\SQLEXPRESS2012;Initial Catalog=sys_cfg;User Id=sa;Password=info51987!;");
-
-        private DataAccess _da;
-
         private Location _location;
         private int _currentLocationId;
 
         [SetUp]
         public void SetUp()
         {
-            _da = new DataAccess
-            {
-                CfgConnectionString = _cfgConnection.ConnectionString,
-                AccessType = DataAccessType.SqlServer
-            };
+            BHDataAccess.InitialiseDataAccess();
         }
 
         [Test]
@@ -35,9 +26,9 @@ namespace NUnitTestingLibrary
                 LocationDescription = "Neston Squash Club"
             };
 
-            _da.Location.Save(location);
+            BHDataAccess._da.Location.Save(location);
 
-            var locationList = _da.Location.GetAll();
+            var locationList = BHDataAccess._da.Location.GetAll();
 
             if (locationList.Count == 0)
             {
@@ -57,8 +48,8 @@ namespace NUnitTestingLibrary
         [Test]
         public void RemoveLocationFromDatabase()
         {
-            _da.Location.Delete(_location);
-            var ex = Assert.Throws<Exception>(() => _da.Location.GetById(_currentLocationId));
+            BHDataAccess._da.Location.Delete(_location);
+            var ex = Assert.Throws<Exception>(() => BHDataAccess._da.Location.GetById(_currentLocationId));
             Assert.That(ex.Message, Is.EqualTo("Location Id " + _currentLocationId + " does not exist in database"));
         }
     }

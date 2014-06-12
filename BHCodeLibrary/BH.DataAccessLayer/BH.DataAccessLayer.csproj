@@ -42,35 +42,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Address.cs" />
-    <Compile Include="AddressRepositorySqlServer.cs" />
     <Compile Include="BookingRecord.cs" />
-    <Compile Include="BookingRecordRepositorySqlServer.cs" />
     <Compile Include="IMemberRepository.cs" />
-    <Compile Include="MemberRepositorySqlServer.cs" />
     <Compile Include="Member.cs" />
-    <Compile Include="CourtBookingSheetRepositorySqlServer.cs" />
     <Compile Include="DataFormatting.cs" />
     <Compile Include="ICourtBookingSheetRepository.cs" />
     <Compile Include="CourtBookingSheet.cs" />
     <Compile Include="IBookingRecordRepository.cs" />
-    <Compile Include="CourtRepositorySqlServer.cs" />
     <Compile Include="ICourtRepository.cs" />
     <Compile Include="Court.cs" />
-    <Compile Include="FacilityScheduleRepositorySqlServer.cs" />
     <Compile Include="FacilitySchedule.cs" />
     <Compile Include="IFacilityScheduleRepository.cs" />
-    <Compile Include="FacilityRepositorySqlServer.cs" />
     <Compile Include="IFacilityRepository.cs" />
     <Compile Include="Facility.cs" />
-    <Compile Include="LocationRepositorySqlServer.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="ILocationRepository.cs" />
-    <Compile Include="LinkRepositorySqlServer.cs" />
     <Compile Include="LinkObjectMaster.cs" />
     <Compile Include="Customer.cs" />
-    <Compile Include="CustomerRepositorySqlServer.cs" />
     <Compile Include="DataAccess.cs" />
-    <Compile Include="DataQuerySqlServer.cs" />
     <Compile Include="IAddressRepository.cs" />
     <Compile Include="ICustomerRepository.cs" />
     <Compile Include="IDbItentity.cs" />

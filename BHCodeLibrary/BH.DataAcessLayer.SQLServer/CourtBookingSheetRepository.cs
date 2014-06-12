@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BH.DataAccessLayer
+namespace BH.DataAccessLayer.SqlServer
 {
     /// <summary>
     /// Class for getting customer data from the database
     /// </summary>
-    internal class CourtBookingSheetRepositorySqlServer : ICourtBookingSheetRepository
+    internal class CourtBookingSheetRepository : ICourtBookingSheetRepository
     {
         private readonly DataQuerySqlServer _dataEngine;
         private string _sqlToExecute;
 
-        public CourtBookingSheetRepositorySqlServer(string bookingConnectionString)
+        public CourtBookingSheetRepository(string bookingConnectionString)
         {
             if (bookingConnectionString != null) 
                 _dataEngine = new DataQuerySqlServer(bookingConnectionString);

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BH.DataAccessLayer
+namespace BH.DataAccessLayer.SqlServer
 {
     /// <summary>
     /// Class for getting facility schedule data from the database
     /// </summary>
-    internal class FacilityScheduleRepositorySqlServer : IFacilityScheduleRepository
+    internal class FacilityScheduleRepository : IFacilityScheduleRepository
     {
         private readonly DataQuerySqlServer _dataEngine;
         private string _sqlToExecute;
 
-        public FacilityScheduleRepositorySqlServer(string cfgConnectionString)
+        public FacilityScheduleRepository(string cfgConnectionString)
         {
             if (cfgConnectionString != null) 
                 _dataEngine = new DataQuerySqlServer(cfgConnectionString);

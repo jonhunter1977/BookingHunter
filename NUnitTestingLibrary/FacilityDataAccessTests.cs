@@ -9,11 +9,6 @@ namespace NUnitTestingLibrary
 {
     class FacilityDataAccessTests
     {
-        private readonly SqlConnectionStringBuilder _cfgConnection =
-            new SqlConnectionStringBuilder("Data Source=127.0.0.1\\SQLEXPRESS2012;Initial Catalog=sys_cfg;User Id=sa;Password=info51987!;");
-
-        private DataAccess _da;
-
         private Facility _facility;
         private int _currentFacilityId;
 
@@ -23,11 +18,7 @@ namespace NUnitTestingLibrary
         [SetUp]
         public void SetUp()
         {
-            _da = new DataAccess
-            {
-                CfgConnectionString = _cfgConnection.ConnectionString,
-                AccessType = DataAccessType.SqlServer
-            };
+            BHDataAccess.InitialiseDataAccess();
         }
 
         [Test]
@@ -38,9 +29,9 @@ namespace NUnitTestingLibrary
                 FacilityBookAheadDays = 7
             };
 
-            _da.Facility.Save(facility);
+            BHDataAccess._da.Facility.Save(facility);
 
-            var facilityList = _da.Facility.GetAll();
+            var facilityList = BHDataAccess._da.Facility.GetAll();
 
             if (facilityList.Count == 0)
             {
@@ -86,9 +77,9 @@ namespace NUnitTestingLibrary
                 SundayFacilityBookLength = 0
             };
 
-            _da.FacilitySchedule.Save(facilitySchedule);
+            BHDataAccess._da.FacilitySchedule.Save(facilitySchedule);
 
-            var facilityScheduleList = _da.FacilitySchedule.GetAll();
+            var facilityScheduleList = BHDataAccess._da.FacilitySchedule.GetAll();
 
             if (facilityScheduleList.Count == 0)
             {
@@ -108,16 +99,16 @@ namespace NUnitTestingLibrary
         [Test]
         public void RemoveFacilityFromDatabase()
         {
-            _da.Facility.Delete(_facility);
-            var ex = Assert.Throws<Exception>(() => _da.Facility.GetById(_currentFacilityId));
+            BHDataAccess._da.Facility.Delete(_facility);
+            var ex = Assert.Throws<Exception>(() => BHDataAccess._da.Facility.GetById(_currentFacilityId));
             Assert.That(ex.Message, Is.EqualTo("Facility Id " + _currentFacilityId + " does not exist in database"));
         }
 
         [Test]
         public void RemoveFacilityScheduleFromDatabase()
         {
-            _da.FacilitySchedule.Delete(_facilitySchedule);
-            var ex = Assert.Throws<Exception>(() => _da.FacilitySchedule.GetById(_currentFacilityScheduleId));
+            BHDataAccess._da.FacilitySchedule.Delete(_facilitySchedule);
+            var ex = Assert.Throws<Exception>(() => BHDataAccess._da.FacilitySchedule.GetById(_currentFacilityScheduleId));
             Assert.That(ex.Message, Is.EqualTo("FacilitySchedule Id " + _currentFacilityScheduleId + " does not exist in database"));
         }
     }

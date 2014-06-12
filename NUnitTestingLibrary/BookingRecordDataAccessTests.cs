@@ -9,22 +9,13 @@ namespace NUnitTestingLibrary
 {
     class BookingRecordDataAccessTests
     {
-        private readonly SqlConnectionStringBuilder _bookingConnection =
-            new SqlConnectionStringBuilder("Data Source=127.0.0.1\\SQLEXPRESS2012;Initial Catalog=sys_booking;User Id=sa;Password=info51987!;");
-
-        private DataAccess _da;
-
         private BookingRecord _bookingRecord;
         private int _currentBookingRecordId;
 
         [SetUp]
         public void SetUp()
         {
-            _da = new DataAccess
-            {
-                BookingConnectionString = _bookingConnection.ConnectionString,
-                AccessType = DataAccessType.SqlServer
-            };
+            BHDataAccess.InitialiseDataAccess();
         }
 
         [Test]
@@ -39,9 +30,9 @@ namespace NUnitTestingLibrary
                 BookingRecordPin = 1234
             };
 
-            _da.BookingRecord.Save(bookingRecord);
+            BHDataAccess._da.BookingRecord.Save(bookingRecord);
 
-            var bookingRecordList = _da.BookingRecord.GetAll();
+            var bookingRecordList = BHDataAccess._da.BookingRecord.GetAll();
 
             if (bookingRecordList.Count == 0)
             {
@@ -61,8 +52,8 @@ namespace NUnitTestingLibrary
         [Test]
         public void RemoveBookingRecordFromDatabase()
         {
-            _da.BookingRecord.Delete(_bookingRecord);
-            var ex = Assert.Throws<Exception>(() => _da.BookingRecord.GetById(_currentBookingRecordId));
+            BHDataAccess._da.BookingRecord.Delete(_bookingRecord);
+            var ex = Assert.Throws<Exception>(() => BHDataAccess._da.BookingRecord.GetById(_currentBookingRecordId));
             Assert.That(ex.Message, Is.EqualTo("BookingRecord Id " + _currentBookingRecordId + " does not exist in database"));
         }
     }

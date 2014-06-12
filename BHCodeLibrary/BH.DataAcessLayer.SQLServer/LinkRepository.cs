@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BH.DataAccessLayer
+namespace BH.DataAccessLayer.SqlServer
 {
     /// <summary>
     /// Class for getting link objects from the link database
     /// </summary>
-    internal class LinkRepositorySqlServer : ILinkRepository
+    internal class LinkRepository : ILinkRepository
     {
         private readonly DataQuerySqlServer _dataEngine;
         private string _sqlToExecute;
 
-        public LinkRepositorySqlServer(string linkConnectionString)
+        public LinkRepository(string linkConnectionString)
         {
             if (linkConnectionString != null)
                 _dataEngine = new DataQuerySqlServer(linkConnectionString);

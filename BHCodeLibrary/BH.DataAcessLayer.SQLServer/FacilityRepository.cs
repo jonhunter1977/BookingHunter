@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BH.DataAccessLayer
+namespace BH.DataAccessLayer.SqlServer
 {
     /// <summary>
     /// Class for getting facility data from the database
     /// </summary>
-    internal class FacilityRepositorySqlServer : IFacilityRepository
+    internal class FacilityRepository : IFacilityRepository
     {
         private readonly DataQuerySqlServer _dataEngine;
         private string _sqlToExecute;
 
-        public FacilityRepositorySqlServer(string cfgConnectionString)
+        public FacilityRepository(string cfgConnectionString)
         {
             if (cfgConnectionString != null) 
                 _dataEngine = new DataQuerySqlServer(cfgConnectionString);

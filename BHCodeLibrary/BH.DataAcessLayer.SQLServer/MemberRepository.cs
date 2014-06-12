@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BH.DataAccessLayer
+namespace BH.DataAccessLayer.SqlServer
 {
     /// <summary>
     /// Class for getting customer data from the database
     /// </summary>
-    internal class MemberRepositorySqlServer : IMemberRepository
+    internal class MemberRepository : IMemberRepository
     {
         private readonly DataQuerySqlServer _dataEngine;
         private string _sqlToExecute;
 
-        public MemberRepositorySqlServer(string memberConnectionString)
+        public MemberRepository(string memberConnectionString)
         {
             if (memberConnectionString != null) 
                 _dataEngine = new DataQuerySqlServer(memberConnectionString);
