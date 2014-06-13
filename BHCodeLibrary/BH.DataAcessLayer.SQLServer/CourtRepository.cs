@@ -41,7 +41,10 @@ namespace BH.DataAccessLayer.SqlServer
 
         public Court GetById(int id)
         {
-            _sqlToExecute = "SELECT * FROM [dbo].[Court] WHERE Id = " + id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", id.ToString());
+
+            _sqlToExecute = "SELECT * FROM [dbo].[Court] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.CreateReaderFromSql(_sqlToExecute))
                 throw new Exception("Court - GetById failed");
@@ -58,22 +61,30 @@ namespace BH.DataAccessLayer.SqlServer
         }
 
         public void Save(Court saveThis)
-        {          
+        {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@CourtDescription", saveThis.CourtDescription);
+
             _sqlToExecute = "INSERT INTO [dbo].[Court] ";
-            _sqlToExecute += "([CourtDescription])";
+            _sqlToExecute += "([CourtDescription]) ";
             _sqlToExecute += "VALUES ";
-            _sqlToExecute += "('" + saveThis.CourtDescription + "')";
+            _sqlToExecute += "(";
+            _sqlToExecute += _dataEngine.GetParametersForQuery();
+            _sqlToExecute += ")";
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
-                throw new Exception("Court - Save failed");
+                throw new Exception("Court - Save failed"); 
         }
 
         public void Delete(Court deleteThis)
         {
-            _sqlToExecute = "DELETE FROM [dbo].[Court] WHERE Id = " + deleteThis.Id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
+
+            _sqlToExecute = "DELETE FROM [dbo].[Court] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
-                throw new Exception("Court - Delete failed");
+                throw new Exception("Court - Delete failed");  
         }
 
         /// <summary>

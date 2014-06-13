@@ -41,7 +41,10 @@ namespace BH.DataAccessLayer.SqlServer
 
         public FacilitySchedule GetById(int id)
         {
-            _sqlToExecute = "SELECT * FROM [dbo].[FacilitySchedule] WHERE Id = " + id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", id.ToString());
+
+            _sqlToExecute = "SELECT * FROM [dbo].[FacilitySchedule] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.CreateReaderFromSql(_sqlToExecute))
                 throw new Exception("FacilitySchedule - GetById failed");
@@ -59,6 +62,30 @@ namespace BH.DataAccessLayer.SqlServer
 
         public void Save(FacilitySchedule saveThis)
         {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@FacilityBookAheadDays", saveThis.FacilityScheduleDescription);
+            _dataEngine.AddParameter("@StartMinuteMonday", saveThis.StartMinuteMonday.ToString());
+            _dataEngine.AddParameter("@EndMinuteMonday", saveThis.EndMinuteMonday.ToString());
+            _dataEngine.AddParameter("@MondayFacilityBookLength", saveThis.MondayFacilityBookLength.ToString());
+            _dataEngine.AddParameter("@StartMinuteTuesday", saveThis.StartMinuteTuesday.ToString());
+            _dataEngine.AddParameter("@EndMinuteTuesday", saveThis.EndMinuteTuesday.ToString());
+            _dataEngine.AddParameter("@TuesdayFacilityBookLength", saveThis.TuesdayFacilityBookLength.ToString());
+            _dataEngine.AddParameter("@StartMinuteWednesday", saveThis.StartMinuteWednesday.ToString());
+            _dataEngine.AddParameter("@EndMinuteWednesday", saveThis.EndMinuteWednesday.ToString());
+            _dataEngine.AddParameter("@WednesdayFacilityBookLength", saveThis.WednesdayFacilityBookLength.ToString());
+            _dataEngine.AddParameter("@StartMinuteThursday", saveThis.StartMinuteThursday.ToString());
+            _dataEngine.AddParameter("@EndMinuteThursday", saveThis.EndMinuteThursday.ToString());
+            _dataEngine.AddParameter("@ThursdayFacilityBookLength", saveThis.ThursdayFacilityBookLength.ToString());
+            _dataEngine.AddParameter("@StartMinuteFriday", saveThis.StartMinuteFriday.ToString());
+            _dataEngine.AddParameter("@EndMinuteFriday", saveThis.EndMinuteFriday.ToString());
+            _dataEngine.AddParameter("@FridayFacilityBookLength", saveThis.FridayFacilityBookLength.ToString());
+            _dataEngine.AddParameter("@StartMinuteSaturday", saveThis.StartMinuteSaturday.ToString());
+            _dataEngine.AddParameter("@EndMinuteSaturday", saveThis.EndMinuteSaturday.ToString());
+            _dataEngine.AddParameter("@SaturdayFacilityBookLength", saveThis.SaturdayFacilityBookLength.ToString());
+            _dataEngine.AddParameter("@StartMinuteSunday", saveThis.StartMinuteSunday.ToString());
+            _dataEngine.AddParameter("@EndMinuteSunday", saveThis.EndMinuteSunday.ToString());
+            _dataEngine.AddParameter("@SundayFacilityBookLength", saveThis.SundayFacilityBookLength.ToString());
+
             _sqlToExecute = "INSERT INTO [dbo].[FacilitySchedule] ";
             _sqlToExecute += "([FacilityScheduleDescription]";
             _sqlToExecute += ",[StartMinuteMonday]";
@@ -81,30 +108,11 @@ namespace BH.DataAccessLayer.SqlServer
             _sqlToExecute += ",[SaturdayFacilityBookLength]";
             _sqlToExecute += ",[StartMinuteSunday]";
             _sqlToExecute += ",[EndMinuteSunday]";
-            _sqlToExecute += ",[SundayFacilityBookLength])";
+            _sqlToExecute += ",[SundayFacilityBookLength]) ";
             _sqlToExecute += "VALUES ";
-            _sqlToExecute += "('" + saveThis.FacilityScheduleDescription + "'";
-            _sqlToExecute += "," + saveThis.StartMinuteMonday;
-            _sqlToExecute += "," + saveThis.EndMinuteMonday;
-            _sqlToExecute += "," + saveThis.MondayFacilityBookLength;
-            _sqlToExecute += "," + saveThis.StartMinuteTuesday;
-            _sqlToExecute += "," + saveThis.EndMinuteTuesday;
-            _sqlToExecute += "," + saveThis.TuesdayFacilityBookLength;
-            _sqlToExecute += "," + saveThis.StartMinuteWednesday;
-            _sqlToExecute += "," + saveThis.EndMinuteWednesday;
-            _sqlToExecute += "," + saveThis.WednesdayFacilityBookLength;
-            _sqlToExecute += "," + saveThis.StartMinuteThursday;
-            _sqlToExecute += "," + saveThis.EndMinuteThursday;
-            _sqlToExecute += "," + saveThis.ThursdayFacilityBookLength;
-            _sqlToExecute += "," + saveThis.StartMinuteFriday;
-            _sqlToExecute += "," + saveThis.EndMinuteFriday;
-            _sqlToExecute += "," + saveThis.FridayFacilityBookLength;
-            _sqlToExecute += "," + saveThis.StartMinuteSaturday;
-            _sqlToExecute += "," + saveThis.EndMinuteSaturday;
-            _sqlToExecute += "," + saveThis.SaturdayFacilityBookLength;
-            _sqlToExecute += "," + saveThis.StartMinuteSunday;
-            _sqlToExecute += "," + saveThis.EndMinuteSunday;
-            _sqlToExecute += "," + saveThis.SundayFacilityBookLength + ")";
+            _sqlToExecute += "(";
+            _sqlToExecute += _dataEngine.GetParametersForQuery();
+            _sqlToExecute += ")";
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
                 throw new Exception("FacilitySchedule - Save failed");
@@ -112,7 +120,10 @@ namespace BH.DataAccessLayer.SqlServer
 
         public void Delete(FacilitySchedule deleteThis)
         {
-            _sqlToExecute = "DELETE FROM [dbo].[FacilitySchedule] WHERE Id = " + deleteThis.Id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
+
+            _sqlToExecute = "DELETE FROM [dbo].[FacilitySchedule] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
                 throw new Exception("FacilitySchedule - Delete failed");

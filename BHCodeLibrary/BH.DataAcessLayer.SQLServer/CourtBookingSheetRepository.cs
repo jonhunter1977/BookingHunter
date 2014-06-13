@@ -41,7 +41,10 @@ namespace BH.DataAccessLayer.SqlServer
 
         public CourtBookingSheet GetById(int id)
         {
-            _sqlToExecute = "SELECT * FROM [dbo].[CourtBookingSheet] WHERE Id = " + id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", id.ToString());
+
+            _sqlToExecute = "SELECT * FROM [dbo].[CourtBookingSheet] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.CreateReaderFromSql(_sqlToExecute))
                 throw new Exception("CourtBookingSheet - GetById failed");
@@ -59,14 +62,19 @@ namespace BH.DataAccessLayer.SqlServer
 
         public void Save(CourtBookingSheet saveThis)
         {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@CourtBookingStartTime", saveThis.CourtBookingStartTime.ToString());
+            _dataEngine.AddParameter("@CourtBookingEndTime", saveThis.CourtBookingEndTime.ToString());
+            _dataEngine.AddParameter("@CourtBookingDate", DataFormatting.FormatDateTime(saveThis.CourtBookingDate));
+
             _sqlToExecute = "INSERT INTO [dbo].[CourtBookingSheet] ";
             _sqlToExecute += "([CourtBookingStartTime]";
             _sqlToExecute += ",[CourtBookingEndTime]";
-            _sqlToExecute += ",[CourtBookingDate])";
+            _sqlToExecute += ",[CourtBookingDate]) ";
             _sqlToExecute += "VALUES ";
-            _sqlToExecute += "(" + saveThis.CourtBookingStartTime;
-            _sqlToExecute += "," + saveThis.CourtBookingEndTime;
-            _sqlToExecute += ",'" + DataFormatting.FormatDateTime(saveThis.CourtBookingDate) + "')";
+            _sqlToExecute += "(";
+            _sqlToExecute += _dataEngine.GetParametersForQuery();
+            _sqlToExecute += ")";
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
                 throw new Exception("CourtBookingSheet - Save failed");
@@ -74,7 +82,10 @@ namespace BH.DataAccessLayer.SqlServer
 
         public void Delete(CourtBookingSheet deleteThis)
         {
-            _sqlToExecute = "DELETE FROM [dbo].[CourtBookingSheet] WHERE Id = " + deleteThis.Id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
+
+            _sqlToExecute = "DELETE FROM [dbo].[CourtBookingSheet] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
                 throw new Exception("CourtBookingSheet - Delete failed");

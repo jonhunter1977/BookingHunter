@@ -32,12 +32,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                var location = new Location
-                {
-                    Id = int.Parse(_dataEngine.Dr["Id"].ToString()),
-                    LocationDescription = _dataEngine.Dr["LocationDescription"].ToString()                        
-                };
-
+                var location = CreateLocationFromData();
                 locationList.Add(location);
             }
 
@@ -46,19 +41,17 @@ namespace BH.DataAccessLayer.SqlServer
 
         public Location GetById(int id)
         {
-            _sqlToExecute = "SELECT * FROM [dbo].[Customer] WHERE Id = " + id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", id.ToString());
+
+            _sqlToExecute = "SELECT * FROM [dbo].[Customer] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.CreateReaderFromSql(_sqlToExecute))
                 throw new Exception("Location - GetById failed");
 
             if (_dataEngine.Dr.Read())
             {
-                var location = new Location
-                {
-                    Id = int.Parse(_dataEngine.Dr["Id"].ToString()),
-                    LocationDescription = _dataEngine.Dr["LocationDescription"].ToString()                    
-                };
-
+                var location = CreateLocationFromData();
                 return location;
             }
             else
@@ -68,11 +61,16 @@ namespace BH.DataAccessLayer.SqlServer
         }
 
         public void Save(Location saveThis)
-        {          
+        {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@LocationDescription", saveThis.LocationDescription);
+
             _sqlToExecute = "INSERT INTO [dbo].[Location] ";
-            _sqlToExecute += "([LocationDescription])";
+            _sqlToExecute += "([LocationDescription]) ";
             _sqlToExecute += "VALUES ";
-            _sqlToExecute += "('" + saveThis.LocationDescription + "')";
+            _sqlToExecute += "(";
+            _sqlToExecute += _dataEngine.GetParametersForQuery();
+            _sqlToExecute += ")";
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
                 throw new Exception("Location - Save failed");
@@ -80,10 +78,28 @@ namespace BH.DataAccessLayer.SqlServer
 
         public void Delete(Location deleteThis)
         {
-            _sqlToExecute = "DELETE FROM [dbo].[Location] WHERE Id = " + deleteThis.Id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
+
+            _sqlToExecute = "DELETE FROM [dbo].[Location] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
                 throw new Exception("Location - Delete failed");
+        }
+
+        /// <summary>
+        /// Creates the object from the data returned from the database
+        /// </summary>
+        /// <returns></returns>
+        private Location CreateLocationFromData()
+        {
+            var location = new Location
+            {
+                Id = int.Parse(_dataEngine.Dr["Id"].ToString()),
+                LocationDescription = _dataEngine.Dr["LocationDescription"].ToString()
+            };
+
+            return location;
         }
     }
 }

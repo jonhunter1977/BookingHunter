@@ -41,7 +41,10 @@ namespace BH.DataAccessLayer.SqlServer
 
         public Member GetById(int id)
         {
-            _sqlToExecute = "SELECT * FROM [dbo].[Member] WHERE Id = " + id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", id.ToString());
+
+            _sqlToExecute = "SELECT * FROM [dbo].[Member] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.CreateReaderFromSql(_sqlToExecute))
                 throw new Exception("Member - GetById failed");
@@ -59,29 +62,37 @@ namespace BH.DataAccessLayer.SqlServer
 
         public void Save(Member saveThis)
         {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@FirstName", saveThis.FirstName);
+            _dataEngine.AddParameter("@LastName", saveThis.LastName);
+            _dataEngine.AddParameter("@EmailAddress", saveThis.EmailAddress);
+            _dataEngine.AddParameter("@MobileNumber", saveThis.MobileNumber);
+            _dataEngine.AddParameter("@MembershipNumber", saveThis.MembershipNumber);
+
             _sqlToExecute = "INSERT INTO [dbo].[Member] ";
             _sqlToExecute += "([FirstName]";
             _sqlToExecute += ",[LastName]";
             _sqlToExecute += ",[EmailAddress]";
             _sqlToExecute += ",[MobileNumber]";
-            _sqlToExecute += ",[MembershipNumber])";
+            _sqlToExecute += ",[MembershipNumber]) ";
             _sqlToExecute += "VALUES ";
-            _sqlToExecute += "('" + saveThis.FirstName + "'";
-            _sqlToExecute += ",'" + saveThis.LastName + "'";
-            _sqlToExecute += ",'" + saveThis.EmailAddress + "'";
-            _sqlToExecute += ",'" + saveThis.MobileNumber + "'";
-            _sqlToExecute += ",'" + saveThis.MembershipNumber + "')";
+            _sqlToExecute += "(";
+            _sqlToExecute += _dataEngine.GetParametersForQuery();
+            _sqlToExecute += ")";
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
-                throw new Exception("Member - Save failed");
+                throw new Exception("Member - Save failed");  
         }
 
         public void Delete(Member deleteThis)
         {
-            _sqlToExecute = "DELETE FROM [dbo].[Member] WHERE Id = " + deleteThis.Id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
+
+            _sqlToExecute = "DELETE FROM [dbo].[Member] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
-                throw new Exception("Member - Delete failed");
+                throw new Exception("Member - Delete failed"); 
         }        
 
         /// <summary>

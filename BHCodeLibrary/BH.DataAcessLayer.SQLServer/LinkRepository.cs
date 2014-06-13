@@ -38,17 +38,22 @@ namespace BH.DataAccessLayer.SqlServer
         }
 
         public void Save(LinkObjectMaster saveThis)
-        {          
+        {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@MasterLinkTypeId", ((int)saveThis.MasterLinkType).ToString());
+            _dataEngine.AddParameter("@MasterLinkId", saveThis.MasterLinkId.ToString());
+            _dataEngine.AddParameter("@ChildLinkTypeId", ((int)saveThis.ChildLinkType).ToString());
+            _dataEngine.AddParameter("@ChildLinkId", saveThis.ChildLinkId.ToString());
+
             _sqlToExecute = "INSERT INTO [dbo].[LinkObjectMaster] ";
             _sqlToExecute += "([MasterLinkTypeId]";
             _sqlToExecute += ",[MasterLinkId]";
             _sqlToExecute += ",[ChildLinkTypeId]";
-            _sqlToExecute += ",[ChildLinkId])";
+            _sqlToExecute += ",[ChildLinkId]) ";
             _sqlToExecute += "VALUES ";
-            _sqlToExecute += "(" + (int)saveThis.MasterLinkType;
-            _sqlToExecute += "," + saveThis.MasterLinkId;
-            _sqlToExecute += "," + (int)saveThis.ChildLinkType;
-            _sqlToExecute += "," + saveThis.ChildLinkId + ")";
+            _sqlToExecute += "(";
+            _sqlToExecute += _dataEngine.GetParametersForQuery();
+            _sqlToExecute += ")";
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
                 throw new Exception("Link - Save failed");
@@ -56,7 +61,10 @@ namespace BH.DataAccessLayer.SqlServer
 
         public void Delete(LinkObjectMaster deleteThis)
         {
-            _sqlToExecute = "DELETE FROM [dbo].[LinkObjectMaster] WHERE Id = " + deleteThis.Id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
+
+            _sqlToExecute = "DELETE FROM [dbo].[LinkObjectMaster] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
                 throw new Exception("Link - Delete failed");
@@ -66,10 +74,15 @@ namespace BH.DataAccessLayer.SqlServer
         {
             var linkObjectList = new List<LinkObjectMaster>();
 
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@MasterLinkTypeId", ((int)masterLinkType).ToString());
+            _dataEngine.AddParameter("@MasterLinkId", masterLinkId.ToString());
+            _dataEngine.AddParameter("@ChildLinkTypeId", ((int)childLinkType).ToString());
+
             _sqlToExecute = "SELECT * FROM [dbo].[LinkObjectMaster] ";
-            _sqlToExecute += "WHERE MasterLinkTypeId = " + (int)masterLinkType + " ";
-            _sqlToExecute += "AND MasterLinkId = " + masterLinkId + " ";
-            _sqlToExecute += "AND ChildLinkTypeId = " + (int)childLinkType + " ";
+            _sqlToExecute += "WHERE MasterLinkTypeId = @MasterLinkTypeId ";
+            _sqlToExecute += "AND MasterLinkId = @MasterLinkId ";
+            _sqlToExecute += "AND ChildLinkTypeId = @ChildLinkTypeId ";
 
             if (!_dataEngine.CreateReaderFromSql(_sqlToExecute))
                 throw new Exception("Link - GetLinkObject failed");
@@ -87,10 +100,15 @@ namespace BH.DataAccessLayer.SqlServer
         {
             var linkObjectList = new List<LinkObjectMaster>();
 
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@ChildLinkTypeId", ((int)childLinkType).ToString());
+            _dataEngine.AddParameter("@ChildLinkId", childLinkId.ToString());
+            _dataEngine.AddParameter("@MasterLinkTypeId", ((int)masterLinkType).ToString());
+
             _sqlToExecute = "SELECT * FROM [dbo].[LinkObjectMaster] ";
-            _sqlToExecute += "WHERE ChildLinkTypeId = " + (int)childLinkType + " ";
-            _sqlToExecute += "AND ChildLinkId = " + childLinkId + " ";
-            _sqlToExecute += "AND MasterLinkTypeId = " + (int)masterLinkType + " ";
+            _sqlToExecute += "WHERE ChildLinkTypeId = @ChildLinkTypeId ";
+            _sqlToExecute += "AND ChildLinkId = @ChildLinkId ";
+            _sqlToExecute += "AND MasterLinkTypeId = @MasterLinkTypeId ";
 
             if (!_dataEngine.CreateReaderFromSql(_sqlToExecute))
                 throw new Exception("Link - GetLinkObject failed");

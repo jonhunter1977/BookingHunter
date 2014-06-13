@@ -41,7 +41,10 @@ namespace BH.DataAccessLayer.SqlServer
 
         public Address GetById(int id)
         {
-            _sqlToExecute = "SELECT * FROM [dbo].[Address] WHERE Id = " + id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", id.ToString());
+
+            _sqlToExecute = "SELECT * FROM [dbo].[Address] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.CreateReaderFromSql(_sqlToExecute))
                 throw new Exception("Address - GetById failed");
@@ -59,6 +62,16 @@ namespace BH.DataAccessLayer.SqlServer
 
         public void Save(Address saveThis)
         {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Address1", saveThis.Address1);
+            _dataEngine.AddParameter("@Address2", saveThis.Address2);
+            _dataEngine.AddParameter("@Address3", saveThis.Address3);
+            _dataEngine.AddParameter("@Town", saveThis.Town);
+            _dataEngine.AddParameter("@County", saveThis.County);
+            _dataEngine.AddParameter("@Country", saveThis.Country);
+            _dataEngine.AddParameter("@AddressOther", saveThis.AddressOther);
+            _dataEngine.AddParameter("@PostCode", saveThis.PostCode);
+
             _sqlToExecute = "INSERT INTO [dbo].[Address] ";
            _sqlToExecute += "([Address1]";
            _sqlToExecute += ",[Address2]";
@@ -67,27 +80,25 @@ namespace BH.DataAccessLayer.SqlServer
            _sqlToExecute += ",[County]";
            _sqlToExecute += ",[Country]";
            _sqlToExecute += ",[AddressOther]";
-           _sqlToExecute += ",[PostCode])";
+           _sqlToExecute += ",[PostCode]) ";
            _sqlToExecute += "VALUES ";
-           _sqlToExecute += "('" + saveThis.Address1 + "'";
-           _sqlToExecute += ",'" + saveThis.Address2 + "'";
-           _sqlToExecute += ",'" + saveThis.Address3 + "'";
-           _sqlToExecute += ",'" + saveThis.Town + "'";
-           _sqlToExecute += ",'" + saveThis.County + "'";
-           _sqlToExecute += ",'" + saveThis.Country + "'";
-           _sqlToExecute += ",'" + saveThis.AddressOther + "'";
-           _sqlToExecute += ",'" + saveThis.PostCode + "')";
+           _sqlToExecute += "(";
+           _sqlToExecute += _dataEngine.GetParametersForQuery();
+           _sqlToExecute += ")";
             
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
-                throw new Exception("Address - Save failed");
+                throw new Exception("Address - Save failed"); 
         }
 
         public void Delete(Address deleteThis)
         {
-            _sqlToExecute = "DELETE FROM [dbo].[Address] WHERE Id = " + deleteThis.Id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
+
+            _sqlToExecute = "DELETE FROM [dbo].[Address] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
-                throw new Exception("Address - Delete failed");
+                throw new Exception("Address - Delete failed"); 
         }
 
         /// <summary>

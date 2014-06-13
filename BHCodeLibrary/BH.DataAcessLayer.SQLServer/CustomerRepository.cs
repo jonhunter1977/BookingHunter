@@ -32,12 +32,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                var customer = new Customer
-                {
-                    Id = int.Parse(_dataEngine.Dr["Id"].ToString()),
-                    CustomerName = _dataEngine.Dr["CustomerName"].ToString()                        
-                };
-
+                Customer customer = CreateCustomerFromData();
                 customerList.Add(customer);
             }
 
@@ -46,19 +41,17 @@ namespace BH.DataAccessLayer.SqlServer
 
         public Customer GetById(int id)
         {
-            _sqlToExecute = "SELECT * FROM [dbo].[Customer] WHERE Id = " + id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", id.ToString());
+
+            _sqlToExecute = "SELECT * FROM [dbo].[Customer] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.CreateReaderFromSql(_sqlToExecute))
                 throw new Exception("Customer - GetById failed");
 
             if (_dataEngine.Dr.Read())
             {
-                var customer = new Customer
-                {
-                    CustomerName = _dataEngine.Dr["CustomerName"].ToString(),
-                    Id = int.Parse(_dataEngine.Dr["Id"].ToString())
-                };
-
+                Customer customer = CreateCustomerFromData();
                 return customer;
             }
             else
@@ -68,11 +61,16 @@ namespace BH.DataAccessLayer.SqlServer
         }
 
         public void Save(Customer saveThis)
-        {          
+        {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@CustomerName", saveThis.CustomerName);
+
             _sqlToExecute = "INSERT INTO [dbo].[Customer] ";
-            _sqlToExecute += "([CustomerName])";
+            _sqlToExecute += "([CustomerName]) ";
             _sqlToExecute += "VALUES ";
-            _sqlToExecute += "('" + saveThis.CustomerName + "')";
+            _sqlToExecute += "(";
+            _sqlToExecute += _dataEngine.GetParametersForQuery();
+            _sqlToExecute += ")";
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
                 throw new Exception("Customer - Save failed");
@@ -80,10 +78,28 @@ namespace BH.DataAccessLayer.SqlServer
 
         public void Delete(Customer deleteThis)
         {
-            _sqlToExecute = "DELETE FROM [dbo].[Customer] WHERE Id = " + deleteThis.Id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
+
+            _sqlToExecute = "DELETE FROM [dbo].[Customer] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
                 throw new Exception("Customer - Delete failed");
+        }
+
+        /// <summary>
+        /// Creates the object from the data returned from the database
+        /// </summary>
+        /// <returns></returns>
+        private Customer CreateCustomerFromData()
+        {
+            var customer = new Customer
+            {
+                Id = int.Parse(_dataEngine.Dr["Id"].ToString()),
+                CustomerName = _dataEngine.Dr["CustomerName"].ToString()
+            };
+
+            return customer;
         }
     }
 }

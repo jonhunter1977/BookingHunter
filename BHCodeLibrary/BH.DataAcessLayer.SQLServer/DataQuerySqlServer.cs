@@ -16,6 +16,8 @@ namespace BH.DataAccessLayer.SqlServer
         public Boolean DatabaseConnected;
         public SqlDataReader Dr;
 
+        public List<SqlParameter> queryParams;
+
         /// <summary>
         /// Opens a connection to a database using the supplied connection string
         /// </summary>
@@ -114,7 +116,18 @@ namespace BH.DataAccessLayer.SqlServer
                     CommandTimeout = 150
                 };
 
+                //Add any parameters
+                if (this.queryParams != null)
+                {
+                    foreach (SqlParameter param in this.queryParams)
+                    {
+                        _command.Parameters.Add(param);
+                    }
+                }
+
                 Dr = _command.ExecuteReader();
+
+                InitialiseParameterList();
 
                 return true;
             }
@@ -122,6 +135,48 @@ namespace BH.DataAccessLayer.SqlServer
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Initialises the parameter list, used for inserts and updates to avoid
+        /// SQL injection attacks
+        /// </summary>
+        /// <param name="size"></param>
+        public void InitialiseParameterList()
+        {
+            this.queryParams = new List<SqlParameter>();
+        }
+
+        /// <summary>
+        /// Adds a parameter to the parameter list to be used for the next ExecuteSql query
+        /// </summary>
+        /// <param name="parameterName"></param>
+        /// <param name="parameterValue"></param>
+        public void AddParameter(string parameterName, string parameterValue)
+        {
+            SqlParameter paramToAdd = new SqlParameter();
+            paramToAdd.ParameterName = parameterName;
+            paramToAdd.Value = (object)parameterValue ?? DBNull.Value;
+
+            this.queryParams.Add(paramToAdd);
+        }
+
+        /// <summary>
+        /// Returns a string of all the parameters so they can be entered into an SQL
+        /// query
+        /// </summary>
+        /// <returns>String</returns>
+        public string GetParametersForQuery()
+        {
+            string paramsForSql = string.Empty;
+
+            foreach (SqlParameter param in this.queryParams)
+            {
+                paramsForSql += param.ParameterName + ",";
+            }
+
+            //return and remove the last comma
+            return paramsForSql.Substring(0, paramsForSql.Length -1);
         }
 
         /// <summary>
@@ -141,7 +196,19 @@ namespace BH.DataAccessLayer.SqlServer
                     CommandTimeout = 150
                 };
 
+                //Add any parameters
+                if (this.queryParams != null)
+                {
+                    foreach (SqlParameter param in this.queryParams)
+                    {
+                        _command.Parameters.Add(param);
+                    }
+                }
+
                 _command.ExecuteNonQuery();
+
+                
+                InitialiseParameterList();
 
                 return true;
             }

@@ -32,12 +32,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                var facility = new Facility
-                {
-                    Id = int.Parse(_dataEngine.Dr["Id"].ToString()),
-                    FacilityBookAheadDays = int.Parse(_dataEngine.Dr["FacilityBookAheadDays"].ToString())
-                };
-
+                var facility = CreateFacilityFromData();
                 facilityList.Add(facility);
             }
 
@@ -46,19 +41,17 @@ namespace BH.DataAccessLayer.SqlServer
 
         public Facility GetById(int id)
         {
-            _sqlToExecute = "SELECT * FROM [dbo].[Facility] WHERE Id = " + id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", id.ToString());
+
+            _sqlToExecute = "SELECT * FROM [dbo].[Facility] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.CreateReaderFromSql(_sqlToExecute))
                 throw new Exception("Facility - GetById failed");
 
             if (_dataEngine.Dr.Read())
             {
-                var facility = new Facility
-                {
-                    FacilityBookAheadDays = int.Parse(_dataEngine.Dr["FacilityBookAheadDays"].ToString()),
-                    Id = int.Parse(_dataEngine.Dr["Id"].ToString())
-                };
-
+                var facility = CreateFacilityFromData();
                 return facility;
             }
             else
@@ -69,10 +62,15 @@ namespace BH.DataAccessLayer.SqlServer
 
         public void Save(Facility saveThis)
         {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@FacilityBookAheadDays", saveThis.FacilityBookAheadDays.ToString());
+
             _sqlToExecute = "INSERT INTO [dbo].[Facility] ";
-            _sqlToExecute += "([FacilityBookAheadDays])";
+            _sqlToExecute += "([FacilityBookAheadDays]) ";
             _sqlToExecute += "VALUES ";
-            _sqlToExecute += "(" + saveThis.FacilityBookAheadDays + ")";
+            _sqlToExecute += "(";
+            _sqlToExecute += _dataEngine.GetParametersForQuery();
+            _sqlToExecute += ")";
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
                 throw new Exception("Facility - Save failed");
@@ -80,10 +78,28 @@ namespace BH.DataAccessLayer.SqlServer
 
         public void Delete(Facility deleteThis)
         {
-            _sqlToExecute = "DELETE FROM [dbo].[Facility] WHERE Id = " + deleteThis.Id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
+
+            _sqlToExecute = "DELETE FROM [dbo].[Facility] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
                 throw new Exception("Facility - Delete failed");
+        }
+
+        /// <summary>
+        /// Creates the object from the data returned from the database
+        /// </summary>
+        /// <returns></returns>
+        private Facility CreateFacilityFromData()
+        {
+            var facility = new Facility
+            {
+                Id = int.Parse(_dataEngine.Dr["Id"].ToString()),
+                FacilityBookAheadDays = int.Parse(_dataEngine.Dr["FacilityBookAheadDays"].ToString())
+            };
+
+            return facility;
         }
     }
 }

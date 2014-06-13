@@ -41,7 +41,10 @@ namespace BH.DataAccessLayer.SqlServer
 
         public BookingRecord GetById(int id)
         {
-            _sqlToExecute = "SELECT * FROM [dbo].[BookingRecord] WHERE Id = " + id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", id.ToString());
+
+            _sqlToExecute = "SELECT * FROM [dbo].[BookingRecord] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.CreateReaderFromSql(_sqlToExecute))
                 throw new Exception("BookingRecord - GetById failed");
@@ -59,29 +62,37 @@ namespace BH.DataAccessLayer.SqlServer
 
         public void Save(BookingRecord saveThis)
         {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@TimeArrived", saveThis.TimeArrived.ToString());
+            _dataEngine.AddParameter("@ArrivalRegistrationMethod", ((int)saveThis.ArrivalRegistrationMethod).ToString());
+            _dataEngine.AddParameter("@BookingStatus", ((int)saveThis.BookingStatus).ToString());
+            _dataEngine.AddParameter("@BookingRecordUniqueId", saveThis.BookingRecordUniqueId.ToString());
+            _dataEngine.AddParameter("@BookingRecordPin", saveThis.BookingRecordPin.ToString());
+
             _sqlToExecute = "INSERT INTO [dbo].[BookingRecord] ";
             _sqlToExecute += "([TimeArrived]";
             _sqlToExecute += ",[ArrivalRegistrationMethod]";
             _sqlToExecute += ",[BookingStatus]";
             _sqlToExecute += ",[BookingRecordUniqueId]";
-            _sqlToExecute += ",[BookingRecordPin])";
+            _sqlToExecute += ",[BookingRecordPin]) ";
             _sqlToExecute += "VALUES ";
-            _sqlToExecute += "(" + saveThis.TimeArrived;
-            _sqlToExecute += "," + (int)saveThis.ArrivalRegistrationMethod;
-            _sqlToExecute += "," + (int)saveThis.BookingStatus;
-            _sqlToExecute += ",'" + saveThis.BookingRecordUniqueId + "'";
-            _sqlToExecute += "," + saveThis.BookingRecordPin + ")";
+            _sqlToExecute += "(";
+            _sqlToExecute += _dataEngine.GetParametersForQuery();
+            _sqlToExecute += ")";
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
-                throw new Exception("BookingRecord - Save failed");
+                throw new Exception("BookingRecord - Save failed"); 
         }
 
         public void Delete(BookingRecord deleteThis)
         {
-            _sqlToExecute = "DELETE FROM [dbo].[BookingRecord] WHERE Id = " + deleteThis.Id.ToString();
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
+
+            _sqlToExecute = "DELETE FROM [dbo].[BookingRecord] WHERE Id = " + _dataEngine.GetParametersForQuery();
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
-                throw new Exception("BookingRecord - Delete failed");
+                throw new Exception("BookingRecord - Delete failed"); 
         }
 
         public BookingRecord GetByBookingRecordUniqueId(int BookingRecordUniqueId)
