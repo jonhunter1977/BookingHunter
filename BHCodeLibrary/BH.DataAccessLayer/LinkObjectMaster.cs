@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using BH.Domain;
 
 namespace BH.DataAccessLayer
 {
     /// <summary>
     /// Data for a customer
     /// </summary>
-    public struct LinkObjectMaster : IDbItentity
+    public struct LinkObjectMaster : ILinkObjectMaster, IDbItentity
     {
         /// <summary>
         /// Link Id - identity column

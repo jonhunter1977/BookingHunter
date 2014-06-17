@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BH.Domain;
 
 namespace BH.DataAccessLayer.SqlServer
 {
@@ -21,9 +22,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Cfg Database query engine is not connected");
         }
 
-        public IList<Court> GetAll()
+        public IList<ICourt> GetAll()
         {
-            var courtList = new List<Court>();
+            var courtList = new List<ICourt>();
 
             _sqlToExecute = "SELECT * FROM [dbo].[Court]";
 
@@ -32,14 +33,14 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                Court court = CreateCourtFromData();
+                ICourt court = CreateCourtFromData();
                 courtList.Add(court);
             }
 
             return courtList;
         }
 
-        public Court GetById(int id)
+        public ICourt GetById(int id)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", id.ToString());
@@ -51,7 +52,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             if (_dataEngine.Dr.Read())
             {
-                Court court = CreateCourtFromData();
+                ICourt court = CreateCourtFromData();
                 return court;
             }
             else
@@ -60,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public void Save(Court saveThis)
+        public void Save(ICourt saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@CourtDescription", saveThis.CourtDescription);
@@ -76,7 +77,7 @@ namespace BH.DataAccessLayer.SqlServer
                 throw new Exception("Court - Save failed"); 
         }
 
-        public void Delete(Court deleteThis)
+        public void Delete(ICourt deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -91,7 +92,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private Court CreateCourtFromData()
+        private ICourt CreateCourtFromData()
         {
             var court = new Court
             {

@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using NUnit.Framework;
 using BH.DataAccessLayer;
+using BH.Domain;
 using System.Data.Common;
 
 namespace NUnitTestingLibrary
@@ -11,12 +12,6 @@ namespace NUnitTestingLibrary
     {
         private Member _member;
         private int _currentMemberRecordId;
-
-        [SetUp]
-        public void SetUp()
-        {
-            BHDataAccess.InitialiseDataAccess();
-        }
 
         [Test]
         public void CreateAndRetrieveMember()
@@ -40,7 +35,7 @@ namespace NUnitTestingLibrary
             }
             else
             {
-                member = memberList[0];
+                member = (Member)memberList[0];
             }
 
             _member = member;

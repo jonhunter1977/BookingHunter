@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using NUnit.Framework;
 using BH.DataAccessLayer;
+using BH.Domain;
 using System.Data.Common;
 
 namespace NUnitTestingLibrary
@@ -11,12 +12,6 @@ namespace NUnitTestingLibrary
     {
         private Location _location;
         private int _currentLocationId;
-
-        [SetUp]
-        public void SetUp()
-        {
-            BHDataAccess.InitialiseDataAccess();
-        }
 
         [Test]
         public void CreateAndRetrieveLocation()
@@ -36,7 +31,7 @@ namespace NUnitTestingLibrary
             }
             else
             {
-                location = locationList[0];
+                location = (Location)locationList[0];
             }
 
             _location = location;

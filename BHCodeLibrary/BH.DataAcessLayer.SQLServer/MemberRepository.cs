@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BH.Domain;
 
 namespace BH.DataAccessLayer.SqlServer
 {
@@ -21,9 +22,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Member Database query engine is not connected");
         }
 
-        public IList<Member> GetAll()
+        public IList<IMember> GetAll()
         {
-            var memberList = new List<Member>();
+            var memberList = new List<IMember>();
 
             _sqlToExecute = "SELECT * FROM [dbo].[Member]";
 
@@ -32,14 +33,14 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                Member member = CreateMemberFromData();
+                IMember member = CreateMemberFromData();
                 memberList.Add(member);
             }
 
             return memberList;
         }
 
-        public Member GetById(int id)
+        public IMember GetById(int id)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", id.ToString());
@@ -51,7 +52,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             if (_dataEngine.Dr.Read())
             {
-                Member member = CreateMemberFromData();
+                IMember member = CreateMemberFromData();
                 return member;
             }
             else
@@ -60,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public void Save(Member saveThis)
+        public void Save(IMember saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@FirstName", saveThis.FirstName);
@@ -84,7 +85,7 @@ namespace BH.DataAccessLayer.SqlServer
                 throw new Exception("Member - Save failed");  
         }
 
-        public void Delete(Member deleteThis)
+        public void Delete(IMember deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -99,7 +100,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private Member CreateMemberFromData()
+        private IMember CreateMemberFromData()
         {
             var member = new Member
             {

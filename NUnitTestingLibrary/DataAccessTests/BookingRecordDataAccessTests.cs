@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using NUnit.Framework;
 using BH.DataAccessLayer;
+using BH.Domain;
 using System.Data.Common;
 
 namespace NUnitTestingLibrary
@@ -11,12 +12,6 @@ namespace NUnitTestingLibrary
     {
         private BookingRecord _bookingRecord;
         private int _currentBookingRecordId;
-
-        [SetUp]
-        public void SetUp()
-        {
-            BHDataAccess.InitialiseDataAccess();
-        }
 
         [Test]
         public void CreateAndRetrieveBookingRecord()
@@ -40,7 +35,7 @@ namespace NUnitTestingLibrary
             }
             else
             {
-                bookingRecord = bookingRecordList[0];
+                bookingRecord = (BookingRecord)bookingRecordList[0];
             }
 
             _bookingRecord = bookingRecord;

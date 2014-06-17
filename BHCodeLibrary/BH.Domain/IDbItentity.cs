@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BH.DataAccessLayer
+namespace BH.Domain
 {
     /// <summary>
     /// Interface that allows access to the identity property for database objects

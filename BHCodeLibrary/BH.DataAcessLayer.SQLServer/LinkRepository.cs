@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BH.Domain;
 
 namespace BH.DataAccessLayer.SqlServer
 {
@@ -21,13 +22,13 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Link Database query engine is not connected");
         }
 
-        public IList<LinkObjectMaster> GetAll()
+        public IList<ILinkObjectMaster> GetAll()
         {
-            var linkList = new List<LinkObjectMaster>();
+            var linkList = new List<ILinkObjectMaster>();
             return linkList;
         }
 
-        public LinkObjectMaster GetById(int id)
+        public ILinkObjectMaster GetById(int id)
         {
             var linkObject = new LinkObjectMaster
             {
@@ -37,7 +38,7 @@ namespace BH.DataAccessLayer.SqlServer
             return linkObject;
         }
 
-        public void Save(LinkObjectMaster saveThis)
+        public void Save(ILinkObjectMaster saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@MasterLinkTypeId", ((int)saveThis.MasterLinkType).ToString());
@@ -59,7 +60,7 @@ namespace BH.DataAccessLayer.SqlServer
                 throw new Exception("Link - Save failed");
         }
 
-        public void Delete(LinkObjectMaster deleteThis)
+        public void Delete(ILinkObjectMaster deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -70,9 +71,9 @@ namespace BH.DataAccessLayer.SqlServer
                 throw new Exception("Link - Delete failed");
         }
 
-        public List<LinkObjectMaster> GetChildLinkObjectId(LinkType masterLinkType, int masterLinkId, LinkType childLinkType)
+        public List<ILinkObjectMaster> GetChildLinkObjectId(LinkType masterLinkType, int masterLinkId, LinkType childLinkType)
         {
-            var linkObjectList = new List<LinkObjectMaster>();
+            var linkObjectList = new List<ILinkObjectMaster>();
 
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@MasterLinkTypeId", ((int)masterLinkType).ToString());
@@ -89,16 +90,16 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                LinkObjectMaster linkObject = CreateLinkObjectFromData();
+                ILinkObjectMaster linkObject = CreateLinkObjectFromData();
                 linkObjectList.Add(linkObject);
             }
 
             return linkObjectList;
         }
 
-        public List<LinkObjectMaster> GetMasterLinkObjectId(LinkType childLinkType, int childLinkId, LinkType masterLinkType)
+        public List<ILinkObjectMaster> GetMasterLinkObjectId(LinkType childLinkType, int childLinkId, LinkType masterLinkType)
         {
-            var linkObjectList = new List<LinkObjectMaster>();
+            var linkObjectList = new List<ILinkObjectMaster>();
 
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@ChildLinkTypeId", ((int)childLinkType).ToString());
@@ -115,7 +116,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                LinkObjectMaster linkObject = CreateLinkObjectFromData();
+                ILinkObjectMaster linkObject = CreateLinkObjectFromData();
                 linkObjectList.Add(linkObject);
             }
 
@@ -126,7 +127,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private LinkObjectMaster CreateLinkObjectFromData()
+        private ILinkObjectMaster CreateLinkObjectFromData()
         {
             var linkObject = new LinkObjectMaster
             {

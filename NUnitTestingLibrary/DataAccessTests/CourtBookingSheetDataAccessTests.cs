@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using NUnit.Framework;
 using BH.DataAccessLayer;
+using BH.Domain;
 using System.Data.Common;
 
 namespace NUnitTestingLibrary
@@ -11,12 +12,6 @@ namespace NUnitTestingLibrary
     {
         private CourtBookingSheet _courtBookingSheet;
         private int _currentCourtBookingSheetRecordId;
-
-        [SetUp]
-        public void SetUp()
-        {
-            BHDataAccess.InitialiseDataAccess();
-        }
 
         [Test]
         public void CreateAndRetrieveCourtBookingSheet()
@@ -38,7 +33,7 @@ namespace NUnitTestingLibrary
             }
             else
             {
-                courtBookingSheet = courtBookingSheetList[0];
+                courtBookingSheet = (CourtBookingSheet)courtBookingSheetList[0];
             }
 
             _courtBookingSheet = courtBookingSheet;

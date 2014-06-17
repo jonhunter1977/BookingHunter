@@ -40,10 +40,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerLogic.cs" />
+    <Compile Include="IBusinessLogic.cs" />
+    <Compile Include="ICustomerLogic.cs" />
+    <Compile Include="DatabaseAccess.cs" />
+    <Compile Include="IDatabaseAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BH.DataAccessLayer\BH.DataAccessLayer.csproj">
+      <Project>{3120ac73-d8ea-4126-aae8-8937461eb0fa}</Project>
+      <Name>BH.DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BH.Domain\BH.Domain.csproj">
+      <Project>{88f548f3-f004-4599-a5ca-d33f2ba250e8}</Project>
+      <Name>BH.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

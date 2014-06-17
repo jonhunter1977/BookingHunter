@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BH.DataAccessLayer", "BHCod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BH.DataAccessLayer.SQLServer", "BHCodeLibrary\BH.DataAcessLayer.SQLServer\BH.DataAccessLayer.SQLServer.csproj", "{29F7AC70-3993-4DC1-8080-78C49C7F08A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BH.Domain", "BHCodeLibrary\BH.Domain\BH.Domain.csproj", "{88F548F3-F004-4599-A5CA-D33F2BA250E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{29F7AC70-3993-4DC1-8080-78C49C7F08A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29F7AC70-3993-4DC1-8080-78C49C7F08A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29F7AC70-3993-4DC1-8080-78C49C7F08A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88F548F3-F004-4599-A5CA-D33F2BA250E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88F548F3-F004-4599-A5CA-D33F2BA250E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88F548F3-F004-4599-A5CA-D33F2BA250E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88F548F3-F004-4599-A5CA-D33F2BA250E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

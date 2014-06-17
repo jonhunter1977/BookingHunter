@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using BH.Domain;
 
 namespace BH.DataAccessLayer
 {
     /// <summary>
     /// Data for a booking record
     /// </summary>
-    public struct BookingRecord : IDbItentity
+    public struct BookingRecord : IBookingRecord, IDbItentity
     {
         /// <summary>
         /// Customer Id - identity column

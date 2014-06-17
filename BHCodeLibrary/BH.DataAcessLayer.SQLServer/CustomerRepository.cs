@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BH.Domain;
 
 namespace BH.DataAccessLayer.SqlServer
 {
@@ -21,9 +22,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Cfg Database query engine is not connected");
         }
 
-        public IList<Customer> GetAll()
-        {           
-            var customerList = new List<Customer>();
+        public IList<ICustomer> GetAll()
+        {
+            var customerList = new List<ICustomer>();
 
             _sqlToExecute = "SELECT * FROM [dbo].[Customer]";
 
@@ -32,14 +33,14 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                Customer customer = CreateCustomerFromData();
+                ICustomer customer = CreateCustomerFromData();
                 customerList.Add(customer);
             }
 
             return customerList;
         }
 
-        public Customer GetById(int id)
+        public ICustomer GetById(int id)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", id.ToString());
@@ -51,7 +52,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             if (_dataEngine.Dr.Read())
             {
-                Customer customer = CreateCustomerFromData();
+                ICustomer customer = CreateCustomerFromData();
                 return customer;
             }
             else
@@ -60,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public void Save(Customer saveThis)
+        public void Save(ICustomer saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@CustomerName", saveThis.CustomerName);
@@ -76,7 +77,7 @@ namespace BH.DataAccessLayer.SqlServer
                 throw new Exception("Customer - Save failed");
         }
 
-        public void Delete(Customer deleteThis)
+        public void Delete(ICustomer deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -91,7 +92,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private Customer CreateCustomerFromData()
+        private ICustomer CreateCustomerFromData()
         {
             var customer = new Customer
             {

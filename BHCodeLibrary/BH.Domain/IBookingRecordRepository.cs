@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
+using BH.Domain;
 
-namespace BH.DataAccessLayer
+namespace BH.Domain
 {
     /// <summary>
     /// The different ways a customer can update a booking to say they have arrived
@@ -30,13 +28,13 @@ namespace BH.DataAccessLayer
     /// <summary>
     /// Interface for interacting with the booking records in the database
     /// </summary>
-    public interface IBookingRecordRepository : IRepository<BookingRecord>
+    public interface IBookingRecordRepository : IRepository<IBookingRecord>
     {
         /// <summary>
         /// Retrieves a booking record by the unique Id created when it is saved
         /// </summary>
         /// <param name="BookingRecordUniqueId">Unique Id to query for</param>
         /// <returns>A booking record</returns>
-        BookingRecord GetByBookingRecordUniqueId(int BookingRecordUniqueId);
+        IBookingRecord GetByBookingRecordUniqueId(int BookingRecordUniqueId);
     }
 }

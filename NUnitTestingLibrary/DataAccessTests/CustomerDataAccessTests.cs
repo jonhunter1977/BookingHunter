@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using NUnit.Framework;
 using BH.DataAccessLayer;
+using BH.Domain;
 using System.Data.Common;
 
 namespace NUnitTestingLibrary
@@ -18,12 +19,6 @@ namespace NUnitTestingLibrary
 
         private LinkObjectMaster _linkObject;
         private int _linkObjectId;
-       
-        [SetUp]
-        public void SetUp()
-        {
-            BHDataAccess.InitialiseDataAccess();
-        }
 
         [Test]
         public void ConnectionExceptionIfCfgConnectionStringIsNull()
@@ -69,7 +64,7 @@ namespace NUnitTestingLibrary
             }
             else
             {
-                customer = customerList[0];
+                customer = (Customer)customerList[0];
             }
 
             _customer = customer;
@@ -99,7 +94,7 @@ namespace NUnitTestingLibrary
             }
             else
             {
-                address = addressList[0];
+                address = (Address)addressList[0];
             }
 
             _address = address;
@@ -140,7 +135,7 @@ namespace NUnitTestingLibrary
                 _customer.Id,
                 LinkType.Address);
 
-            _linkObject = linkObjectList.Find(x => x.MasterLinkId == _customer.Id);
+            _linkObject = (LinkObjectMaster)linkObjectList.Find(x => x.MasterLinkId == _customer.Id);
 
             _linkObjectId = _linkObject.Id;
 
@@ -150,16 +145,16 @@ namespace NUnitTestingLibrary
         [Test]
         public void LoadCustomerAndAddressInOne()
         {
-            _customer = BHDataAccess._da.Customer.GetById(_currentCustomerId);
+            _customer = (Customer)BHDataAccess._da.Customer.GetById(_currentCustomerId);
 
             var linkObjectList = BHDataAccess._da.Link.GetChildLinkObjectId(
                 LinkType.Customer,
                 _customer.Id,
                 LinkType.Address);
 
-            _linkObject = linkObjectList.Find(x => x.MasterLinkId == _customer.Id);
+            _linkObject = (LinkObjectMaster)linkObjectList.Find(x => x.MasterLinkId == _customer.Id);
 
-            _address = BHDataAccess._da.Address.GetById(_linkObject.ChildLinkId.Value);
+            _address = (Address)BHDataAccess._da.Address.GetById(_linkObject.ChildLinkId.Value);
 
             Assert.AreEqual(_address.Address1, "Station Road");
         }
@@ -192,9 +187,9 @@ namespace NUnitTestingLibrary
                 _customer.Id,
                 LinkType.Address);
 
-            _linkObject = linkObjectList.Find(x => x.MasterLinkId == _customer.Id);
+            //_linkObject = (LinkObjectMaster)linkObjectList.Find(x => x.MasterLinkId == _customer.Id);
 
-            Assert.That(_linkObject.MasterLinkId, Is.EqualTo(null));
+            Assert.That(linkObjectList.Count, Is.EqualTo(0));
         }
     }
 }

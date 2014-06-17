@@ -2,8 +2,9 @@
 using System.Data.SqlClient;
 using System.Linq;
 using NUnit.Framework;
-using BH.DataAccessLayer;
 using System.Data.Common;
+using BH.DataAccessLayer;
+using BH.Domain;
 
 namespace NUnitTestingLibrary
 {
@@ -11,12 +12,6 @@ namespace NUnitTestingLibrary
     {
         private Court _court;
         private int _currentCourtId;
-
-        [SetUp]
-        public void SetUp()
-        {
-            BHDataAccess.InitialiseDataAccess();
-        }
 
         [Test]
         public void CreateAndRetrieveCourt()
@@ -36,7 +31,7 @@ namespace NUnitTestingLibrary
             }
             else
             {
-                court = courtList[0];
+                court = (Court)courtList[0];
             }
 
             _court = court;

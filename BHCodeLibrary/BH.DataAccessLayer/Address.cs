@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using BH.Domain;
 
 namespace BH.DataAccessLayer
 {
     /// <summary>
     /// Data for an address
     /// </summary>
-    public struct Address : IDbItentity
+    public struct Address : IAddress, IDbItentity
     {
         /// <summary>
         /// Address Id - identity column

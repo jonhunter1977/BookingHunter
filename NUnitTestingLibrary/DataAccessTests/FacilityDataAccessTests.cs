@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using NUnit.Framework;
 using BH.DataAccessLayer;
+using BH.Domain;
 using System.Data.Common;
 
 namespace NUnitTestingLibrary
@@ -14,12 +15,6 @@ namespace NUnitTestingLibrary
 
         private FacilitySchedule _facilitySchedule;
         private int _currentFacilityScheduleId;
-
-        [SetUp]
-        public void SetUp()
-        {
-            BHDataAccess.InitialiseDataAccess();
-        }
 
         [Test]
         public void CreateAndRetrieveFacility()
@@ -39,7 +34,7 @@ namespace NUnitTestingLibrary
             }
             else
             {
-                facility = facilityList[0];
+                facility = (Facility)facilityList[0];
             }
 
             _facility = facility;
@@ -87,7 +82,7 @@ namespace NUnitTestingLibrary
             }
             else
             {
-                facilitySchedule = facilityScheduleList[0];
+                facilitySchedule = (FacilitySchedule)facilityScheduleList[0];
             }
 
             _facilitySchedule = facilitySchedule;

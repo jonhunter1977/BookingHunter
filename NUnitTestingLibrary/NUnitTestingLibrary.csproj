@@ -44,17 +44,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookingRecordDataAccessTests.cs" />
-    <Compile Include="MemberDataAccessTests.cs" />
-    <Compile Include="CourtBookingSheetDataAccessTests.cs" />
-    <Compile Include="CourtDataAccessTests.cs" />
-    <Compile Include="FacilityDataAccessTests.cs" />
-    <Compile Include="LocationDataAccessTests.cs" />
-    <Compile Include="CustomerDataAccessTests.cs" />
+    <Compile Include="DataAccessTests\BookingRecordDataAccessTests.cs" />
+    <Compile Include="BusinessLayerTests\CustomerBusinessLayerTests.cs" />
+    <Compile Include="DataAccessTests\MemberDataAccessTests.cs" />
+    <Compile Include="DataAccessTests\CourtBookingSheetDataAccessTests.cs" />
+    <Compile Include="DataAccessTests\CourtDataAccessTests.cs" />
+    <Compile Include="DataAccessTests\FacilityDataAccessTests.cs" />
+    <Compile Include="DataAccessTests\LocationDataAccessTests.cs" />
+    <Compile Include="DataAccessTests\CustomerDataAccessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BHDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BHCodeLibrary\BH.BusinessLayer\BH.BusinessLayer.csproj">
+      <Project>{c8afb41a-3f15-4d30-a983-a6b0f6603df8}</Project>
+      <Name>BH.BusinessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BHCodeLibrary\BH.DataAccessLayer\BH.DataAccessLayer.csproj">
       <Project>{3120ac73-d8ea-4126-aae8-8937461eb0fa}</Project>
       <Name>BH.DataAccessLayer</Name>
@@ -62,6 +67,10 @@
     <ProjectReference Include="..\BHCodeLibrary\BH.DataAcessLayer.SQLServer\BH.DataAccessLayer.SQLServer.csproj">
       <Project>{29f7ac70-3993-4dc1-8080-78c49c7f08a2}</Project>
       <Name>BH.DataAccessLayer.SQLServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHCodeLibrary\BH.Domain\BH.Domain.csproj">
+      <Project>{88f548f3-f004-4599-a5ca-d33f2ba250e8}</Project>
+      <Name>BH.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

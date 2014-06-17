@@ -1,9 +1,12 @@
 ﻿using System;
 using BH.DataAccessLayer;
+using BH.Domain;
 using System.Data.SqlClient;
+using NUnit.Framework;
 
 namespace NUnitTestingLibrary
 {
+    [SetUpFixture]
     internal class BHDataAccess
     {
         private static readonly SqlConnectionStringBuilder _bookingConnection =
@@ -23,7 +26,7 @@ namespace NUnitTestingLibrary
 
         internal static DataAccess _da;
 
-        internal static void InitialiseDataAccess()
+        static BHDataAccess()
         {
             _da = new DataAccess
             {

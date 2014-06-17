@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BH.DataAccessLayer
+namespace BH.Domain
 {
     /// <summary>
     /// Interface declaring standard read/write database operations for database objects

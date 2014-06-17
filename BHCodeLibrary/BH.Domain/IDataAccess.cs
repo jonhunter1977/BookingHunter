@@ -1,30 +1,5 @@
-﻿namespace BH.DataAccessLayer
+﻿namespace BH.Domain
 {
-    /// <summary>
-    /// Supported data connection types
-    /// </summary>
-    public enum DataAccessType
-    {
-        SqlServer
-    }
-
-    /// <summary>
-    /// Support repository types
-    /// </summary>
-    //private enum RepositoryType
-    //{
-    //    AddressRepository,
-    //    BookingRecordRepository,
-    //    CourtBookingSheetRepository,
-    //    CourtRepository,
-    //    CustomerRepository,
-    //    FacilityRepository,
-    //    FacilityScheduleRepository,
-    //    LinkRepository,
-    //    LocationRepository,
-    //    MemberRepository
-    //}
-
     /// <summary>
     /// Interface for accessing data
     /// </summary>

@@ -1,8 +1,17 @@
 ﻿using System;
 using System.Reflection;
+using BH.Domain;
 
 namespace BH.DataAccessLayer
 {
+    /// <summary>
+    /// Supported data connection types
+    /// </summary>
+    public enum DataAccessType
+    {
+        SqlServer
+    }
+
     /// <summary>
     /// Data from the data source
     /// </summary>

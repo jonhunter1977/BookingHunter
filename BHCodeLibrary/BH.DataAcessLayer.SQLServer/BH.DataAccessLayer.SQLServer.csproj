@@ -57,6 +57,10 @@
       <Project>{3120ac73-d8ea-4126-aae8-8937461eb0fa}</Project>
       <Name>BH.DataAccessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BH.Domain\BH.Domain.csproj">
+      <Project>{88f548f3-f004-4599-a5ca-d33f2ba250e8}</Project>
+      <Name>BH.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

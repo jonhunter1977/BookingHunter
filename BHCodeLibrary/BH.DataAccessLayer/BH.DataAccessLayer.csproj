@@ -41,31 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataFormatting.cs" />
+    <Compile Include="DataAccess.cs" />
     <Compile Include="Address.cs" />
     <Compile Include="BookingRecord.cs" />
-    <Compile Include="IMemberRepository.cs" />
-    <Compile Include="Member.cs" />
-    <Compile Include="DataFormatting.cs" />
-    <Compile Include="ICourtBookingSheetRepository.cs" />
-    <Compile Include="CourtBookingSheet.cs" />
-    <Compile Include="IBookingRecordRepository.cs" />
-    <Compile Include="ICourtRepository.cs" />
     <Compile Include="Court.cs" />
-    <Compile Include="FacilitySchedule.cs" />
-    <Compile Include="IFacilityScheduleRepository.cs" />
-    <Compile Include="IFacilityRepository.cs" />
-    <Compile Include="Facility.cs" />
-    <Compile Include="Location.cs" />
-    <Compile Include="ILocationRepository.cs" />
-    <Compile Include="LinkObjectMaster.cs" />
+    <Compile Include="CourtBookingSheet.cs" />
     <Compile Include="Customer.cs" />
-    <Compile Include="DataAccess.cs" />
-    <Compile Include="IAddressRepository.cs" />
-    <Compile Include="ICustomerRepository.cs" />
-    <Compile Include="IDbItentity.cs" />
-    <Compile Include="IDataAccess.cs" />
-    <Compile Include="ILinkRepository.cs" />
-    <Compile Include="IRepository.cs" />
+    <Compile Include="Facility.cs" />
+    <Compile Include="FacilitySchedule.cs" />
+    <Compile Include="LinkObjectMaster.cs" />
+    <Compile Include="Location.cs" />
+    <Compile Include="Member.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -82,6 +69,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BH.Domain\BH.Domain.csproj">
+      <Project>{88f548f3-f004-4599-a5ca-d33f2ba250e8}</Project>
+      <Name>BH.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

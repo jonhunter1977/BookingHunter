@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BH.Domain;
 
 namespace BH.DataAccessLayer.SqlServer
 {
@@ -21,9 +22,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Cfg Database query engine is not connected");
         }
 
-        public IList<Facility> GetAll()
+        public IList<IFacility> GetAll()
         {
-            var facilityList = new List<Facility>();
+            var facilityList = new List<IFacility>();
 
             _sqlToExecute = "SELECT * FROM [dbo].[Facility]";
 
@@ -39,7 +40,7 @@ namespace BH.DataAccessLayer.SqlServer
             return facilityList;
         }
 
-        public Facility GetById(int id)
+        public IFacility GetById(int id)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", id.ToString());
@@ -60,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public void Save(Facility saveThis)
+        public void Save(IFacility saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@FacilityBookAheadDays", saveThis.FacilityBookAheadDays.ToString());
@@ -76,7 +77,7 @@ namespace BH.DataAccessLayer.SqlServer
                 throw new Exception("Facility - Save failed");
         }
 
-        public void Delete(Facility deleteThis)
+        public void Delete(IFacility deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -91,7 +92,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private Facility CreateFacilityFromData()
+        private IFacility CreateFacilityFromData()
         {
             var facility = new Facility
             {

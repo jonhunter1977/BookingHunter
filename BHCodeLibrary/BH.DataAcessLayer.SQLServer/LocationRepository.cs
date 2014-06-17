@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BH.Domain;
 
 namespace BH.DataAccessLayer.SqlServer
 {
@@ -21,9 +22,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Cfg Database query engine is not connected");
         }
 
-        public IList<Location> GetAll()
-        {           
-            var locationList = new List<Location>();
+        public IList<ILocation> GetAll()
+        {
+            var locationList = new List<ILocation>();
 
             _sqlToExecute = "SELECT * FROM [dbo].[Location]";
 
@@ -39,7 +40,7 @@ namespace BH.DataAccessLayer.SqlServer
             return locationList;
         }
 
-        public Location GetById(int id)
+        public ILocation GetById(int id)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", id.ToString());
@@ -60,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public void Save(Location saveThis)
+        public void Save(ILocation saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@LocationDescription", saveThis.LocationDescription);
@@ -76,7 +77,7 @@ namespace BH.DataAccessLayer.SqlServer
                 throw new Exception("Location - Save failed");
         }
 
-        public void Delete(Location deleteThis)
+        public void Delete(ILocation deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -91,7 +92,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private Location CreateLocationFromData()
+        private ILocation CreateLocationFromData()
         {
             var location = new Location
             {
