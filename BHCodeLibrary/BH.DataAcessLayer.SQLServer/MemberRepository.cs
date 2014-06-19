@@ -61,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public void Save(IMember saveThis)
+        public int Insert(IMember saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@FirstName", saveThis.FirstName);
@@ -76,13 +76,18 @@ namespace BH.DataAccessLayer.SqlServer
             _sqlToExecute += ",[EmailAddress]";
             _sqlToExecute += ",[MobileNumber]";
             _sqlToExecute += ",[MembershipNumber]) ";
+            _sqlToExecute += "OUTPUT INSERTED.Id ";
             _sqlToExecute += "VALUES ";
             _sqlToExecute += "(";
             _sqlToExecute += _dataEngine.GetParametersForQuery();
             _sqlToExecute += ")";
 
-            if (!_dataEngine.ExecuteSql(_sqlToExecute))
-                throw new Exception("Member - Save failed");  
+            int insertedRowId = 0;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute, out insertedRowId))
+                throw new Exception("Member - Save failed");
+
+            return insertedRowId; 
         }
 
         public void Delete(IMember deleteThis)

@@ -61,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public void Save(IFacilitySchedule saveThis)
+        public int Insert(IFacilitySchedule saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@FacilityBookAheadDays", saveThis.FacilityScheduleDescription);
@@ -110,13 +110,18 @@ namespace BH.DataAccessLayer.SqlServer
             _sqlToExecute += ",[StartMinuteSunday]";
             _sqlToExecute += ",[EndMinuteSunday]";
             _sqlToExecute += ",[SundayFacilityBookLength]) ";
+            _sqlToExecute += "OUTPUT INSERTED.Id ";
             _sqlToExecute += "VALUES ";
             _sqlToExecute += "(";
             _sqlToExecute += _dataEngine.GetParametersForQuery();
             _sqlToExecute += ")";
 
-            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+            int insertedRowId = 0;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute, out insertedRowId))
                 throw new Exception("FacilitySchedule - Save failed");
+
+            return insertedRowId;
         }
 
         public void Delete(IFacilitySchedule deleteThis)

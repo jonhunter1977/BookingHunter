@@ -61,20 +61,25 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public void Save(IFacility saveThis)
+        public int Insert(IFacility saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@FacilityBookAheadDays", saveThis.FacilityBookAheadDays.ToString());
 
             _sqlToExecute = "INSERT INTO [dbo].[Facility] ";
             _sqlToExecute += "([FacilityBookAheadDays]) ";
+            _sqlToExecute += "OUTPUT INSERTED.Id ";
             _sqlToExecute += "VALUES ";
             _sqlToExecute += "(";
             _sqlToExecute += _dataEngine.GetParametersForQuery();
             _sqlToExecute += ")";
 
-            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+            int insertedRowId = 0;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute, out insertedRowId))
                 throw new Exception("Facility - Save failed");
+
+            return insertedRowId;
         }
 
         public void Delete(IFacility deleteThis)

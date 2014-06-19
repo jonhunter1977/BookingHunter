@@ -33,7 +33,6 @@ namespace BH.DataAccessLayer.SqlServer
 
             _conn = new SqlConnection(connectionString);
 
-            string connectionStatus;
             DatabaseConnected = OpenConnection(_conn);
         }
 
@@ -208,6 +207,45 @@ namespace BH.DataAccessLayer.SqlServer
                 _command.ExecuteNonQuery();
 
                 
+                InitialiseParameterList();
+
+                return true;
+            }
+            catch (SqlException sqlErr)
+            {
+                throw sqlErr;
+            }
+        }
+
+        /// <summary>
+        /// Runs a TSQL query against the data source and returns the inserted row ID
+        /// </summary>
+        /// <param name="sqlToExecute">The TSQL query to execute</param>
+        /// <returns>True if the TSQL ran OK, false if not</returns>
+        public bool ExecuteSql(string sqlToExecute, out int insertedId)
+        {
+            try
+            {
+                _command = new SqlCommand
+                {
+                    Connection = _conn,
+                    CommandType = CommandType.Text,
+                    CommandText = sqlToExecute,
+                    CommandTimeout = 150
+                };
+
+                //Add any parameters
+                if (this.queryParams != null)
+                {
+                    foreach (SqlParameter param in this.queryParams)
+                    {
+                        _command.Parameters.Add(param);
+                    }
+                }
+
+                insertedId = (int)_command.ExecuteScalar();
+
+
                 InitialiseParameterList();
 
                 return true;

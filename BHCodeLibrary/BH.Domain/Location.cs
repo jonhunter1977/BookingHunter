@@ -1,12 +1,11 @@
 ﻿using System;
-using BH.Domain;
 
-namespace BH.DataAccessLayer
+namespace BH.Domain
 {
     /// <summary>
-    /// Data for a facility
+    /// Data for a customer
     /// </summary>
-    public struct Facility : IFacility, IDbItentity
+    public struct Location : ILocation, IDbItentity
     {
         /// <summary>
         /// Customer Id - identity column
@@ -14,8 +13,8 @@ namespace BH.DataAccessLayer
         public int Id { get; set; }
 
         /// <summary>
-        /// FacilityBookAheadDays name column
+        /// Customer name column
         /// </summary>
-        public int FacilityBookAheadDays { get; set; }
+        public string LocationDescription { get; set; }
     }
 }

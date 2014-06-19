@@ -1,4 +1,4 @@
-﻿namespace BH.Domain
+﻿namespace BH.DataAccessLayer
 {
     /// <summary>
     /// Interface for accessing data

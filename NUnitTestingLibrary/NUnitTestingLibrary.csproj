@@ -44,14 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccessTests\BookingRecordDataAccessTests.cs" />
     <Compile Include="BusinessLayerTests\CustomerBusinessLayerTests.cs" />
-    <Compile Include="DataAccessTests\MemberDataAccessTests.cs" />
-    <Compile Include="DataAccessTests\CourtBookingSheetDataAccessTests.cs" />
-    <Compile Include="DataAccessTests\CourtDataAccessTests.cs" />
-    <Compile Include="DataAccessTests\FacilityDataAccessTests.cs" />
-    <Compile Include="DataAccessTests\LocationDataAccessTests.cs" />
-    <Compile Include="DataAccessTests\CustomerDataAccessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BHDataAccess.cs" />
   </ItemGroup>

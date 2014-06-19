@@ -61,20 +61,25 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public void Save(ICustomer saveThis)
+        public int Insert(ICustomer saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@CustomerName", saveThis.CustomerName);
 
             _sqlToExecute = "INSERT INTO [dbo].[Customer] ";
             _sqlToExecute += "([CustomerName]) ";
+            _sqlToExecute += "OUTPUT INSERTED.Id ";
             _sqlToExecute += "VALUES ";
             _sqlToExecute += "(";
             _sqlToExecute += _dataEngine.GetParametersForQuery();
             _sqlToExecute += ")";
 
-            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+            int insertedRowId = 0;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute, out insertedRowId))
                 throw new Exception("Customer - Save failed");
+
+            return insertedRowId;
         }
 
         public void Delete(ICustomer deleteThis)

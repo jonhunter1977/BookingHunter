@@ -41,18 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataFormatting.cs" />
     <Compile Include="DataAccess.cs" />
-    <Compile Include="Address.cs" />
-    <Compile Include="BookingRecord.cs" />
-    <Compile Include="Court.cs" />
-    <Compile Include="CourtBookingSheet.cs" />
-    <Compile Include="Customer.cs" />
-    <Compile Include="Facility.cs" />
-    <Compile Include="FacilitySchedule.cs" />
+    <Compile Include="DataFormatting.cs" />
+    <Compile Include="IAddressRepository.cs" />
+    <Compile Include="IBookingRecordRepository.cs" />
+    <Compile Include="ICourtBookingSheetRepository.cs" />
+    <Compile Include="ICourtRepository.cs" />
+    <Compile Include="ICustomerRepository.cs" />
+    <Compile Include="IDataAccess.cs" />
+    <Compile Include="IFacilityRepository.cs" />
+    <Compile Include="IFacilityScheduleRepository.cs" />
+    <Compile Include="ILinkRepository.cs" />
+    <Compile Include="ILocationRepository.cs" />
+    <Compile Include="IMemberRepository.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="LinkObjectMaster.cs" />
-    <Compile Include="Location.cs" />
-    <Compile Include="Member.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

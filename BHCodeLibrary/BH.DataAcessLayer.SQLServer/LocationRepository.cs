@@ -61,20 +61,25 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public void Save(ILocation saveThis)
+        public int Insert(ILocation saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@LocationDescription", saveThis.LocationDescription);
 
             _sqlToExecute = "INSERT INTO [dbo].[Location] ";
             _sqlToExecute += "([LocationDescription]) ";
+            _sqlToExecute += "OUTPUT INSERTED.Id ";
             _sqlToExecute += "VALUES ";
             _sqlToExecute += "(";
             _sqlToExecute += _dataEngine.GetParametersForQuery();
             _sqlToExecute += ")";
 
-            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+            int insertedRowId = 0;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute, out insertedRowId))
                 throw new Exception("Location - Save failed");
+
+            return insertedRowId;
         }
 
         public void Delete(ILocation deleteThis)

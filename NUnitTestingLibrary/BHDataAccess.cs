@@ -9,19 +9,19 @@ namespace NUnitTestingLibrary
     [SetUpFixture]
     internal class BHDataAccess
     {
-        private static readonly SqlConnectionStringBuilder _bookingConnection =
+        public static readonly SqlConnectionStringBuilder bookingConnection =
             new SqlConnectionStringBuilder("Data Source=127.0.0.1\\SQLEXPRESS2012;Initial Catalog=sys_booking;User Id=sa;Password=info51987!;");
 
-        private static readonly SqlConnectionStringBuilder _cfgConnection =
+        public static readonly SqlConnectionStringBuilder cfgConnection =
            new SqlConnectionStringBuilder("Data Source=127.0.0.1\\SQLEXPRESS2012;Initial Catalog=sys_cfg;User Id=sa;Password=info51987!;");
 
-        private static readonly SqlConnectionStringBuilder _contactConnection =
+        public static readonly SqlConnectionStringBuilder contactConnection =
             new SqlConnectionStringBuilder("Data Source=127.0.0.1\\SQLEXPRESS2012;Initial Catalog=sys_contact;User Id=sa;Password=info51987!;");
 
-        private static readonly SqlConnectionStringBuilder _linksConnection =
+        public static readonly SqlConnectionStringBuilder linksConnection =
             new SqlConnectionStringBuilder("Data Source=127.0.0.1\\SQLEXPRESS2012;Initial Catalog=sys_links;User Id=sa;Password=info51987!;");
 
-        private static readonly SqlConnectionStringBuilder _memberConnection =
+        public static readonly SqlConnectionStringBuilder memberConnection =
            new SqlConnectionStringBuilder("Data Source=127.0.0.1\\SQLEXPRESS2012;Initial Catalog=sys_member;User Id=sa;Password=info51987!;");
 
         internal static DataAccess _da;
@@ -30,11 +30,11 @@ namespace NUnitTestingLibrary
         {
             _da = new DataAccess
             {
-                BookingConnectionString = _bookingConnection.ConnectionString,
-                ContactConnectionString = _contactConnection.ConnectionString,
-                CfgConnectionString = _cfgConnection.ConnectionString,
-                LinksConnectionString = _linksConnection.ConnectionString,
-                MemberConnectionString = _memberConnection.ConnectionString,
+                BookingConnectionString = bookingConnection.ConnectionString,
+                ContactConnectionString = contactConnection.ConnectionString,
+                CfgConnectionString = cfgConnection.ConnectionString,
+                LinksConnectionString = linksConnection.ConnectionString,
+                MemberConnectionString = memberConnection.ConnectionString,
                 AccessType = DataAccessType.SqlServer
             };
         }

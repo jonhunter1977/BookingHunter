@@ -2,24 +2,8 @@
 using System.Collections.Generic;
 using BH.Domain;
 
-namespace BH.Domain
+namespace BH.DataAccessLayer
 {
-    /// <summary>
-    /// Decribes the link type objects to their Id in the link table
-    /// </summary>
-    public enum LinkType
-    {
-        Customer = 1,
-        Location = 2,
-        Address = 3,
-        Facility = 4,
-        FacilitySchedule = 5,
-        Court = 6,
-        CourtBookingSheet = 7,
-        BookingRecord = 8,
-        Member = 9
-    }
-
     /// <summary>
     /// Interface for interacting with link records in the database
     /// </summary>

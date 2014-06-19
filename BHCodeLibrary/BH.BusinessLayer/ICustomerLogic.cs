@@ -1,5 +1,4 @@
 ﻿using System;
-using BH.DataAccessLayer;
 using BH.Domain;
 
 namespace BH.BusinessLayer
@@ -12,6 +11,6 @@ namespace BH.BusinessLayer
         /// <summary>
         /// Logic to create a new customer
         /// </summary>
-        void CreateCustomer(ICustomer customer, IAddress address);
+        void CreateCustomer(ref Customer customer, ref Address address);
     }
 }

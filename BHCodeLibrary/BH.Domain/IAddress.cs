@@ -1,56 +1,55 @@
 ﻿using System;
-using BH.Domain;
 
-namespace BH.DataAccessLayer
+namespace BH.Domain
 {
     /// <summary>
     /// Data for an address
     /// </summary>
-    public struct Address : IAddress, IDbItentity
+    public interface IAddress : IDbItentity
     {
         /// <summary>
         /// Address Id - identity column
         /// </summary>
-        public int Id { get; set; }    
+        int Id { get; set; }    
 
         /// <summary>
         /// Address line 1
         /// </summary>
-        public string Address1 { get; set; }
+        string Address1 { get; set; }
 
         /// <summary>
         /// Address line 2
         /// </summary>
-        public string Address2 { get; set; }
+        string Address2 { get; set; }
 
         /// <summary>
         /// Address line 3
         /// </summary>
-        public string Address3 { get; set; }
+        string Address3 { get; set; }
 
         /// <summary>
         /// Address other
         /// </summary>
-        public string AddressOther { get; set; }
+        string AddressOther { get; set; }
 
         /// <summary>
         /// Address country
         /// </summary>
-        public string Country { get; set; }
+        string Country { get; set; }
 
         /// <summary>
         /// Address county
         /// </summary>
-        public string County { get; set; }
+        string County { get; set; }
 
         /// <summary>
         /// Address portcode
         /// </summary>
-        public string PostCode { get; set; }
+        string PostCode { get; set; }
 
         /// <summary>
         /// Address town
         /// </summary>
-        public string Town { get; set; }
+        string Town { get; set; }
     }
 }

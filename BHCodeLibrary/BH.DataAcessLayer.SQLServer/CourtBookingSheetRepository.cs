@@ -62,7 +62,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public void Save(ICourtBookingSheet saveThis)
+        public int Insert(ICourtBookingSheet saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@CourtBookingStartTime", saveThis.CourtBookingStartTime.ToString());
@@ -73,13 +73,18 @@ namespace BH.DataAccessLayer.SqlServer
             _sqlToExecute += "([CourtBookingStartTime]";
             _sqlToExecute += ",[CourtBookingEndTime]";
             _sqlToExecute += ",[CourtBookingDate]) ";
+            _sqlToExecute += "OUTPUT INSERTED.Id ";
             _sqlToExecute += "VALUES ";
             _sqlToExecute += "(";
             _sqlToExecute += _dataEngine.GetParametersForQuery();
             _sqlToExecute += ")";
 
-            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+            int insertedRowId = 0;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute, out insertedRowId))
                 throw new Exception("CourtBookingSheet - Save failed");
+
+            return insertedRowId;
         }
 
         public void Delete(ICourtBookingSheet deleteThis)

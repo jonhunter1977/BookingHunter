@@ -1,21 +1,20 @@
 ﻿using System;
-using BH.Domain;
 
-namespace BH.DataAccessLayer
+namespace BH.Domain
 {
     /// <summary>
     /// Data for a customer
     /// </summary>
-    public struct Location : ILocation, IDbItentity
+    public interface ICustomer : IDbItentity
     {
         /// <summary>
         /// Customer Id - identity column
         /// </summary>
-        public int Id { get; set; }
+        int Id { get; set; }
 
         /// <summary>
         /// Customer name column
         /// </summary>
-        public string LocationDescription { get; set; }
+        string CustomerName { get; set; }
     }
 }

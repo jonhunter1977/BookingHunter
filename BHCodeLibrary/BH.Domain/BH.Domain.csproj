@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C8AFB41A-3F15-4D30-A983-A6B0F6603DF8}</ProjectGuid>
+    <ProjectGuid>{88F548F3-F004-4599-A5CA-D33F2BA250E8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.BusinessLayer</RootNamespace>
-    <AssemblyName>BH.BusinessLayer</AssemblyName>
+    <RootNamespace>BH.Domain</RootNamespace>
+    <AssemblyName>BH.Domain</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -40,23 +40,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomerLogic.cs" />
-    <Compile Include="IBusinessLogic.cs" />
-    <Compile Include="ICustomerLogic.cs" />
+    <Compile Include="Address.cs" />
+    <Compile Include="BookingRecord.cs" />
+    <Compile Include="Court.cs" />
+    <Compile Include="CourtBookingSheet.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Facility.cs" />
+    <Compile Include="FacilitySchedule.cs" />
+    <Compile Include="IAddress.cs" />
+    <Compile Include="IBookingRecord.cs" />
+    <Compile Include="ICourt.cs" />
+    <Compile Include="ICourtBookingSheet.cs" />
+    <Compile Include="ICustomer.cs" />
+    <Compile Include="IFacility.cs" />
+    <Compile Include="IFacilitySchedule.cs" />
+    <Compile Include="IDbItentity.cs" />
+    <Compile Include="ILinkObjectMaster.cs" />
+    <Compile Include="ILocation.cs" />
+    <Compile Include="IMember.cs" />
+    <Compile Include="Location.cs" />
+    <Compile Include="Member.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BH.DataAccessLayer\BH.DataAccessLayer.csproj">
-      <Project>{3120ac73-d8ea-4126-aae8-8937461eb0fa}</Project>
-      <Name>BH.DataAccessLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BH.Domain\BH.Domain.csproj">
-      <Project>{88f548f3-f004-4599-a5ca-d33f2ba250e8}</Project>
-      <Name>BH.Domain</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

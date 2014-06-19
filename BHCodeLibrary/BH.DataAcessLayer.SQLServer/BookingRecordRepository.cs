@@ -61,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public void Save(IBookingRecord saveThis)
+        public int Insert(IBookingRecord saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@TimeArrived", saveThis.TimeArrived.ToString());
@@ -76,13 +76,18 @@ namespace BH.DataAccessLayer.SqlServer
             _sqlToExecute += ",[BookingStatus]";
             _sqlToExecute += ",[BookingRecordUniqueId]";
             _sqlToExecute += ",[BookingRecordPin]) ";
+            _sqlToExecute += "OUTPUT INSERTED.Id ";
             _sqlToExecute += "VALUES ";
             _sqlToExecute += "(";
             _sqlToExecute += _dataEngine.GetParametersForQuery();
             _sqlToExecute += ")";
 
-            if (!_dataEngine.ExecuteSql(_sqlToExecute))
-                throw new Exception("BookingRecord - Save failed"); 
+            int insertedRowId = 0;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute, out insertedRowId))
+                throw new Exception("BookingRecord - Save failed");
+
+            return insertedRowId; 
         }
 
         public void Delete(IBookingRecord deleteThis)

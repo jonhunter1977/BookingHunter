@@ -9,8 +9,8 @@ namespace BH.BusinessLayer
     public interface IBusinessLogic
     {
         /// <summary>
-        /// Customer functions
+        /// Access to the database tables
         /// </summary>
-        ICustomerLogic customer { get; }
+        IDataAccess da { get;}
     }
 }

@@ -38,7 +38,7 @@ namespace BH.DataAccessLayer.SqlServer
             return linkObject;
         }
 
-        public void Save(ILinkObjectMaster saveThis)
+        public int Insert(ILinkObjectMaster saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@MasterLinkTypeId", ((int)saveThis.MasterLinkType).ToString());
@@ -51,13 +51,18 @@ namespace BH.DataAccessLayer.SqlServer
             _sqlToExecute += ",[MasterLinkId]";
             _sqlToExecute += ",[ChildLinkTypeId]";
             _sqlToExecute += ",[ChildLinkId]) ";
+            _sqlToExecute += "OUTPUT INSERTED.Id ";
             _sqlToExecute += "VALUES ";
             _sqlToExecute += "(";
             _sqlToExecute += _dataEngine.GetParametersForQuery();
             _sqlToExecute += ")";
 
-            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+            int insertedRowId = 0;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute, out insertedRowId))
                 throw new Exception("Link - Save failed");
+
+            return insertedRowId;
         }
 
         public void Delete(ILinkObjectMaster deleteThis)

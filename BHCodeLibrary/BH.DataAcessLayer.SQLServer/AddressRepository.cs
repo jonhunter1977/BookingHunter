@@ -61,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public void Save(IAddress saveThis)
+        public int Insert(IAddress saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Address1", saveThis.Address1);
@@ -82,13 +82,18 @@ namespace BH.DataAccessLayer.SqlServer
            _sqlToExecute += ",[Country]";
            _sqlToExecute += ",[AddressOther]";
            _sqlToExecute += ",[PostCode]) ";
+           _sqlToExecute += "OUTPUT INSERTED.Id ";
            _sqlToExecute += "VALUES ";
            _sqlToExecute += "(";
            _sqlToExecute += _dataEngine.GetParametersForQuery();
            _sqlToExecute += ")";
-            
-            if (!_dataEngine.ExecuteSql(_sqlToExecute))
-                throw new Exception("Address - Save failed"); 
+
+           int insertedRowId = 0;
+
+           if (!_dataEngine.ExecuteSql(_sqlToExecute, out insertedRowId))
+               throw new Exception("Address - Save failed");
+
+           return insertedRowId;
         }
 
         public void Delete(IAddress deleteThis)

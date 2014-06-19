@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BH.Domain;
 
-namespace BH.Domain
+namespace BH.DataAccessLayer
 {
     /// <summary>
     /// Interface declaring standard read/write database operations for database objects
@@ -29,7 +30,8 @@ namespace BH.Domain
         /// Save a record to the table
         /// </summary>
         /// <param name="saveThis">The object to save</param>
-        void Save(T saveThis);
+        /// <returns>The identity ID of the inserted row</returns>
+        int Insert(T saveThis);
 
         /// <summary>
         /// Update a record to the table
