@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using BH.Domain;
 using BH.DataAccessLayer;
+using System.Collections.Generic;
 
 namespace BH.BusinessLayer
 {
@@ -99,6 +101,23 @@ namespace BH.BusinessLayer
 
                 throw new Exception("Failed to create link record, transaction rolled back");
             }
+        }
+
+        public IEnumerable<Customer> FindCustomerByName(string customerName)
+        {
+            if (customerName.Equals(string.Empty))
+                throw new Exception("Customer name cannot be empty");
+
+            var customerList = _da.Customer.GetAll();
+            var filteredCustomerList = customerList.Where(c => c.CustomerName == customerName);
+
+            return filteredCustomerList;
+        }
+
+        public void UpdateCustomer(ref Customer customer)
+        {
+            //_da.Customer.Update();
+            throw new NotImplementedException();
         }
     }
 }

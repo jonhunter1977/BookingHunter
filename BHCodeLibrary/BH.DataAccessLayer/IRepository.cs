@@ -37,7 +37,7 @@ namespace BH.DataAccessLayer
         /// Update a record to the table
         /// </summary>
         /// <param name="saveThis">The object to update</param>
-        //void Update(T updateThis);
+        void Update(T updateThis);
 
         /// <summary>
         /// Delete a record from the table

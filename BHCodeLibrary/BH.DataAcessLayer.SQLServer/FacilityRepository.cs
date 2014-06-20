@@ -22,9 +22,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Cfg Database query engine is not connected");
         }
 
-        public IList<IFacility> GetAll()
+        public IList<Facility> GetAll()
         {
-            var facilityList = new List<IFacility>();
+            var facilityList = new List<Facility>();
 
             _sqlToExecute = "SELECT * FROM [dbo].[Facility]";
 
@@ -40,7 +40,7 @@ namespace BH.DataAccessLayer.SqlServer
             return facilityList;
         }
 
-        public IFacility GetById(int id)
+        public Facility GetById(int id)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", id.ToString());
@@ -61,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public int Insert(IFacility saveThis)
+        public int Insert(Facility saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@FacilityBookAheadDays", saveThis.FacilityBookAheadDays.ToString());
@@ -82,7 +82,7 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId;
         }
 
-        public void Delete(IFacility deleteThis)
+        public void Delete(Facility deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -97,7 +97,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private IFacility CreateFacilityFromData()
+        private Facility CreateFacilityFromData()
         {
             var facility = new Facility
             {

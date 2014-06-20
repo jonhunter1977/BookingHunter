@@ -22,9 +22,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Member Database query engine is not connected");
         }
 
-        public IList<IMember> GetAll()
+        public IList<Member> GetAll()
         {
-            var memberList = new List<IMember>();
+            var memberList = new List<Member>();
 
             _sqlToExecute = "SELECT * FROM [dbo].[Member]";
 
@@ -33,14 +33,14 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                IMember member = CreateMemberFromData();
+                Member member = CreateMemberFromData();
                 memberList.Add(member);
             }
 
             return memberList;
         }
 
-        public IMember GetById(int id)
+        public Member GetById(int id)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", id.ToString());
@@ -52,7 +52,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             if (_dataEngine.Dr.Read())
             {
-                IMember member = CreateMemberFromData();
+                Member member = CreateMemberFromData();
                 return member;
             }
             else
@@ -61,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public int Insert(IMember saveThis)
+        public int Insert(Member saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@FirstName", saveThis.FirstName);
@@ -90,7 +90,7 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId; 
         }
 
-        public void Delete(IMember deleteThis)
+        public void Delete(Member deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -105,7 +105,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private IMember CreateMemberFromData()
+        private Member CreateMemberFromData()
         {
             var member = new Member
             {

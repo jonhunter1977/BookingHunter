@@ -22,9 +22,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Cfg Database query engine is not connected");
         }
 
-        public IList<IFacilitySchedule> GetAll()
+        public IList<FacilitySchedule> GetAll()
         {
-            var facilityScheduleList = new List<IFacilitySchedule>();
+            var facilityScheduleList = new List<FacilitySchedule>();
 
             _sqlToExecute = "SELECT * FROM [dbo].[FacilitySchedule]";
 
@@ -33,14 +33,14 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                IFacilitySchedule facilitySchedule = CreateFacilityScheduleFromData();
+                FacilitySchedule facilitySchedule = CreateFacilityScheduleFromData();
                 facilityScheduleList.Add(facilitySchedule);
             }
 
             return facilityScheduleList;
         }
 
-        public IFacilitySchedule GetById(int id)
+        public FacilitySchedule GetById(int id)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", id.ToString());
@@ -52,7 +52,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             if (_dataEngine.Dr.Read())
             {
-                IFacilitySchedule facilitySchedule = CreateFacilityScheduleFromData();
+                FacilitySchedule facilitySchedule = CreateFacilityScheduleFromData();
                 return facilitySchedule;
             }
             else
@@ -61,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public int Insert(IFacilitySchedule saveThis)
+        public int Insert(FacilitySchedule saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@FacilityBookAheadDays", saveThis.FacilityScheduleDescription);
@@ -124,7 +124,7 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId;
         }
 
-        public void Delete(IFacilitySchedule deleteThis)
+        public void Delete(FacilitySchedule deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -139,7 +139,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private IFacilitySchedule CreateFacilityScheduleFromData()
+        private FacilitySchedule CreateFacilityScheduleFromData()
         {
             var facilitySchedule = new FacilitySchedule
             {

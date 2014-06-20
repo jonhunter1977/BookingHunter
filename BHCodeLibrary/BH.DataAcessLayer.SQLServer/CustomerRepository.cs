@@ -22,9 +22,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Cfg Database query engine is not connected");
         }
 
-        public IList<ICustomer> GetAll()
+        public IList<Customer> GetAll()
         {
-            var customerList = new List<ICustomer>();
+            var customerList = new List<Customer>();
 
             _sqlToExecute = "SELECT * FROM [dbo].[Customer]";
 
@@ -33,14 +33,14 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                ICustomer customer = CreateCustomerFromData();
+                Customer customer = CreateCustomerFromData();
                 customerList.Add(customer);
             }
 
             return customerList;
         }
 
-        public ICustomer GetById(int id)
+        public Customer GetById(int id)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", id.ToString());
@@ -52,7 +52,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             if (_dataEngine.Dr.Read())
             {
-                ICustomer customer = CreateCustomerFromData();
+                Customer customer = CreateCustomerFromData();
                 return customer;
             }
             else
@@ -61,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public int Insert(ICustomer saveThis)
+        public int Insert(Customer saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@CustomerName", saveThis.CustomerName);
@@ -82,7 +82,7 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId;
         }
 
-        public void Delete(ICustomer deleteThis)
+        public void Delete(Customer deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -97,7 +97,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private ICustomer CreateCustomerFromData()
+        private Customer CreateCustomerFromData()
         {
             var customer = new Customer
             {

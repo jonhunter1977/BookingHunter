@@ -23,9 +23,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Booking Database query engine is not connected");
         }
 
-        public IList<ICourtBookingSheet> GetAll()
+        public IList<CourtBookingSheet> GetAll()
         {
-            var courtBookingSheetList = new List<ICourtBookingSheet>();
+            var courtBookingSheetList = new List<CourtBookingSheet>();
 
             _sqlToExecute = "SELECT * FROM [dbo].[CourtBookingSheet]";
 
@@ -34,14 +34,14 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                ICourtBookingSheet courtBookingSheet = CreateCourtBookingSheetRecordFromData();
+                CourtBookingSheet courtBookingSheet = CreateCourtBookingSheetRecordFromData();
                 courtBookingSheetList.Add(courtBookingSheet);
             }
 
             return courtBookingSheetList;
         }
 
-        public ICourtBookingSheet GetById(int id)
+        public CourtBookingSheet GetById(int id)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", id.ToString());
@@ -53,7 +53,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             if (_dataEngine.Dr.Read())
             {
-                ICourtBookingSheet courtBookingSheet = CreateCourtBookingSheetRecordFromData();
+                CourtBookingSheet courtBookingSheet = CreateCourtBookingSheetRecordFromData();
                 return courtBookingSheet;
             }
             else
@@ -62,7 +62,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public int Insert(ICourtBookingSheet saveThis)
+        public int Insert(CourtBookingSheet saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@CourtBookingStartTime", saveThis.CourtBookingStartTime.ToString());
@@ -87,7 +87,7 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId;
         }
 
-        public void Delete(ICourtBookingSheet deleteThis)
+        public void Delete(CourtBookingSheet deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -102,7 +102,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private ICourtBookingSheet CreateCourtBookingSheetRecordFromData()
+        private CourtBookingSheet CreateCourtBookingSheetRecordFromData()
         {
             var courtBookingSheet = new CourtBookingSheet
             {

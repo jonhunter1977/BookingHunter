@@ -22,9 +22,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Cfg Database query engine is not connected");
         }
 
-        public IList<ILocation> GetAll()
+        public IList<Location> GetAll()
         {
-            var locationList = new List<ILocation>();
+            var locationList = new List<Location>();
 
             _sqlToExecute = "SELECT * FROM [dbo].[Location]";
 
@@ -40,7 +40,7 @@ namespace BH.DataAccessLayer.SqlServer
             return locationList;
         }
 
-        public ILocation GetById(int id)
+        public Location GetById(int id)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", id.ToString());
@@ -61,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public int Insert(ILocation saveThis)
+        public int Insert(Location saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@LocationDescription", saveThis.LocationDescription);
@@ -82,7 +82,7 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId;
         }
 
-        public void Delete(ILocation deleteThis)
+        public void Delete(Location deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -97,7 +97,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private ILocation CreateLocationFromData()
+        private Location CreateLocationFromData()
         {
             var location = new Location
             {

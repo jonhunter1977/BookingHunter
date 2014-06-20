@@ -22,9 +22,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Cfg Database query engine is not connected");
         }
 
-        public IList<ICourt> GetAll()
+        public IList<Court> GetAll()
         {
-            var courtList = new List<ICourt>();
+            var courtList = new List<Court>();
 
             _sqlToExecute = "SELECT * FROM [dbo].[Court]";
 
@@ -33,14 +33,14 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                ICourt court = CreateCourtFromData();
+                Court court = CreateCourtFromData();
                 courtList.Add(court);
             }
 
             return courtList;
         }
 
-        public ICourt GetById(int id)
+        public Court GetById(int id)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", id.ToString());
@@ -52,7 +52,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             if (_dataEngine.Dr.Read())
             {
-                ICourt court = CreateCourtFromData();
+                Court court = CreateCourtFromData();
                 return court;
             }
             else
@@ -61,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public int Insert(ICourt saveThis)
+        public int Insert(Court saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@CourtDescription", saveThis.CourtDescription);
@@ -82,7 +82,7 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId;
         }
 
-        public void Delete(ICourt deleteThis)
+        public void Delete(Court deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -97,7 +97,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private ICourt CreateCourtFromData()
+        private Court CreateCourtFromData()
         {
             var court = new Court
             {

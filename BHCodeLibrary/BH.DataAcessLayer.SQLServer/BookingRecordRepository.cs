@@ -22,9 +22,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Booking Database query engine is not connected");
         }
 
-        public IList<IBookingRecord> GetAll()
+        public IList<BookingRecord> GetAll()
         {
-            var bookingRecordList = new List<IBookingRecord>();
+            var bookingRecordList = new List<BookingRecord>();
 
             _sqlToExecute = "SELECT * FROM [dbo].[BookingRecord]";
 
@@ -33,14 +33,14 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                IBookingRecord bookingRecord = CreateBookingRecordFromData();
+                BookingRecord bookingRecord = CreateBookingRecordFromData();
                 bookingRecordList.Add(bookingRecord);
             }
 
             return bookingRecordList;
         }
 
-        public IBookingRecord GetById(int id)
+        public BookingRecord GetById(int id)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", id.ToString());
@@ -52,7 +52,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             if (_dataEngine.Dr.Read())
             {
-                IBookingRecord bookingRecord = CreateBookingRecordFromData();
+                BookingRecord bookingRecord = CreateBookingRecordFromData();
                 return bookingRecord;
             }
             else
@@ -61,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public int Insert(IBookingRecord saveThis)
+        public int Insert(BookingRecord saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@TimeArrived", saveThis.TimeArrived.ToString());
@@ -90,7 +90,7 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId; 
         }
 
-        public void Delete(IBookingRecord deleteThis)
+        public void Delete(BookingRecord deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -101,7 +101,7 @@ namespace BH.DataAccessLayer.SqlServer
                 throw new Exception("BookingRecord - Delete failed"); 
         }
 
-        public IBookingRecord GetByBookingRecordUniqueId(int BookingRecordUniqueId)
+        public BookingRecord GetByBookingRecordUniqueId(int BookingRecordUniqueId)
         {
             _sqlToExecute = "SELECT * FROM [dbo].[BookingRecord] WHERE BookingRecordUniqueId = '" + BookingRecordUniqueId.ToString() + "'";
 
@@ -110,7 +110,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             if (_dataEngine.Dr.Read())
             {
-                IBookingRecord bookingRecord = CreateBookingRecordFromData();
+                BookingRecord bookingRecord = CreateBookingRecordFromData();
                 return bookingRecord;
             }
             else
@@ -123,7 +123,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private IBookingRecord CreateBookingRecordFromData()
+        private BookingRecord CreateBookingRecordFromData()
         {
             var bookingRecord = new BookingRecord
             {

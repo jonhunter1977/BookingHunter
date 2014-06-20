@@ -22,9 +22,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Contact Database query engine is not connected");
         }
 
-        public IList<IAddress> GetAll()
+        public IList<Address> GetAll()
         {
-            var addressList = new List<IAddress>();
+            var addressList = new List<Address>();
 
             _sqlToExecute = "SELECT * FROM [dbo].[Address]";
 
@@ -33,14 +33,14 @@ namespace BH.DataAccessLayer.SqlServer
 
             while (_dataEngine.Dr.Read())
             {
-                IAddress address = CreateAddressFromData();
+                Address address = CreateAddressFromData();
                 addressList.Add(address);
             }
 
             return addressList;
         }
 
-        public IAddress GetById(int id)
+        public Address GetById(int id)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", id.ToString());
@@ -52,7 +52,7 @@ namespace BH.DataAccessLayer.SqlServer
 
             if (_dataEngine.Dr.Read())
             {
-                IAddress address = CreateAddressFromData();
+                Address address = CreateAddressFromData();
                 return address;
             }
             else
@@ -61,7 +61,7 @@ namespace BH.DataAccessLayer.SqlServer
             }            
         }
 
-        public int Insert(IAddress saveThis)
+        public int Insert(Address saveThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Address1", saveThis.Address1);
@@ -96,7 +96,7 @@ namespace BH.DataAccessLayer.SqlServer
            return insertedRowId;
         }
 
-        public void Delete(IAddress deleteThis)
+        public void Delete(Address deleteThis)
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@Id", deleteThis.Id.ToString());
@@ -111,7 +111,7 @@ namespace BH.DataAccessLayer.SqlServer
         /// Creates the object from the data returned from the database
         /// </summary>
         /// <returns></returns>
-        private IAddress CreateAddressFromData()
+        private Address CreateAddressFromData()
         {
             var address = new Address
             {
