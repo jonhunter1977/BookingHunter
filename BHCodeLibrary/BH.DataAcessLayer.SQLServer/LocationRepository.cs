@@ -82,6 +82,19 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId;
         }
 
+        public void Update(Location saveThis)
+        {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@LocationDescription", saveThis.LocationDescription);
+
+            _sqlToExecute = "UPDATE [dbo].[Location] SET ";
+            _sqlToExecute += "([LocationDescription] = @LocationDescription) ";
+            _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+                throw new Exception("Location - Update failed");
+        }
+
         public void Delete(Location deleteThis)
         {
             _dataEngine.InitialiseParameterList();

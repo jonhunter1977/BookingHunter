@@ -82,6 +82,19 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId;
         }
 
+        public void Update(Court saveThis)
+        {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@CourtDescription", saveThis.CourtDescription);
+
+            _sqlToExecute = "UPDATE [dbo].[Court] SET ";
+            _sqlToExecute += "([CourtDescription] = @CourtDescription) ";
+            _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+                throw new Exception("Court - Update failed");
+        }
+
         public void Delete(Court deleteThis)
         {
             _dataEngine.InitialiseParameterList();

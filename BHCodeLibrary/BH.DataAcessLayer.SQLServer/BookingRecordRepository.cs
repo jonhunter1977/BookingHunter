@@ -90,6 +90,27 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId; 
         }
 
+        public void Update(BookingRecord saveThis)
+        {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@TimeArrived", saveThis.TimeArrived.ToString());
+            _dataEngine.AddParameter("@ArrivalRegistrationMethod", ((int)saveThis.ArrivalRegistrationMethod).ToString());
+            _dataEngine.AddParameter("@BookingStatus", ((int)saveThis.BookingStatus).ToString());
+            _dataEngine.AddParameter("@BookingRecordUniqueId", saveThis.BookingRecordUniqueId.ToString());
+            _dataEngine.AddParameter("@BookingRecordPin", saveThis.BookingRecordPin.ToString());
+
+            _sqlToExecute = "UPDATE [dbo].[BookingRecord] SET ";
+            _sqlToExecute += "([TimeArrived] = @TimeArrived";
+            _sqlToExecute += ",[ArrivalRegistrationMethod] = @ArrivalRegistrationMethod";
+            _sqlToExecute += ",[BookingStatus] = @BookingStatus";
+            _sqlToExecute += ",[BookingRecordUniqueId] = @BookingRecordUniqueId";
+            _sqlToExecute += ",[BookingRecordPin] = @BookingRecordPin) ";
+            _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+                throw new Exception("BookingRecord - Update failed");
+        }
+
         public void Delete(BookingRecord deleteThis)
         {
             _dataEngine.InitialiseParameterList();

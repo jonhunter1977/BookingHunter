@@ -82,6 +82,19 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId;
         }
 
+        public void Update(Customer saveThis)
+        {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@CustomerName", saveThis.CustomerName);
+
+            _sqlToExecute = "UPDATE [dbo].[Customer] SET ";
+            _sqlToExecute += "([CustomerName] = @CustomerName) ";
+            _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+                throw new Exception("Customer - Update failed");
+        }
+
         public void Delete(Customer deleteThis)
         {
             _dataEngine.InitialiseParameterList();

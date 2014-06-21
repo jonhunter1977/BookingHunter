@@ -82,6 +82,19 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId;
         }
 
+        public void Update(Facility saveThis)
+        {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@FacilityBookAheadDays", saveThis.FacilityBookAheadDays.ToString());
+
+            _sqlToExecute = "UPDATE [dbo].[Facility] SET ";
+            _sqlToExecute += "([FacilityBookAheadDays] = @FacilityBookAheadDays) ";
+            _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+                throw new Exception("Facility - Update failed");
+        }
+
         public void Delete(Facility deleteThis)
         {
             _dataEngine.InitialiseParameterList();

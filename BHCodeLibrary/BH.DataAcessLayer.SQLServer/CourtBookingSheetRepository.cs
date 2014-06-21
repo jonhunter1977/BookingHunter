@@ -87,6 +87,23 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId;
         }
 
+        public void Update(CourtBookingSheet saveThis)
+        {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@CourtBookingStartTime", saveThis.CourtBookingStartTime.ToString());
+            _dataEngine.AddParameter("@CourtBookingEndTime", saveThis.CourtBookingEndTime.ToString());
+            _dataEngine.AddParameter("@CourtBookingDate", DataFormatting.FormatDateTime(saveThis.CourtBookingDate));
+
+            _sqlToExecute = "UPDATE [dbo].[CourtBookingSheet] SET ";
+            _sqlToExecute += "([CourtBookingStartTime] = @CourtBookingStartTime";
+            _sqlToExecute += ",[CourtBookingEndTime] = @CourtBookingEndTime";
+            _sqlToExecute += ",[CourtBookingDate] = CourtBookingDate) ";
+            _sqlToExecute += "WHERE [Id] = " + saveThis.Id; ;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+                throw new Exception("CourtBookingSheet - Update failed");
+        }
+
         public void Delete(CourtBookingSheet deleteThis)
         {
             _dataEngine.InitialiseParameterList();

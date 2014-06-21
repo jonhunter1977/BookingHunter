@@ -96,6 +96,33 @@ namespace BH.DataAccessLayer.SqlServer
            return insertedRowId;
         }
 
+        public void Update(Address saveThis)
+        {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@Address1", saveThis.Address1);
+            _dataEngine.AddParameter("@Address2", saveThis.Address2);
+            _dataEngine.AddParameter("@Address3", saveThis.Address3);
+            _dataEngine.AddParameter("@Town", saveThis.Town);
+            _dataEngine.AddParameter("@County", saveThis.County);
+            _dataEngine.AddParameter("@Country", saveThis.Country);
+            _dataEngine.AddParameter("@AddressOther", saveThis.AddressOther);
+            _dataEngine.AddParameter("@PostCode", saveThis.PostCode);
+
+            _sqlToExecute = "UPDATE [dbo].[Address] SET ";
+            _sqlToExecute += "([Address1] = @Address1";
+            _sqlToExecute += ",[Address2] = @Address2";
+            _sqlToExecute += ",[Address3] = @Address3";
+            _sqlToExecute += ",[Town] = @Town";
+            _sqlToExecute += ",[County] = @County";
+            _sqlToExecute += ",[Country] = @Country";
+            _sqlToExecute += ",[AddressOther] = @AddressOther";
+            _sqlToExecute += ",[PostCode]) = PostCode ";
+            _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+                throw new Exception("Address - Update failed");
+        }
+
         public void Delete(Address deleteThis)
         {
             _dataEngine.InitialiseParameterList();

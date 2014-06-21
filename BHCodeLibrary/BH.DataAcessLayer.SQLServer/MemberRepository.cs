@@ -90,6 +90,27 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId; 
         }
 
+        public void Update(Member saveThis)
+        {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@FirstName", saveThis.FirstName);
+            _dataEngine.AddParameter("@LastName", saveThis.LastName);
+            _dataEngine.AddParameter("@EmailAddress", saveThis.EmailAddress);
+            _dataEngine.AddParameter("@MobileNumber", saveThis.MobileNumber);
+            _dataEngine.AddParameter("@MembershipNumber", saveThis.MembershipNumber);
+
+            _sqlToExecute = "UPDATE [dbo].[Member] SET ";
+            _sqlToExecute += "([FirstName] = @FirstName";
+            _sqlToExecute += ",[LastName] = @LastName";
+            _sqlToExecute += ",[EmailAddress] = @EmailAddress";
+            _sqlToExecute += ",[MobileNumber] = @MobileNumber";
+            _sqlToExecute += ",[MembershipNumber] = @MembershipNumber) ";
+            _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+                throw new Exception("Member - Update failed");
+        }
+
         public void Delete(Member deleteThis)
         {
             _dataEngine.InitialiseParameterList();

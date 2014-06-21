@@ -65,6 +65,25 @@ namespace BH.DataAccessLayer.SqlServer
             return insertedRowId;
         }
 
+        public void Update(LinkObjectMaster saveThis)
+        {
+            _dataEngine.InitialiseParameterList();
+            _dataEngine.AddParameter("@MasterLinkTypeId", ((int)saveThis.MasterLinkType).ToString());
+            _dataEngine.AddParameter("@MasterLinkId", saveThis.MasterLinkId.ToString());
+            _dataEngine.AddParameter("@ChildLinkTypeId", ((int)saveThis.ChildLinkType).ToString());
+            _dataEngine.AddParameter("@ChildLinkId", saveThis.ChildLinkId.ToString());
+
+            _sqlToExecute = "UPDATE [dbo].[LinkObjectMaster] SET ";
+            _sqlToExecute += "([MasterLinkTypeId] = @MasterLinkTypeId";
+            _sqlToExecute += ",[MasterLinkId] = @MasterLinkId";
+            _sqlToExecute += ",[ChildLinkTypeId] = @ChildLinkTypeId";
+            _sqlToExecute += ",[ChildLinkId] = @ChildLinkId) ";
+            _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
+
+            if (!_dataEngine.ExecuteSql(_sqlToExecute))
+                throw new Exception("Link - Update failed");
+        }
+
         public void Delete(LinkObjectMaster deleteThis)
         {
             _dataEngine.InitialiseParameterList();
