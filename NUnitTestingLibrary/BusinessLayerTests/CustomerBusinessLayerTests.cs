@@ -62,7 +62,7 @@ namespace NUnitTestingLibrary
                 BHDataAccess.linksConnection.ConnectionString
             );
 
-            var customerList = cl.FindCustomerByName("Neston Cricket Club");
+            var customerList = cl.Search(c => c.CustomerName == "Neston Cricket Club");
             var customerCount = customerList.Count(c => c.CustomerName == "Neston Cricket Club");
 
             if (customerCount > 0)
@@ -82,7 +82,7 @@ namespace NUnitTestingLibrary
                 BHDataAccess.linksConnection.ConnectionString
             );
 
-            var customerList = cl.FindCustomerByName("Neston Cricket Club");
+            var customerList = cl.Search(c => c.CustomerName == "Neston Cricket Club");
             var customer = customerList.First(c => c.CustomerName == "Neston Cricket Club");
 
             customer.CustomerName = "Neston Squash Club";

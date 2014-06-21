@@ -6,7 +6,7 @@ namespace BH.BusinessLayer
     /// <summary>
     /// Customer business logic
     /// </summary>
-    public interface ICustomerLogic : IBusinessLogic<Customer>
+    public interface ILocationLogic : IBusinessLogic<Location>
     {
         /// <summary>
         /// Logic to create a new customer

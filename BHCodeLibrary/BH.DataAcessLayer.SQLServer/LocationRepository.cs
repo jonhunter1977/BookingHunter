@@ -88,7 +88,7 @@ namespace BH.DataAccessLayer.SqlServer
             _dataEngine.AddParameter("@LocationDescription", saveThis.LocationDescription);
 
             _sqlToExecute = "UPDATE [dbo].[Location] SET ";
-            _sqlToExecute += "([LocationDescription] = @LocationDescription) ";
+            _sqlToExecute += "[LocationDescription] = @LocationDescription ";
             _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))

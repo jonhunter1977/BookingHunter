@@ -65,9 +65,11 @@ namespace BH.DataAccessLayer.SqlServer
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@CustomerName", saveThis.CustomerName);
+            _dataEngine.AddParameter("@Active", saveThis.Active == true ? "1" : "0");
 
             _sqlToExecute = "INSERT INTO [dbo].[Customer] ";
-            _sqlToExecute += "([CustomerName]) ";
+            _sqlToExecute += "([CustomerName] ";
+            _sqlToExecute += ",[Active]) "; 
             _sqlToExecute += "OUTPUT INSERTED.Id ";
             _sqlToExecute += "VALUES ";
             _sqlToExecute += "(";
@@ -86,9 +88,11 @@ namespace BH.DataAccessLayer.SqlServer
         {
             _dataEngine.InitialiseParameterList();
             _dataEngine.AddParameter("@CustomerName", saveThis.CustomerName);
+            _dataEngine.AddParameter("@Active", saveThis.Active == true ? "1" : "0");
 
             _sqlToExecute = "UPDATE [dbo].[Customer] SET ";
-            _sqlToExecute += "([CustomerName] = @CustomerName) ";
+            _sqlToExecute += "[CustomerName] = @CustomerName ";
+            _sqlToExecute += ",[Active] = @Active ";
             _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
@@ -115,7 +119,8 @@ namespace BH.DataAccessLayer.SqlServer
             var customer = new Customer
             {
                 Id = int.Parse(_dataEngine.Dr["Id"].ToString()),
-                CustomerName = _dataEngine.Dr["CustomerName"].ToString()
+                CustomerName = _dataEngine.Dr["CustomerName"].ToString(),
+                Active = _dataEngine.Dr["Active"].ToString() == "0" ? false : true
             };
 
             return customer;

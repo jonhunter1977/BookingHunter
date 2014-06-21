@@ -109,14 +109,14 @@ namespace BH.DataAccessLayer.SqlServer
             _dataEngine.AddParameter("@PostCode", saveThis.PostCode);
 
             _sqlToExecute = "UPDATE [dbo].[Address] SET ";
-            _sqlToExecute += "([Address1] = @Address1";
+            _sqlToExecute += "[Address1] = @Address1";
             _sqlToExecute += ",[Address2] = @Address2";
             _sqlToExecute += ",[Address3] = @Address3";
             _sqlToExecute += ",[Town] = @Town";
             _sqlToExecute += ",[County] = @County";
             _sqlToExecute += ",[Country] = @Country";
             _sqlToExecute += ",[AddressOther] = @AddressOther";
-            _sqlToExecute += ",[PostCode]) = PostCode ";
+            _sqlToExecute += ",[PostCode] = PostCode ";
             _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))

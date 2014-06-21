@@ -95,9 +95,9 @@ namespace BH.DataAccessLayer.SqlServer
             _dataEngine.AddParameter("@CourtBookingDate", DataFormatting.FormatDateTime(saveThis.CourtBookingDate));
 
             _sqlToExecute = "UPDATE [dbo].[CourtBookingSheet] SET ";
-            _sqlToExecute += "([CourtBookingStartTime] = @CourtBookingStartTime";
+            _sqlToExecute += "[CourtBookingStartTime] = @CourtBookingStartTime";
             _sqlToExecute += ",[CourtBookingEndTime] = @CourtBookingEndTime";
-            _sqlToExecute += ",[CourtBookingDate] = CourtBookingDate) ";
+            _sqlToExecute += ",[CourtBookingDate] = CourtBookingDate ";
             _sqlToExecute += "WHERE [Id] = " + saveThis.Id; ;
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))

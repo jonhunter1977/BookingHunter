@@ -74,10 +74,10 @@ namespace BH.DataAccessLayer.SqlServer
             _dataEngine.AddParameter("@ChildLinkId", saveThis.ChildLinkId.ToString());
 
             _sqlToExecute = "UPDATE [dbo].[LinkObjectMaster] SET ";
-            _sqlToExecute += "([MasterLinkTypeId] = @MasterLinkTypeId";
+            _sqlToExecute += "[MasterLinkTypeId] = @MasterLinkTypeId";
             _sqlToExecute += ",[MasterLinkId] = @MasterLinkId";
             _sqlToExecute += ",[ChildLinkTypeId] = @ChildLinkTypeId";
-            _sqlToExecute += ",[ChildLinkId] = @ChildLinkId) ";
+            _sqlToExecute += ",[ChildLinkId] = @ChildLinkId ";
             _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))

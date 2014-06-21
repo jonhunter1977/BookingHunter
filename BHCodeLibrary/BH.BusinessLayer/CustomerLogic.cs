@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace BH.BusinessLayer
 {
-    public class CustomerLogic : ICustomerLogic, IBusinessLogic
+    public class CustomerLogic : ICustomerLogic
     {
         private DataAccessType _accessType;
         private string _cfgConnectionString;
@@ -41,9 +41,6 @@ namespace BH.BusinessLayer
             };
         }
 
-        /// <summary>
-        /// Access to the database
-        /// </summary>
         public IDataAccess da
         {
             get 
@@ -103,21 +100,30 @@ namespace BH.BusinessLayer
             }
         }
 
-        public IEnumerable<Customer> FindCustomerByName(string customerName)
-        {
-            if (customerName.Equals(string.Empty))
-                throw new Exception("Customer name cannot be empty");
-
-            var customerList = _da.Customer.GetAll();
-            var filteredCustomerList = customerList.Where(c => c.CustomerName == customerName);
-
-            return filteredCustomerList;
-        }
-
         public void UpdateCustomer(ref Customer customer)
         {
-            //_da.Customer.Update();
-            throw new NotImplementedException();
+            _da.Customer.Update(customer);            
+        }
+
+        public Customer FindCustomerById(int id)
+        {
+            try
+            {
+                var customer = _da.Customer.GetById(id);
+                return customer;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Customer id " + id.ToString() + " does not exist");
+            }           
+        }
+
+        public IEnumerable<Customer> Search(Func<Customer, bool> searchCriteria)
+        {
+            var customerList = _da.Customer.GetAll();
+            var filteredCustomerList = customerList.Where(searchCriteria);
+
+            return filteredCustomerList;
         }
     }
 }

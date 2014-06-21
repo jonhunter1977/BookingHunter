@@ -16,5 +16,10 @@ namespace BH.Domain
         /// Customer name column
         /// </summary>
         public string CustomerName { get; set; }
+
+        /// <summary>
+        /// Active name column
+        /// </summary>
+        public bool Active { get; set; }
     }
 }

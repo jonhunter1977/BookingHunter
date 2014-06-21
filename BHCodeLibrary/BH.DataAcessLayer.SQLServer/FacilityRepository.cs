@@ -88,7 +88,7 @@ namespace BH.DataAccessLayer.SqlServer
             _dataEngine.AddParameter("@FacilityBookAheadDays", saveThis.FacilityBookAheadDays.ToString());
 
             _sqlToExecute = "UPDATE [dbo].[Facility] SET ";
-            _sqlToExecute += "([FacilityBookAheadDays] = @FacilityBookAheadDays) ";
+            _sqlToExecute += "[FacilityBookAheadDays] = @FacilityBookAheadDays ";
             _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))

@@ -100,11 +100,11 @@ namespace BH.DataAccessLayer.SqlServer
             _dataEngine.AddParameter("@BookingRecordPin", saveThis.BookingRecordPin.ToString());
 
             _sqlToExecute = "UPDATE [dbo].[BookingRecord] SET ";
-            _sqlToExecute += "([TimeArrived] = @TimeArrived";
+            _sqlToExecute += "[TimeArrived] = @TimeArrived";
             _sqlToExecute += ",[ArrivalRegistrationMethod] = @ArrivalRegistrationMethod";
             _sqlToExecute += ",[BookingStatus] = @BookingStatus";
             _sqlToExecute += ",[BookingRecordUniqueId] = @BookingRecordUniqueId";
-            _sqlToExecute += ",[BookingRecordPin] = @BookingRecordPin) ";
+            _sqlToExecute += ",[BookingRecordPin] = @BookingRecordPin ";
             _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))

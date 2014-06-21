@@ -151,7 +151,7 @@ namespace BH.DataAccessLayer.SqlServer
             _dataEngine.AddParameter("@SundayFacilityBookLength", saveThis.SundayFacilityBookLength.ToString());
 
             _sqlToExecute = "UPDATE [dbo].[FacilitySchedule] SET ";
-            _sqlToExecute += "([FacilityScheduleDescription] = @FacilityBookAheadDays";
+            _sqlToExecute += "[FacilityScheduleDescription] = @FacilityBookAheadDays";
             _sqlToExecute += ",[StartMinuteMonday] = @StartMinuteMonday";
             _sqlToExecute += ",[EndMinuteMonday] = @EndMinuteMonday";
             _sqlToExecute += ",[MondayFacilityBookLength] = @MondayFacilityBookLength";
@@ -172,7 +172,7 @@ namespace BH.DataAccessLayer.SqlServer
             _sqlToExecute += ",[SaturdayFacilityBookLength] = @SaturdayFacilityBookLength";
             _sqlToExecute += ",[StartMinuteSunday] = @StartMinuteSunday";
             _sqlToExecute += ",[EndMinuteSunday] = @EndMinuteSunday";
-            _sqlToExecute += ",[SundayFacilityBookLength] = @SundayFacilityBookLength) ";
+            _sqlToExecute += ",[SundayFacilityBookLength] = @SundayFacilityBookLength ";
             _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))

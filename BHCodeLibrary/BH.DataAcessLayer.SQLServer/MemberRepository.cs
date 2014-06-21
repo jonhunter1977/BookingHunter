@@ -100,11 +100,11 @@ namespace BH.DataAccessLayer.SqlServer
             _dataEngine.AddParameter("@MembershipNumber", saveThis.MembershipNumber);
 
             _sqlToExecute = "UPDATE [dbo].[Member] SET ";
-            _sqlToExecute += "([FirstName] = @FirstName";
+            _sqlToExecute += "[FirstName] = @FirstName";
             _sqlToExecute += ",[LastName] = @LastName";
             _sqlToExecute += ",[EmailAddress] = @EmailAddress";
             _sqlToExecute += ",[MobileNumber] = @MobileNumber";
-            _sqlToExecute += ",[MembershipNumber] = @MembershipNumber) ";
+            _sqlToExecute += ",[MembershipNumber] = @MembershipNumber ";
             _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))

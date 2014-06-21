@@ -88,7 +88,7 @@ namespace BH.DataAccessLayer.SqlServer
             _dataEngine.AddParameter("@CourtDescription", saveThis.CourtDescription);
 
             _sqlToExecute = "UPDATE [dbo].[Court] SET ";
-            _sqlToExecute += "([CourtDescription] = @CourtDescription) ";
+            _sqlToExecute += "[CourtDescription] = @CourtDescription ";
             _sqlToExecute += "WHERE [Id] = " + saveThis.Id;
 
             if (!_dataEngine.ExecuteSql(_sqlToExecute))
