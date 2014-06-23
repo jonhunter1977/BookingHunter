@@ -5,7 +5,7 @@ namespace BH.Domain
     /// <summary>
     /// Data for an address
     /// </summary>
-    public struct Address : IAddress, IDbItentity
+    public class Address : IAddress, IDbItentity
     {
         /// <summary>
         /// Address Id - identity column

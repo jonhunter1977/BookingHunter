@@ -40,6 +40,12 @@ namespace BH.DataAccessLayer.SqlServer
             return customerList;
         }
 
+        /// <summary>
+        /// Returns a customer by ID
+        /// </summary>
+        /// <param name="id">The ID to search for</param>
+        /// <returns>A customer record</returns>
+        /// <exception cref="System.Exception">If no customer ID is found</exception>
         public Customer GetById(int id)
         {
             _dataEngine.InitialiseParameterList();

@@ -9,10 +9,10 @@ using BH.Domain;
 namespace NUnitTestingLibrary
 {
     [TestFixture]
-    public class CustomerBusinessLayerTests
+    public class BusinessLayerTests
     {
         [Test]
-        public void CreateCustomer()
+        public void CreateCustomerAndLocation()
         {
             var customer = new Customer
             {
@@ -38,17 +38,42 @@ namespace NUnitTestingLibrary
             try
             {
                 cl.CreateCustomer(ref customer, ref address);
+
+                if (customer.Id == 0)
+                    Assert.Fail("Customer Id did not get set, it is 0");
+
+                if (address.Id == 0)
+                    Assert.Fail("Address Id did not get set, it is 0");
             }
             catch(Exception ex)
             {
                 Assert.Fail("Create customer threw an exception : " + ex.Message);
             }
 
-            if (customer.Id == 0)
-                Assert.Fail("Customer Id did not get set, it is 0");
+            var location = new Location()
+            {
+                LocationDescription = "Neston Squash Club"
+            };
 
-            if(address.Id == 0)
-                Assert.Fail("Address Id did not get set, it is 0");    
+            var ll = new LocationLogic
+            (
+                DataAccessType.SqlServer,
+                BHDataAccess.cfgConnection.ConnectionString,
+                BHDataAccess.contactConnection.ConnectionString,
+                BHDataAccess.linksConnection.ConnectionString
+            );
+
+            try
+            {
+                ll.CreateLocation(customer.Id, ref location, ref address);
+
+                if (location.Id == 0)
+                    Assert.Fail("Location Id did not get set, it is 0");
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("CreateLocation threw an error : " + ex.Message);
+            }
         }
 
         [Test]
@@ -89,5 +114,7 @@ namespace NUnitTestingLibrary
             cl.UpdateCustomer(ref customer);
             
         }
+
+
     }
 }

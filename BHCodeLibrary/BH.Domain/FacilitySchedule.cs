@@ -5,7 +5,7 @@ namespace BH.Domain
     /// <summary>
     /// Data for a facility schedule
     /// </summary>
-    public struct FacilitySchedule : IFacilitySchedule, IDbItentity
+    public class FacilitySchedule : IFacilitySchedule, IDbItentity
     {
         /// <summary>
         /// Customer Id - identity column

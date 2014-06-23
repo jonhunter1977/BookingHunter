@@ -5,7 +5,7 @@ namespace BH.Domain
     /// <summary>
     /// Data for a court booking sheet
     /// </summary>
-    public struct CourtBookingSheet : ICourtBookingSheet, IDbItentity
+    public class CourtBookingSheet : ICourtBookingSheet, IDbItentity
     {
         /// <summary>
         /// Address Id - identity column

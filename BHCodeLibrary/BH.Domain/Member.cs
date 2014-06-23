@@ -5,7 +5,7 @@ namespace BH.Domain
     /// <summary>
     /// Data for a booking record
     /// </summary>
-    public struct Member : IMember, IDbItentity
+    public class Member : IMember, IDbItentity
     {
         /// <summary>
         /// Customer Id - identity column

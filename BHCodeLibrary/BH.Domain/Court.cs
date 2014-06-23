@@ -5,7 +5,7 @@ namespace BH.Domain
     /// <summary>
     /// Data for a court
     /// </summary>
-    public struct Court : ICourt, IDbItentity
+    public class Court : ICourt, IDbItentity
     {
         /// <summary>
         /// Customer Id - identity column

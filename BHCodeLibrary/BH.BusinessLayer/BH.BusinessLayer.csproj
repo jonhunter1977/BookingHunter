@@ -44,6 +44,7 @@
     <Compile Include="CustomerLogic.cs" />
     <Compile Include="IBusinessLogic.cs" />
     <Compile Include="ICustomerLogic.cs" />
+    <Compile Include="LocationLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -16,7 +16,7 @@ namespace BH.BusinessLayer
         /// <summary>
         /// Logic to update a customer
         /// </summary>
-        /// <param name="customer"></param>
+        /// <param name="customer">The customer object to update</param>
         void UpdateCustomer(ref Customer customer);
 
         /// <summary>

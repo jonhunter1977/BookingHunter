@@ -11,13 +11,13 @@ namespace BH.BusinessLayer
         /// <summary>
         /// Logic to create a new customer
         /// </summary>
-        void CreateCustomer(ref Customer customer, ref Address address);
+        void CreateLocation(int customerId, ref Location location, ref Address address);
 
         /// <summary>
         /// Logic to update a customer
         /// </summary>
-        /// <param name="customer"></param>
-        void UpdateCustomer(ref Customer customer);
+        /// <param name="location">The location object to update</param>
+        void UpdateLocation(ref Location location);
 
         /// <summary>
         /// Search for a customer by ID

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace BH.BusinessLayer
 {
-    public class CustomerLogic : ICustomerLogic
+    public class LocationLogic : ILocationLogic
     {
         private DataAccessType _accessType;
         private string _cfgConnectionString;
@@ -15,13 +15,13 @@ namespace BH.BusinessLayer
         private IDataAccess _da;
 
         /// <summary>
-        /// Create access to customer logic using required connection strings and access type
+        /// Create access to location logic using required connection strings and access type
         /// </summary>
         /// <param name="accessType">The database access type</param>
         /// <param name="cfgConnectionString">Connection string to use to cfg data source</param>
         /// <param name="contactConnectionString">Connection string to use to contact data source</param>
         /// <param name="linksConnectionString">Connection string to use to links data source</param>
-        public CustomerLogic(
+        public LocationLogic(
             DataAccessType accessType,
             string cfgConnectionString,
             string contactConnectionString,
@@ -49,21 +49,53 @@ namespace BH.BusinessLayer
             }
         }
 
-        public void CreateCustomer(ref Customer customer, ref Address address)
+        public void CreateLocation(int customerId, ref Location location, ref Address address)
         {
-            //Save the customer record
-            var insertedRowId = _da.Customer.Insert(customer);
+            //Check a valid customer id has been passed
+            try
+            {
+                var customer = _da.Customer.GetById(customerId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            //Create a new location record
+            var insertedRowId = _da.Location.Insert(location);
 
             if (insertedRowId == 0)
             {
-                throw new Exception("Failed to create customer record");
+                throw new Exception("Failed to create location record");
             }
             else
             {
-                customer.Id = insertedRowId;
+                location.Id = insertedRowId;
+            }
+
+            //Link the customer and location
+            var customerLocationLink = new LinkObjectMaster()
+            {
+                MasterLinkId = customerId,
+                MasterLinkType = LinkType.Customer,
+                ChildLinkId = location.Id,
+                ChildLinkType = LinkType.Location
+            };
+
+            //Save the link record
+            insertedRowId = _da.Link.Insert(customerLocationLink);
+
+            if (insertedRowId == 0)
+            {
+                //Roll back the inserts as it's failed
+                //Delete the location record
+                _da.Location.Delete(location);
+
+                throw new Exception("Failed to create customer location link record, transaction rolled back");
             }
 
             //Save the address record
+            bool addressCreated = false;
             if (address.Id == 0)
             {
                 //Create a new address record
@@ -76,58 +108,48 @@ namespace BH.BusinessLayer
                 else
                 {
                     address.Id = insertedRowId;
-                }
+                    addressCreated = true;
+                }                
             }
 
-            //Link the customer and address records
-            var customerAddressLink = new LinkObjectMaster()
+            //Link the location and address records
+            var locationAddressLink = new LinkObjectMaster()
             {
-                MasterLinkId = customer.Id,
-                MasterLinkType = LinkType.Customer,
+                MasterLinkId = location.Id,
+                MasterLinkType = LinkType.Location,
                 ChildLinkId = address.Id,
                 ChildLinkType = LinkType.Address
             };
 
             //Save the link record
-            insertedRowId = _da.Link.Insert(customerAddressLink);
+            insertedRowId = _da.Link.Insert(locationAddressLink);
 
             if (insertedRowId == 0)
             {
                 //Roll back the inserts as it's failed
-                //Delete the customer record
-                _da.Customer.Delete(customer);
+                //Delete the location record
+                _da.Location.Delete(location);
 
-                //Delete the address record
-                _da.Address.Delete(address);
+                if (addressCreated)
+                    _da.Address.Delete(address);
 
-                throw new Exception("Failed to create customer address link record, transaction rolled back");
+                throw new Exception("Failed to create location address link record, transaction rolled back");
             }
         }
 
-        public void UpdateCustomer(ref Customer customer)
+        public void UpdateLocation(ref Location location)
         {
-            _da.Customer.Update(customer);            
+            throw new NotImplementedException();
         }
 
         public Customer FindCustomerById(int id)
         {
-            try
-            {
-                var customer = _da.Customer.GetById(id);
-                return customer;
-            }
-            catch (Exception)
-            {
-                throw new Exception("Customer id " + id.ToString() + " does not exist");
-            }           
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Customer> Search(Func<Customer, bool> searchCriteria)
+        public IEnumerable<Location> Search(Func<Location, bool> searchCriteria)
         {
-            var customerList = _da.Customer.GetAll();
-            var filteredCustomerList = customerList.Where(searchCriteria);
-
-            return filteredCustomerList;
+            throw new NotImplementedException();
         }
     }
 }
