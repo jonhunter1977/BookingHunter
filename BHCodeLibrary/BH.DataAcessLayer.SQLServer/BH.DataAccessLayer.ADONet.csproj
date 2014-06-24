@@ -7,8 +7,8 @@
     <ProjectGuid>{29F7AC70-3993-4DC1-8080-78C49C7F08A2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.DataAccessLayer.SQLServer</RootNamespace>
-    <AssemblyName>BH.DataAccessLayer.SQLServer</AssemblyName>
+    <RootNamespace>BH.DataAccessLayer.ADONet</RootNamespace>
+    <AssemblyName>BH.DataAccessLayer.ADONet</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

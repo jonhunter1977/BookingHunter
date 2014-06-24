@@ -10,7 +10,8 @@ namespace BH.Domain
     /// </summary>
     public enum DataAccessType
     {
-        SqlServer
+        ADONet,
+        LinqToSql
     }
 
     /// <summary>

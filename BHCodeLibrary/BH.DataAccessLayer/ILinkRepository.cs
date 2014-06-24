@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BH.Domain;
 
 namespace BH.DataAccessLayer
@@ -16,7 +17,7 @@ namespace BH.DataAccessLayer
         /// <param name="masterLinkId">The master link type id</param>
         /// <param name="childLinkType">The child link type</param>
         /// <returns>A list of matching LinkObjectMaster objects</returns>
-        List<LinkObjectMaster> GetChildLinkObjectId(LinkType masterLinkType, int masterLinkId, LinkType childLinkType);
+        IQueryable<LinkObjectMaster> GetChildLinkObjectId(LinkType masterLinkType, int masterLinkId, LinkType childLinkType);
 
         /// <summary>
         /// Gets a list of master object ids of a specific link type that are linked to the child link type and id
@@ -25,6 +26,6 @@ namespace BH.DataAccessLayer
         /// <param name="childLinkId">The child link type id</param>
         /// <param name="masterLinkType">The master link type</param>
         /// <returns>A list of matching LinkObjectMaster objects</returns>
-        List<LinkObjectMaster> GetMasterLinkObjectId(LinkType childLinkType, int childLinkId, LinkType masterLinkType);
+        IQueryable<LinkObjectMaster> GetMasterLinkObjectId(LinkType childLinkType, int childLinkId, LinkType masterLinkType);
     }
 }

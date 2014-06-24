@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace BH.DataAccessLayer.SqlServer
+namespace BH.DataAccessLayer.ADONet
 {
     /// <summary>
     /// Class for querying an SQL database

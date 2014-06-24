@@ -17,7 +17,7 @@ namespace BH.DataAccessLayer
         /// Run a select all on the table
         /// </summary>
         /// <returns>All records in the table</returns>
-        IList<T> GetAll();
+        IQueryable<T> GetAll();
 
         /// <summary>
         /// Run a select by id on the table

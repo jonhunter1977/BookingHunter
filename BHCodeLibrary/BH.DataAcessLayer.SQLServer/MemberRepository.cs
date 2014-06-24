@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BH.Domain;
+using BH.DataAccessLayer;
 
-namespace BH.DataAccessLayer.SqlServer
+namespace BH.DataAccessLayer.ADONet
 {
     /// <summary>
     /// Class for getting customer data from the database
@@ -22,7 +24,7 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Member Database query engine is not connected");
         }
 
-        public IList<Member> GetAll()
+        public IQueryable<Member> GetAll()
         {
             var memberList = new List<Member>();
 
@@ -37,7 +39,7 @@ namespace BH.DataAccessLayer.SqlServer
                 memberList.Add(member);
             }
 
-            return memberList;
+            return memberList.AsQueryable();
         }
 
         public Member GetById(int id)

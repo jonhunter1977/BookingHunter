@@ -7,7 +7,7 @@ namespace BH.DataAccessLayer
     /// <summary>
     /// Data from the data source
     /// </summary>
-    public struct DataAccess : IDataAccess
+    public class DataAccess : IDataAccess
     {
         /// <summary>
         /// Connection string for the bookings data source
@@ -105,10 +105,12 @@ namespace BH.DataAccessLayer
             {
                 switch (AccessType)
                 {
-                    case DataAccessType.SqlServer:
-                        return "BH.DataAccessLayer.SqlServer.";
+                    case DataAccessType.ADONet:
+                        return "BH.DataAccessLayer.ADONet.";
+                    case DataAccessType.LinqToSql:
+                        return "BH.DataAccessLayer.LinqToSql.";
                     default:
-                        return "BH.DataAccessLayer.SqlServer.";
+                        return "BH.DataAccessLayer.LinqToSql.";
                 }
             }
         }
@@ -122,7 +124,7 @@ namespace BH.DataAccessLayer
             {
                 switch (AccessType)
                 {
-                    case DataAccessType.SqlServer:
+                    case DataAccessType.ADONet:
                         return Assembly.LoadFrom(_dataAccessNameSpace + "dll");
                     default :
                         return Assembly.LoadFrom(_dataAccessNameSpace + "dll");

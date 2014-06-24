@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BH.Domain;
+using BH.DataAccessLayer;
 
-namespace BH.DataAccessLayer.SqlServer
+namespace BH.DataAccessLayer.ADONet
 {
     /// <summary>
     /// Class for getting link objects from the link database
@@ -22,10 +24,9 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Link Database query engine is not connected");
         }
 
-        public IList<LinkObjectMaster> GetAll()
+        public IQueryable<LinkObjectMaster> GetAll()
         {
-            var linkList = new List<LinkObjectMaster>();
-            return linkList;
+            throw new NotImplementedException();
         }
 
         public LinkObjectMaster GetById(int id)
@@ -95,7 +96,7 @@ namespace BH.DataAccessLayer.SqlServer
                 throw new Exception("Link - Delete failed");
         }
 
-        public List<LinkObjectMaster> GetChildLinkObjectId(LinkType masterLinkType, int masterLinkId, LinkType childLinkType)
+        public IQueryable<LinkObjectMaster> GetChildLinkObjectId(LinkType masterLinkType, int masterLinkId, LinkType childLinkType)
         {
             var linkObjectList = new List<LinkObjectMaster>();
 
@@ -118,10 +119,10 @@ namespace BH.DataAccessLayer.SqlServer
                 linkObjectList.Add(linkObject);
             }
 
-            return linkObjectList;
+            return linkObjectList.AsQueryable();
         }
 
-        public List<LinkObjectMaster> GetMasterLinkObjectId(LinkType childLinkType, int childLinkId, LinkType masterLinkType)
+        public IQueryable<LinkObjectMaster> GetMasterLinkObjectId(LinkType childLinkType, int childLinkId, LinkType masterLinkType)
         {
             var linkObjectList = new List<LinkObjectMaster>();
 
@@ -144,7 +145,7 @@ namespace BH.DataAccessLayer.SqlServer
                 linkObjectList.Add(linkObject);
             }
 
-            return linkObjectList;
+            return linkObjectList.AsQueryable();
         }
 
         /// <summary>

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BH.Domain;
+using BH.DataAccessLayer;
 
-namespace BH.DataAccessLayer.SqlServer
+namespace BH.DataAccessLayer.ADONet
 {
     /// <summary>
     /// Class for getting customer data from the database
@@ -22,7 +24,7 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Cfg Database query engine is not connected");
         }
 
-        public IList<Court> GetAll()
+        public IQueryable<Court> GetAll()
         {
             var courtList = new List<Court>();
 
@@ -37,7 +39,7 @@ namespace BH.DataAccessLayer.SqlServer
                 courtList.Add(court);
             }
 
-            return courtList;
+            return courtList.AsQueryable();
         }
 
         public Court GetById(int id)

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BH.Domain;
+using BH.DataAccessLayer;
 
-namespace BH.DataAccessLayer.SqlServer
+namespace BH.DataAccessLayer.ADONet
 {
     /// <summary>
     /// Class for getting address data from the database
@@ -22,7 +24,7 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Contact Database query engine is not connected");
         }
 
-        public IList<Address> GetAll()
+        public IQueryable<Address> GetAll()
         {
             var addressList = new List<Address>();
 
@@ -37,7 +39,7 @@ namespace BH.DataAccessLayer.SqlServer
                 addressList.Add(address);
             }
 
-            return addressList;
+            return addressList.AsQueryable();
         }
 
         public Address GetById(int id)

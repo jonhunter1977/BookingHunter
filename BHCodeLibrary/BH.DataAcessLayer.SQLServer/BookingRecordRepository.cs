@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BH.Domain;
+using BH.DataAccessLayer;
 
-namespace BH.DataAccessLayer.SqlServer
+namespace BH.DataAccessLayer.ADONet
 {
     /// <summary>
     /// Class for getting customer data from the database
@@ -22,7 +24,7 @@ namespace BH.DataAccessLayer.SqlServer
             if (!_dataEngine.DatabaseConnected) throw new Exception("Booking Database query engine is not connected");
         }
 
-        public IList<BookingRecord> GetAll()
+        public IQueryable<BookingRecord> GetAll()
         {
             var bookingRecordList = new List<BookingRecord>();
 
@@ -37,7 +39,7 @@ namespace BH.DataAccessLayer.SqlServer
                 bookingRecordList.Add(bookingRecord);
             }
 
-            return bookingRecordList;
+            return bookingRecordList.AsQueryable();
         }
 
         public BookingRecord GetById(int id)

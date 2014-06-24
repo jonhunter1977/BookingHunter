@@ -53,13 +53,17 @@
       <Project>{c8afb41a-3f15-4d30-a983-a6b0f6603df8}</Project>
       <Name>BH.BusinessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BHCodeLibrary\BH.DataAccessLayer.LinqToSql\BH.DataAccessLayer.LinqToSql.csproj">
+      <Project>{3e088d4e-faad-4719-b647-da65cb6e35dd}</Project>
+      <Name>BH.DataAccessLayer.LinqToSql</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BHCodeLibrary\BH.DataAccessLayer\BH.DataAccessLayer.csproj">
       <Project>{3120ac73-d8ea-4126-aae8-8937461eb0fa}</Project>
       <Name>BH.DataAccessLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BHCodeLibrary\BH.DataAcessLayer.SQLServer\BH.DataAccessLayer.SQLServer.csproj">
+    <ProjectReference Include="..\BHCodeLibrary\BH.DataAcessLayer.SQLServer\BH.DataAccessLayer.ADONet.csproj">
       <Project>{29f7ac70-3993-4dc1-8080-78c49c7f08a2}</Project>
-      <Name>BH.DataAccessLayer.SQLServer</Name>
+      <Name>BH.DataAccessLayer.ADONet</Name>
     </ProjectReference>
     <ProjectReference Include="..\BHCodeLibrary\BH.Domain\BH.Domain.csproj">
       <Project>{88f548f3-f004-4599-a5ca-d33f2ba250e8}</Project>

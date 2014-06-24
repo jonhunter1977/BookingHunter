@@ -36,7 +36,7 @@ namespace NUnitTestingLibrary
                 CfgConnectionString = cfgConnection.ConnectionString,
                 LinksConnectionString = linksConnection.ConnectionString,
                 MemberConnectionString = memberConnection.ConnectionString,
-                AccessType = DataAccessType.SqlServer
+                AccessType = DataAccessType.LinqToSql
             };
         }
 

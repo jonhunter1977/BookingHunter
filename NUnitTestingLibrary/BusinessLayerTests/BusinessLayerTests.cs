@@ -29,7 +29,7 @@ namespace NUnitTestingLibrary
 
             var cl = new CustomerLogic
             (
-                DataAccessType.SqlServer,
+                DataAccessType.LinqToSql,
                 BHDataAccess.cfgConnection.ConnectionString,
                 BHDataAccess.contactConnection.ConnectionString,
                 BHDataAccess.linksConnection.ConnectionString
@@ -57,7 +57,7 @@ namespace NUnitTestingLibrary
 
             var ll = new LocationLogic
             (
-                DataAccessType.SqlServer,
+                DataAccessType.LinqToSql,
                 BHDataAccess.cfgConnection.ConnectionString,
                 BHDataAccess.contactConnection.ConnectionString,
                 BHDataAccess.linksConnection.ConnectionString
@@ -81,7 +81,7 @@ namespace NUnitTestingLibrary
         {
             var cl = new CustomerLogic
             (
-                DataAccessType.SqlServer,
+                DataAccessType.LinqToSql,
                 BHDataAccess.cfgConnection.ConnectionString,
                 BHDataAccess.contactConnection.ConnectionString,
                 BHDataAccess.linksConnection.ConnectionString
@@ -101,7 +101,7 @@ namespace NUnitTestingLibrary
         {
             var cl = new CustomerLogic
             (
-                DataAccessType.SqlServer,
+                DataAccessType.LinqToSql,
                 BHDataAccess.cfgConnection.ConnectionString,
                 BHDataAccess.contactConnection.ConnectionString,
                 BHDataAccess.linksConnection.ConnectionString
