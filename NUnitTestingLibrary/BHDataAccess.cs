@@ -40,64 +40,64 @@ namespace NUnitTestingLibrary
             };
         }
 
-        [TearDown]
-        public void ResetDatabaseTablesAndSeeds()
-        {
-            //Delete all data from the tables
-            foreach (var deleteMe in _da.Address.GetAll())
-            {
-                _da.Address.Delete(deleteMe);
-            }
+        //[TearDown]
+        //public void ResetDatabaseTablesAndSeeds()
+        //{
+        //    //Delete all data from the tables
+        //    foreach (var deleteMe in _da.Address.GetAll())
+        //    {
+        //        _da.Address.Delete(deleteMe);
+        //    }
 
-            foreach (var deleteMe in _da.BookingRecord.GetAll())
-            {
-                _da.BookingRecord.Delete(deleteMe);
-            }
+        //    foreach (var deleteMe in _da.BookingRecord.GetAll())
+        //    {
+        //        _da.BookingRecord.Delete(deleteMe);
+        //    }
 
-            foreach (var deleteMe in _da.Court.GetAll())
-            {
-                _da.Court.Delete(deleteMe);
-            }
+        //    foreach (var deleteMe in _da.Court.GetAll())
+        //    {
+        //        _da.Court.Delete(deleteMe);
+        //    }
 
-            foreach (var deleteMe in _da.CourtBookingSheet.GetAll())
-            {
-                _da.CourtBookingSheet.Delete(deleteMe);
-            }
+        //    foreach (var deleteMe in _da.CourtBookingSheet.GetAll())
+        //    {
+        //        _da.CourtBookingSheet.Delete(deleteMe);
+        //    }
 
-            foreach (var deleteMe in _da.Customer.GetAll())
-            {
-                _da.Customer.Delete(deleteMe);
-            }
+        //    foreach (var deleteMe in _da.Customer.GetAll())
+        //    {
+        //        _da.Customer.Delete(deleteMe);
+        //    }
 
-            foreach (var deleteMe in _da.Facility.GetAll())
-            {
-                _da.Facility.Delete(deleteMe);
-            }
+        //    foreach (var deleteMe in _da.Facility.GetAll())
+        //    {
+        //        _da.Facility.Delete(deleteMe);
+        //    }
 
-            foreach (var deleteMe in _da.FacilitySchedule.GetAll())
-            {
-                _da.FacilitySchedule.Delete(deleteMe);
-            }
+        //    foreach (var deleteMe in _da.FacilitySchedule.GetAll())
+        //    {
+        //        _da.FacilitySchedule.Delete(deleteMe);
+        //    }
 
-            foreach (var deleteMe in _da.Link.GetAll())
-            {
-                _da.Link.Delete(deleteMe);
-            }
+        //    foreach (var deleteMe in _da.Link.GetAll())
+        //    {
+        //        _da.Link.Delete(deleteMe);
+        //    }
 
-            foreach (var deleteMe in _da.Location.GetAll())
-            {
-                _da.Location.Delete(deleteMe);
-            }
+        //    foreach (var deleteMe in _da.Location.GetAll())
+        //    {
+        //        _da.Location.Delete(deleteMe);
+        //    }
 
-            foreach (var deleteMe in _da.Location.GetAll())
-            {
-                _da.Location.Delete(deleteMe);
-            }
+        //    foreach (var deleteMe in _da.Location.GetAll())
+        //    {
+        //        _da.Location.Delete(deleteMe);
+        //    }
 
-            foreach (var deleteMe in _da.Member.GetAll())
-            {
-                _da.Member.Delete(deleteMe);
-            }
-        }
+        //    foreach (var deleteMe in _da.Member.GetAll())
+        //    {
+        //        _da.Member.Delete(deleteMe);
+        //    }
+        //}
     }
 }

@@ -124,9 +124,9 @@ namespace BH.DataAccessLayer.ADONet
                 throw new Exception("BookingRecord - Delete failed"); 
         }
 
-        public BookingRecord GetByBookingRecordUniqueId(int BookingRecordUniqueId)
+        public BookingRecord GetByBookingRecordUniqueId(string BookingRecordUniqueId)
         {
-            _sqlToExecute = "SELECT * FROM [dbo].[BookingRecord] WHERE BookingRecordUniqueId = '" + BookingRecordUniqueId.ToString() + "'";
+            _sqlToExecute = "SELECT * FROM [dbo].[BookingRecord] WHERE BookingRecordUniqueId = '" + BookingRecordUniqueId + "'";
 
             if (!_dataEngine.CreateReaderFromSql(_sqlToExecute))
                 throw new Exception("GetByBookingRecordUniqueId - GetById failed");

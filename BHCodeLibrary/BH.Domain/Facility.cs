@@ -6,6 +6,7 @@ namespace BH.Domain
     /// <summary>
     /// Data for a facility
     /// </summary>
+    [Table(Name = "Facility")]
     public class Facility : IFacility, IDbItentity
     {
         /// <summary>

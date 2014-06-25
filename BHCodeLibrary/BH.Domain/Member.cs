@@ -6,6 +6,7 @@ namespace BH.Domain
     /// <summary>
     /// Data for a booking record
     /// </summary>
+    [Table(Name = "Member")]
     public class Member : IMember, IDbItentity
     {
         /// <summary>

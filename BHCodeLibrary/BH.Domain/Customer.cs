@@ -6,6 +6,7 @@ namespace BH.Domain
     /// <summary>
     /// Data for a customer
     /// </summary>
+    [Table(Name = "Customer")]
     public class Customer : ICustomer, IDbItentity
     {
         /// <summary>
@@ -30,6 +31,11 @@ namespace BH.Domain
         /// Active name column
         /// </summary>
         [Column(Name = "Active")]
-        public bool Active { get; set; }
+        private int _active;
+        public bool Active 
+        { 
+            get { return _active == 1 ? true : false; }
+            set { _active = value == true ? 1 : 0; }
+        }
     }
 }

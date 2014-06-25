@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3120AC73-D8EA-4126-AAE8-8937461EB0FA}</ProjectGuid>
+    <ProjectGuid>{3E088D4E-FAAD-4719-B647-DA65CB6E35DD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BH.DataAccessLayer</RootNamespace>
-    <AssemblyName>BH.DataAccessLayer</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>BH.DataAccessLayer.LinqToSql</RootNamespace>
+    <AssemblyName>BH.DataAccessLayer.LinqToSql</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,38 +40,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess.cs" />
-    <Compile Include="DataFormatting.cs" />
-    <Compile Include="IAddressRepository.cs" />
-    <Compile Include="IBookingRecordRepository.cs" />
-    <Compile Include="ICourtBookingSheetRepository.cs" />
-    <Compile Include="ICourtRepository.cs" />
-    <Compile Include="ICustomerRepository.cs" />
-    <Compile Include="IDataAccess.cs" />
-    <Compile Include="IFacilityRepository.cs" />
-    <Compile Include="IFacilityScheduleRepository.cs" />
-    <Compile Include="ILinkRepository.cs" />
-    <Compile Include="ILocationRepository.cs" />
-    <Compile Include="IMemberRepository.cs" />
-    <Compile Include="IRepository.cs" />
+    <Compile Include="AddressRepository.cs" />
+    <Compile Include="BookingRecordRepository.cs" />
+    <Compile Include="MemberRepository.cs" />
+    <Compile Include="LinkRepository.cs" />
+    <Compile Include="LocationRepository.cs" />
+    <Compile Include="FacilityScheduleRepository.cs" />
+    <Compile Include="FacilityRepository.cs" />
+    <Compile Include="CustomerRepository.cs" />
+    <Compile Include="CourtRepository.cs" />
+    <Compile Include="CourtBookingSheetRepository.cs" />
+    <Compile Include="DbDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\BH.DataAccessLayer\BH.DataAccessLayer.csproj">
+      <Project>{3120ac73-d8ea-4126-aae8-8937461eb0fa}</Project>
+      <Name>BH.DataAccessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BH.Domain\BH.Domain.csproj">
       <Project>{88f548f3-f004-4599-a5ca-d33f2ba250e8}</Project>
       <Name>BH.Domain</Name>

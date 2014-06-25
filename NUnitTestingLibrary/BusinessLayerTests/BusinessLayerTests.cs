@@ -12,11 +12,12 @@ namespace NUnitTestingLibrary
     public class BusinessLayerTests
     {
         [Test]
-        public void CreateCustomerAndLocation()
+        public void ACreateCustomerAndLocation()
         {
             var customer = new Customer
             {
-                CustomerName = "Neston Cricket Club"
+                CustomerName = "Neston Cricket Club",
+                Active = true,
             };
 
             var address = new Address
@@ -77,7 +78,7 @@ namespace NUnitTestingLibrary
         }
 
         [Test]
-        public void RetrieveCustomer()
+        public void BRetrieveCustomer()
         {
             var cl = new CustomerLogic
             (
@@ -97,7 +98,7 @@ namespace NUnitTestingLibrary
         }
 
         [Test]
-        public void UpdateCustomer()
+        public void CUpdateCustomer()
         {
             var cl = new CustomerLogic
             (

@@ -14,6 +14,6 @@ namespace BH.DataAccessLayer
         /// </summary>
         /// <param name="BookingRecordUniqueId">Unique Id to query for</param>
         /// <returns>A booking record</returns>
-        BookingRecord GetByBookingRecordUniqueId(int BookingRecordUniqueId);
+        BookingRecord GetByBookingRecordUniqueId(string BookingRecordUniqueId);
     }
 }

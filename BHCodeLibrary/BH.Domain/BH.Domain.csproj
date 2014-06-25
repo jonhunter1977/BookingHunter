@@ -60,6 +60,7 @@
     <Compile Include="ILinkObjectMaster.cs" />
     <Compile Include="ILocation.cs" />
     <Compile Include="IMember.cs" />
+    <Compile Include="LinkObjectMaster.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

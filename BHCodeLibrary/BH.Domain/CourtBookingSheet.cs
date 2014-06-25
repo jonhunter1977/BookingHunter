@@ -6,6 +6,7 @@ namespace BH.Domain
     /// <summary>
     /// Data for a court booking sheet
     /// </summary>
+    [Table(Name = "CourtBookingSheet")]
     public class CourtBookingSheet : ICourtBookingSheet, IDbItentity
     {
         /// <summary>

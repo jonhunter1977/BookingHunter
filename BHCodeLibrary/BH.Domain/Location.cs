@@ -6,6 +6,7 @@ namespace BH.Domain
     /// <summary>
     /// Data for a customer
     /// </summary>
+    [Table(Name = "Location")]
     public class Location : ILocation, IDbItentity
     {
         /// <summary>

@@ -6,6 +6,7 @@ namespace BH.Domain
     /// <summary>
     /// Data for a court
     /// </summary>
+    [Table(Name = "Court")]
     public class Court : ICourt, IDbItentity
     {
         /// <summary>
