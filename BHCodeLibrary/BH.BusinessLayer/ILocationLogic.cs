@@ -18,12 +18,5 @@ namespace BH.BusinessLayer
         /// </summary>
         /// <param name="location">The location object to update</param>
         void UpdateLocation(ref Location location);
-
-        /// <summary>
-        /// Search for a customer by ID
-        /// </summary>
-        /// <param name="id">The ID to search for</param>
-        /// <returns>A customer object</returns>
-        Customer FindCustomerById(int id);
     }
 }

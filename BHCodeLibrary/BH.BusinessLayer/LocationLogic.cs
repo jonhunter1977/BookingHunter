@@ -139,17 +139,15 @@ namespace BH.BusinessLayer
 
         public void UpdateLocation(ref Location location)
         {
-            throw new NotImplementedException();
-        }
-
-        public Customer FindCustomerById(int id)
-        {
-            throw new NotImplementedException();
+            _da.Location.Update(location);
         }
 
         public IEnumerable<Location> Search(Func<Location, bool> searchCriteria)
         {
-            throw new NotImplementedException();
+            var objList = _da.Location.GetAll();
+            var filteredObjList = objList.Where(searchCriteria);
+
+            return filteredObjList;
         }
     }
 }

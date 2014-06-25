@@ -12,7 +12,7 @@ namespace NUnitTestingLibrary
     public class BusinessLayerTests
     {
         [Test]
-        public void ACreateCustomerAndLocation()
+        public void a_CreateNestonCricketClubAsNewCustomer()
         {
             var customer = new Customer
             {
@@ -55,14 +55,44 @@ namespace NUnitTestingLibrary
             {
                 LocationDescription = "Neston Squash Club"
             };
+        }
 
-            var ll = new LocationLogic
+        [Test]
+        public void b_CreateNestonSquashAsLocationLinkedToNestonCricketClub()
+        {
+            var cl = new CustomerLogic
             (
                 DataAccessType.LinqToSql,
                 BHDataAccess.cfgConnection.ConnectionString,
                 BHDataAccess.contactConnection.ConnectionString,
                 BHDataAccess.linksConnection.ConnectionString
             );
+
+            var customerList = cl.Search(c => c.CustomerName == "Neston Cricket Club");
+            var customerCount = customerList.Count(c => c.CustomerName == "Neston Cricket Club");
+
+            if (customerCount == 0)
+                Assert.Fail("No customers found");
+
+            var customer = customerList.First(c => c.CustomerName == "Neston Cricket Club");
+
+            var address = cl.GetCustomerAddress(customer);
+
+            if (!address.Address1.Equals("Station Road"))
+                Assert.Fail("Incorrect address returned");
+
+            var ll = new LocationLogic
+            (
+            DataAccessType.LinqToSql,
+                BHDataAccess.cfgConnection.ConnectionString,
+                BHDataAccess.contactConnection.ConnectionString,
+                BHDataAccess.linksConnection.ConnectionString
+            );
+
+            var location = new Location()
+            {
+                LocationDescription = "Neston Squash Club"
+            };
 
             try
             {
@@ -77,28 +107,25 @@ namespace NUnitTestingLibrary
             }
         }
 
-        [Test]
-        public void BRetrieveCustomer()
+
+
+
+
+
+
+
+
+
+
+
+        [Ignore]
+        public void b_RetrieveCustomer()
         {
-            var cl = new CustomerLogic
-            (
-                DataAccessType.LinqToSql,
-                BHDataAccess.cfgConnection.ConnectionString,
-                BHDataAccess.contactConnection.ConnectionString,
-                BHDataAccess.linksConnection.ConnectionString
-            );
 
-            var customerList = cl.Search(c => c.CustomerName == "Neston Cricket Club");
-            var customerCount = customerList.Count(c => c.CustomerName == "Neston Cricket Club");
-
-            if (customerCount > 0)
-                Assert.Pass(customerCount.ToString() + " customers found");
-            else
-                Assert.Fail("No customers found");
         }
 
-        [Test]
-        public void CUpdateCustomer()
+        [Ignore]
+        public void c_UpdateCustomer()
         {
             var cl = new CustomerLogic
             (
@@ -116,6 +143,23 @@ namespace NUnitTestingLibrary
             
         }
 
+        [Ignore]
+        public void d_UpdateLocation()
+        {
+            var logic = new LocationLogic
+            (
+                DataAccessType.LinqToSql,
+                BHDataAccess.cfgConnection.ConnectionString,
+                BHDataAccess.contactConnection.ConnectionString,
+                BHDataAccess.linksConnection.ConnectionString
+            );
 
+            var objList = logic.Search(a => a.LocationDescription  == "Neston Squash Club");
+            var obj = objList.First(a => a.LocationDescription == "Neston Squash Club");
+
+            obj.LocationDescription = "Neston Squash Courts";
+            logic.UpdateLocation(ref obj);
+
+        }
     }
 }

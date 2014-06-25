@@ -124,10 +124,30 @@ namespace BH.BusinessLayer
 
         public IEnumerable<Customer> Search(Func<Customer, bool> searchCriteria)
         {
-            var customerList = _da.Customer.GetAll();
-            var filteredCustomerList = customerList.Where(searchCriteria);
+            var objList = _da.Customer.GetAll();
+            var filteredObjList = objList.Where(searchCriteria);
 
-            return filteredCustomerList;
+            return filteredObjList;
+        }
+
+        public Address GetCustomerAddress(Customer customer)
+        {
+            var customerAddressLink = 
+                _da.Link.GetChildLinkObjectId
+                (
+                    LinkType.Customer, 
+                    customer.Id, 
+                    LinkType.Address
+                );
+
+            var linkRecord = customerAddressLink.Single();
+
+            if (linkRecord.ChildLinkId == null)
+                throw new Exception("No address is linked to customer ID : " + customer.Id);
+
+            var address = _da.Address.GetById(linkRecord.ChildLinkId.Value);
+
+            return address;
         }
     }
 }

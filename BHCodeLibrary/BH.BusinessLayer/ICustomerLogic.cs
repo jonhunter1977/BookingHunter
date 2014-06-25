@@ -25,5 +25,13 @@ namespace BH.BusinessLayer
         /// <param name="id">The ID to search for</param>
         /// <returns>A customer object</returns>
         Customer FindCustomerById(int id);
+
+        /// <summary>
+        /// Find the address linked to a customer
+        /// </summary>
+        /// <param name="customer">The customer whose address you want to find</param>
+        /// <returns>An address object</returns>
+        Address GetCustomerAddress(Customer customer);
+
     }
 }
