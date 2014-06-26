@@ -30,7 +30,7 @@ namespace NUnitTestingLibrary
 
             try
             {
-                TestingSetupClass._logic.customerLogic.CreateCustomer(ref customer, ref address);
+                TestingSetupClass._logic.CustomerLogic.CreateCustomer(ref customer, ref address);
 
                 if (customer.Id == 0)
                     Assert.Fail("Customer Id did not get set, it is 0");
@@ -52,7 +52,7 @@ namespace NUnitTestingLibrary
         [Test]
         public void b_CreateNestonSquashAsLocationLinkedToNestonCricketClub()
         {
-            var customerList = TestingSetupClass._logic.customerLogic.Search(c => c.CustomerName == "Neston Cricket Club");
+            var customerList = TestingSetupClass._logic.CustomerLogic.Search(c => c.CustomerName == "Neston Cricket Club");
             var customerCount = customerList.Count(c => c.CustomerName == "Neston Cricket Club");
 
             if (customerCount == 0)
@@ -60,7 +60,7 @@ namespace NUnitTestingLibrary
 
             var customer = customerList.First(c => c.CustomerName == "Neston Cricket Club");
 
-            var address = TestingSetupClass._logic.customerLogic.GetCustomerAddress(customer);
+            var address = TestingSetupClass._logic.CustomerLogic.GetCustomerAddress(customer);
 
             if (!address.Address1.Equals("Station Road"))
                 Assert.Fail("Incorrect address returned");
@@ -72,7 +72,7 @@ namespace NUnitTestingLibrary
 
             try
             {
-                TestingSetupClass._logic.locationLogic.CreateLocation(customer.Id, ref location, ref address);
+                TestingSetupClass._logic.LocationLogic.CreateLocation(customer.Id, ref location, ref address);
 
                 if (location.Id == 0)
                     Assert.Fail("Location Id did not get set, it is 0");
@@ -86,7 +86,7 @@ namespace NUnitTestingLibrary
         [Test]
         public void c_CreateSquashFacilityLinkedToNestonSquash()
         {
-            var customerList = TestingSetupClass._logic.customerLogic.Search(c => c.CustomerName == "Neston Cricket Club");
+            var customerList = TestingSetupClass._logic.CustomerLogic.Search(c => c.CustomerName == "Neston Cricket Club");
             var customerCount = customerList.Count(c => c.CustomerName == "Neston Cricket Club");
 
             if (customerCount == 0)
@@ -94,7 +94,7 @@ namespace NUnitTestingLibrary
 
             var customer = customerList.First(c => c.CustomerName == "Neston Cricket Club");
 
-            var locationList = TestingSetupClass._logic.customerLogic.GetCustomerLocations(customer);
+            var locationList = TestingSetupClass._logic.CustomerLogic.GetCustomerLocations(customer);
 
             var location = locationList.FirstOrDefault(l => l.LocationDescription == "Neston Squash Club");
 

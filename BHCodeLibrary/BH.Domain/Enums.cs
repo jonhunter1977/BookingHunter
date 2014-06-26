@@ -6,15 +6,6 @@ using System.Text;
 namespace BH.Domain
 {
     /// <summary>
-    /// Supported data connection types
-    /// </summary>
-    public enum DataAccessType
-    {
-        ADONet,
-        LinqToSql
-    }
-
-    /// <summary>
     /// The different ways a customer can update a booking to say they have arrived
     /// </summary>
     public enum ArrivalRegistrationMethod

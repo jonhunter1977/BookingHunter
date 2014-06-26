@@ -10,12 +10,12 @@ namespace BH.BusinessLayer
         /// <summary>
         /// Access to the customer business logic functions
         /// </summary>
-        ICustomerLogic customerLogic { get; }
+        ICustomerLogic CustomerLogic { get; }
 
         /// <summary>
         /// Access to the location business logic functions
         /// </summary>
-        ILocationLogic locationLogic { get; }
+        ILocationLogic LocationLogic { get; }
 
     }
 }

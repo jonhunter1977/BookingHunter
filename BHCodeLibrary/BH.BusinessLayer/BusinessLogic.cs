@@ -1,36 +1,22 @@
 ﻿using System;
 using BH.Domain;
+using BH.DataAccessLayer;
 
 namespace BH.BusinessLayer
 {
     public class BusinessLogic : IBusinessLogic
     {
-        public BusinessLogic
-        (
-            DataAccessType accessType,
-            string cfgConnectionString,
-            string contactConnectionString,
-            string linksConnectionString,
-            string bookingConnectionString,
-            string memberConnectionString
-        )
+        private Lazy<CustomerLogic> _customerLogic = new Lazy<CustomerLogic>();
+        private Lazy<LocationLogic> _locationLogic = new Lazy<LocationLogic>();
+        
+        public ICustomerLogic CustomerLogic
         {
-            BLDataAccess.accessType = accessType;
-            BLDataAccess.cfgConnectionString = cfgConnectionString;
-            BLDataAccess.contactConnectionString = contactConnectionString;
-            BLDataAccess.linksConnectionString = linksConnectionString;
-            BLDataAccess.bookingConnectionString = bookingConnectionString;
-            BLDataAccess.memberConnectionString = memberConnectionString;           
+            get { return _customerLogic.Value; }
         }
-
-        public ICustomerLogic customerLogic
+      
+        public ILocationLogic LocationLogic
         {
-            get { return CustomerLogic.Instance; }
-        }
-
-        public ILocationLogic locationLogic
-        {
-            get { return LocationLogic.Instance; }
+            get { return _locationLogic.Value; }
         }
     }
 }

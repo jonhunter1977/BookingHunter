@@ -9,128 +9,7 @@ namespace BH.DataAccessLayer
     /// </summary>
     public class DataAccess : IDataAccess
     {
-        /// <summary>
-        /// Connection string for the bookings data source
-        /// </summary>
-        private string _bookingConnectionString;
-        public string BookingConnectionString
-        {
-            set
-            {
-                if (value == null || value.Equals(string.Empty)) throw new Exception("Booking Connection string is empty");
-                _bookingConnectionString = value;
-            }
-            get
-            {
-                return _bookingConnectionString;
-            }
-        }
-
-        /// <summary>
-        /// Connection string for the configuration data source
-        /// </summary>
-        private string _cfgConnectionString;
-        public string CfgConnectionString
-        {
-            set
-            {
-                if (value == null || value.Equals(string.Empty)) throw new Exception("Configuration Connection string is empty");
-                _cfgConnectionString = value;
-            }
-            get
-            {
-                return _cfgConnectionString;
-            }
-        }
-
-        /// <summary>
-        /// Connection string for the contact data source
-        /// </summary>
-        private string _contactConnectionString;
-        public string ContactConnectionString
-        {
-            set
-            {
-                if (value == null || value.Equals(string.Empty)) throw new Exception("Contact Connection string is empty");
-                _contactConnectionString = value;
-            }
-            get
-            {
-                return _contactConnectionString;
-            }
-        }
-
-        /// <summary>
-        /// Connection string for the links data source
-        /// </summary>
-        private string _linksConnectionString;
-        public string LinksConnectionString
-        {
-            set
-            {
-                if (value == null || value.Equals(string.Empty)) throw new Exception("Links Connection string is empty");
-                _linksConnectionString = value;
-            }
-            get
-            {
-                return _linksConnectionString;
-            }
-        }
-
-        /// <summary>
-        /// Connection string for the links data source
-        /// </summary>
-        private string _memberConnectionString;
-        public string MemberConnectionString
-        {
-            set
-            {
-                if (value == null || value.Equals(string.Empty)) throw new Exception("Member Connection string is empty");
-                _memberConnectionString = value;
-            }
-            get
-            {
-                return _memberConnectionString;
-            }
-        }
-
-        /// <summary>
-        /// Data access type being used
-        /// </summary>
-        public DataAccessType AccessType;
-
-        private string _dataAccessNameSpace
-        {
-            get
-            {
-                switch (AccessType)
-                {
-                    case DataAccessType.ADONet:
-                        return "BH.DataAccessLayer.ADONet.";
-                    case DataAccessType.LinqToSql:
-                        return "BH.DataAccessLayer.LinqToSql.";
-                    default:
-                        return "BH.DataAccessLayer.LinqToSql.";
-                }
-            }
-        }
-
-        /// <summary>
-        /// The assembly to reference for data access based on the data access type
-        /// </summary>
-        private Assembly _assembly
-        {
-            get
-            {
-                switch (AccessType)
-                {
-                    case DataAccessType.ADONet:
-                        return Assembly.LoadFrom(_dataAccessNameSpace + "dll");
-                    default :
-                        return Assembly.LoadFrom(_dataAccessNameSpace + "dll");
-                }
-            }
-        }
+        public DataAccess() { }
 
         /// <summary>
         /// The type to use for data access
@@ -148,8 +27,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = _assembly.GetType(_dataAccessNameSpace + "BookingRecordRepository");
-                return (IBookingRecordRepository)Activator.CreateInstance(_type, BookingConnectionString);
+                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".BookingRecordRepository");
+                return (IBookingRecordRepository)Activator.CreateInstance(_type, AppSettings.BookingConnectionString);
             }
         }
 
@@ -160,8 +39,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = _assembly.GetType(_dataAccessNameSpace + "CourtBookingSheetRepository");
-                return (ICourtBookingSheetRepository)Activator.CreateInstance(_type, BookingConnectionString);
+                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".CourtBookingSheetRepository");
+                return (ICourtBookingSheetRepository)Activator.CreateInstance(_type, AppSettings.BookingConnectionString);
             }
         }
 
@@ -176,8 +55,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = _assembly.GetType(_dataAccessNameSpace + "CourtRepository");
-                return (ICourtRepository)Activator.CreateInstance(_type, CfgConnectionString);
+                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".CourtRepository");
+                return (ICourtRepository)Activator.CreateInstance(_type, AppSettings.CfgConnectionString);
             }
         }
 
@@ -188,8 +67,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = _assembly.GetType(_dataAccessNameSpace + "CustomerRepository");
-                return (ICustomerRepository)Activator.CreateInstance(_type, CfgConnectionString);
+                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".CustomerRepository");
+                return (ICustomerRepository)Activator.CreateInstance(_type, AppSettings.CfgConnectionString);
             }
         }
 
@@ -200,8 +79,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = _assembly.GetType(_dataAccessNameSpace + "FacilityRepository");
-                return (IFacilityRepository)Activator.CreateInstance(_type, CfgConnectionString);
+                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".FacilityRepository");
+                return (IFacilityRepository)Activator.CreateInstance(_type, AppSettings.CfgConnectionString);
             }
         }
 
@@ -212,8 +91,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = _assembly.GetType(_dataAccessNameSpace + "FacilityScheduleRepository");
-                return (IFacilityScheduleRepository)Activator.CreateInstance(_type, CfgConnectionString);
+                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".FacilityScheduleRepository");
+                return (IFacilityScheduleRepository)Activator.CreateInstance(_type, AppSettings.CfgConnectionString);
             }
         }
 
@@ -224,8 +103,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = _assembly.GetType(_dataAccessNameSpace + "LocationRepository");
-                return (ILocationRepository)Activator.CreateInstance(_type, CfgConnectionString);
+                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".LocationRepository");
+                return (ILocationRepository)Activator.CreateInstance(_type, AppSettings.CfgConnectionString);
             }
         }
 
@@ -240,8 +119,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = _assembly.GetType(_dataAccessNameSpace + "AddressRepository");
-                return (IAddressRepository)Activator.CreateInstance(_type, ContactConnectionString);
+                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".AddressRepository");
+                return (IAddressRepository)Activator.CreateInstance(_type, AppSettings.ContactConnectionString);
             }
         }
 
@@ -256,8 +135,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = _assembly.GetType(_dataAccessNameSpace + "LinkRepository");
-                return (ILinkRepository)Activator.CreateInstance(_type, LinksConnectionString);
+                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".LinkRepository");
+                return (ILinkRepository)Activator.CreateInstance(_type, AppSettings.LinksConnectionString);
             }
         }
 
@@ -272,8 +151,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = _assembly.GetType(_dataAccessNameSpace + "MemberRepository");
-                return (IMemberRepository)Activator.CreateInstance(_type, MemberConnectionString);
+                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".MemberRepository");
+                return (IMemberRepository)Activator.CreateInstance(_type, AppSettings.MemberConnectionString);
             }
         }
     }

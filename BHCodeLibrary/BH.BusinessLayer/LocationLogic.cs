@@ -8,40 +8,16 @@ namespace BH.BusinessLayer
 {
     internal class LocationLogic : ILocationLogic
     {
-        private static LocationLogic _instance = null;
-        private static Object _mutex = new Object();
+        private Lazy<DataAccess> _da = new Lazy<DataAccess>();
 
-        static LocationLogic() { }
-        LocationLogic() { }
-
-        /// <summary>
-        /// Return singleton instance of customer logic class
-        /// </summary>
-        public static LocationLogic Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    lock (_mutex) //for thread safety
-                    {
-                        if (_instance == null)
-                        {
-                            _instance = new LocationLogic();
-                        }
-                    }
-                }
-
-                return _instance;
-            }
-        }
+        public LocationLogic() { }
 
         public void CreateLocation(int customerId, ref Location location, ref Address address)
         {
             //Check a valid customer id has been passed
             try
             {
-                var customer = BLDataAccess.Instance.Customer.GetById(customerId);
+                var customer = _da.Value.Customer.GetById(customerId);
             }
             catch (Exception ex)
             {
@@ -49,7 +25,7 @@ namespace BH.BusinessLayer
             }
 
             //Create a new location record
-            var insertedRowId = BLDataAccess.Instance.Location.Insert(location);
+            var insertedRowId = _da.Value.Location.Insert(location);
 
             if (insertedRowId == 0)
             {
@@ -70,13 +46,13 @@ namespace BH.BusinessLayer
             };
 
             //Save the link record
-            insertedRowId = BLDataAccess.Instance.Link.Insert(customerLocationLink);
+            insertedRowId = _da.Value.Link.Insert(customerLocationLink);
 
             if (insertedRowId == 0)
             {
                 //Roll back the inserts as it's failed
                 //Delete the location record
-                BLDataAccess.Instance.Location.Delete(location);
+                _da.Value.Location.Delete(location);
 
                 throw new Exception("Failed to create customer location link record, transaction rolled back");
             }
@@ -86,7 +62,7 @@ namespace BH.BusinessLayer
             if (address.Id == 0)
             {
                 //Create a new address record
-                insertedRowId = BLDataAccess.Instance.Address.Insert(address);
+                insertedRowId = _da.Value.Address.Insert(address);
 
                 if (insertedRowId == 0)
                 {
@@ -109,16 +85,16 @@ namespace BH.BusinessLayer
             };
 
             //Save the link record
-            insertedRowId = BLDataAccess.Instance.Link.Insert(locationAddressLink);
+            insertedRowId = _da.Value.Link.Insert(locationAddressLink);
 
             if (insertedRowId == 0)
             {
                 //Roll back the inserts as it's failed
                 //Delete the location record
-                BLDataAccess.Instance.Location.Delete(location);
+                _da.Value.Location.Delete(location);
 
                 if (addressCreated)
-                    BLDataAccess.Instance.Address.Delete(address);
+                    _da.Value.Address.Delete(address);
 
                 throw new Exception("Failed to create location address link record, transaction rolled back");
             }
@@ -126,12 +102,12 @@ namespace BH.BusinessLayer
 
         public void UpdateLocation(ref Location location)
         {
-            BLDataAccess.Instance.Location.Update(location);
+            _da.Value.Location.Update(location);
         }
 
         public IEnumerable<Location> Search(Func<Location, bool> searchCriteria)
         {
-            var objList = BLDataAccess.Instance.Location.GetAll();
+            var objList = _da.Value.Location.GetAll();
             var filteredObjList = objList.Where(searchCriteria);
 
             return filteredObjList;

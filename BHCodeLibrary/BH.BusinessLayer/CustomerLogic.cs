@@ -8,38 +8,14 @@ namespace BH.BusinessLayer
 {
     internal class CustomerLogic : ICustomerLogic
     {
-        private static CustomerLogic _instance = null;
-        private static Object _mutex = new Object();
+        private Lazy<DataAccess> _da = new Lazy<DataAccess>();
 
-        static CustomerLogic() { }
-        CustomerLogic() { }
-
-        /// <summary>
-        /// Return singleton instance of customer logic class
-        /// </summary>
-        public static CustomerLogic Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    lock (_mutex) //for thread safety
-                    {
-                        if (_instance == null)
-                        {
-                            _instance = new CustomerLogic();
-                        }
-                    }
-                }
-
-                return _instance;
-            }
-        }
+        public CustomerLogic() { }
 
         public void CreateCustomer(ref Customer customer, ref Address address)
         {
             //Save the customer record
-            var insertedRowId = BLDataAccess.Instance.Customer.Insert(customer);
+            var insertedRowId = _da.Value.Customer.Insert(customer);
 
             if (insertedRowId == 0)
             {
@@ -54,7 +30,7 @@ namespace BH.BusinessLayer
             if (address.Id == 0)
             {
                 //Create a new address record
-                insertedRowId = BLDataAccess.Instance.Address.Insert(address);
+                insertedRowId = _da.Value.Address.Insert(address);
 
                 if (insertedRowId == 0)
                 {
@@ -76,16 +52,16 @@ namespace BH.BusinessLayer
             };
 
             //Save the link record
-            insertedRowId = BLDataAccess.Instance.Link.Insert(customerAddressLink);
+            insertedRowId = _da.Value.Link.Insert(customerAddressLink);
 
             if (insertedRowId == 0)
             {
                 //Roll back the inserts as it's failed
                 //Delete the customer record
-                BLDataAccess.Instance.Customer.Delete(customer);
+                _da.Value.Customer.Delete(customer);
 
                 //Delete the address record
-                BLDataAccess.Instance.Address.Delete(address);
+                _da.Value.Address.Delete(address);
 
                 throw new Exception("Failed to create customer address link record, transaction rolled back");
             }
@@ -93,14 +69,14 @@ namespace BH.BusinessLayer
 
         public void UpdateCustomer(ref Customer customer)
         {
-            BLDataAccess.Instance.Customer.Update(customer);            
+            _da.Value.Customer.Update(customer);            
         }
 
         public Customer FindCustomerById(int id)
         {
             try
             {
-                var customer = BLDataAccess.Instance.Customer.GetById(id);
+                var customer = _da.Value.Customer.GetById(id);
                 return customer;
             }
             catch (Exception)
@@ -111,7 +87,7 @@ namespace BH.BusinessLayer
 
         public IEnumerable<Customer> Search(Func<Customer, bool> searchCriteria)
         {
-            var objList = BLDataAccess.Instance.Customer.GetAll();
+            var objList = _da.Value.Customer.GetAll();
             var filteredObjList = objList.Where(searchCriteria);
 
             return filteredObjList;
@@ -120,7 +96,7 @@ namespace BH.BusinessLayer
         public Address GetCustomerAddress(Customer customer)
         {
             var customerAddressLink =
-                BLDataAccess.Instance.Link.GetChildLinkObjectId
+                _da.Value.Link.GetChildLinkObjectId
                 (
                     LinkType.Customer, 
                     customer.Id, 
@@ -132,7 +108,7 @@ namespace BH.BusinessLayer
             if (linkRecord.ChildLinkId == null)
                 throw new Exception("No address is linked to customer ID : " + customer.Id);
 
-            var address = BLDataAccess.Instance.Address.GetById(linkRecord.ChildLinkId.Value);
+            var address = _da.Value.Address.GetById(linkRecord.ChildLinkId.Value);
 
             return address;
         }
@@ -140,14 +116,14 @@ namespace BH.BusinessLayer
         public IEnumerable<Location> GetCustomerLocations(Customer customer)
         {
             var linkObjs =
-                BLDataAccess.Instance.Link.GetChildLinkObjectId
+                _da.Value.Link.GetChildLinkObjectId
                 (
                     LinkType.Customer, 
                     customer.Id, 
                     LinkType.Location
                 ).AsEnumerable();
 
-            var locationObjs = BLDataAccess.Instance.Location.GetAll().AsEnumerable();
+            var locationObjs = _da.Value.Location.GetAll().AsEnumerable();
 
             //var filteredLocations =
             //    from location in _da.Location.GetAll().AsEnumerable()

@@ -41,7 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic.cs" />
-    <Compile Include="BLDataAccess.cs" />
     <Compile Include="FacilityLogic.cs" />
     <Compile Include="IBusinessLogic.cs" />
     <Compile Include="IFacilityLogic.cs" />
