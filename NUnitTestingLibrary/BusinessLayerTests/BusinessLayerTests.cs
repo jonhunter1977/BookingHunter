@@ -28,17 +28,9 @@ namespace NUnitTestingLibrary
                 PostCode = "CH64 6QJ"
             };
 
-            var cl = new CustomerLogic
-            (
-                DataAccessType.LinqToSql,
-                BHDataAccess.cfgConnection.ConnectionString,
-                BHDataAccess.contactConnection.ConnectionString,
-                BHDataAccess.linksConnection.ConnectionString
-            );
-
             try
             {
-                cl.CreateCustomer(ref customer, ref address);
+                TestingSetupClass._logic.customerLogic.CreateCustomer(ref customer, ref address);
 
                 if (customer.Id == 0)
                     Assert.Fail("Customer Id did not get set, it is 0");
@@ -60,15 +52,7 @@ namespace NUnitTestingLibrary
         [Test]
         public void b_CreateNestonSquashAsLocationLinkedToNestonCricketClub()
         {
-            var cl = new CustomerLogic
-            (
-                DataAccessType.LinqToSql,
-                BHDataAccess.cfgConnection.ConnectionString,
-                BHDataAccess.contactConnection.ConnectionString,
-                BHDataAccess.linksConnection.ConnectionString
-            );
-
-            var customerList = cl.Search(c => c.CustomerName == "Neston Cricket Club");
+            var customerList = TestingSetupClass._logic.customerLogic.Search(c => c.CustomerName == "Neston Cricket Club");
             var customerCount = customerList.Count(c => c.CustomerName == "Neston Cricket Club");
 
             if (customerCount == 0)
@@ -76,18 +60,10 @@ namespace NUnitTestingLibrary
 
             var customer = customerList.First(c => c.CustomerName == "Neston Cricket Club");
 
-            var address = cl.GetCustomerAddress(customer);
+            var address = TestingSetupClass._logic.customerLogic.GetCustomerAddress(customer);
 
             if (!address.Address1.Equals("Station Road"))
                 Assert.Fail("Incorrect address returned");
-
-            var ll = new LocationLogic
-            (
-            DataAccessType.LinqToSql,
-                BHDataAccess.cfgConnection.ConnectionString,
-                BHDataAccess.contactConnection.ConnectionString,
-                BHDataAccess.linksConnection.ConnectionString
-            );
 
             var location = new Location()
             {
@@ -96,7 +72,7 @@ namespace NUnitTestingLibrary
 
             try
             {
-                ll.CreateLocation(customer.Id, ref location, ref address);
+                TestingSetupClass._logic.locationLogic.CreateLocation(customer.Id, ref location, ref address);
 
                 if (location.Id == 0)
                     Assert.Fail("Location Id did not get set, it is 0");
@@ -107,59 +83,31 @@ namespace NUnitTestingLibrary
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-        [Ignore]
-        public void b_RetrieveCustomer()
+        [Test]
+        public void c_CreateSquashFacilityLinkedToNestonSquash()
         {
+            var customerList = TestingSetupClass._logic.customerLogic.Search(c => c.CustomerName == "Neston Cricket Club");
+            var customerCount = customerList.Count(c => c.CustomerName == "Neston Cricket Club");
 
-        }
+            if (customerCount == 0)
+                Assert.Fail("No customers found");
 
-        [Ignore]
-        public void c_UpdateCustomer()
-        {
-            var cl = new CustomerLogic
-            (
-                DataAccessType.LinqToSql,
-                BHDataAccess.cfgConnection.ConnectionString,
-                BHDataAccess.contactConnection.ConnectionString,
-                BHDataAccess.linksConnection.ConnectionString
-            );
-
-            var customerList = cl.Search(c => c.CustomerName == "Neston Cricket Club");
             var customer = customerList.First(c => c.CustomerName == "Neston Cricket Club");
 
-            customer.CustomerName = "Neston Squash Club";
-            cl.UpdateCustomer(ref customer);
-            
-        }
+            var locationList = TestingSetupClass._logic.customerLogic.GetCustomerLocations(customer);
 
-        [Ignore]
-        public void d_UpdateLocation()
-        {
-            var logic = new LocationLogic
-            (
-                DataAccessType.LinqToSql,
-                BHDataAccess.cfgConnection.ConnectionString,
-                BHDataAccess.contactConnection.ConnectionString,
-                BHDataAccess.linksConnection.ConnectionString
-            );
+            var location = locationList.FirstOrDefault(l => l.LocationDescription == "Neston Cricket Club");
 
-            var objList = logic.Search(a => a.LocationDescription  == "Neston Squash Club");
-            var obj = objList.First(a => a.LocationDescription == "Neston Squash Club");
+            if (location == null)
+                Assert.Fail("Did not find location linked to customer");
+            else
+                Assert.Pass("Found " + location.LocationDescription);
 
-            obj.LocationDescription = "Neston Squash Courts";
-            logic.UpdateLocation(ref obj);
-
+            var facility = new Facility()
+            {
+                FacilityBookAheadDays = 14,
+                FacilityDescription = "Squash"
+            };
         }
     }
 }

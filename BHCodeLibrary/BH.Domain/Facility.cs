@@ -26,5 +26,11 @@ namespace BH.Domain
         /// </summary>
         [Column(Name = "FacilityBookAheadDays")]
         public int FacilityBookAheadDays { get; set; }
+
+        /// <summary>
+        /// FacilityBookAheadDays name column
+        /// </summary>
+        [Column(Name = "FacilityDescription")]
+        public string FacilityDescription { get; set; }
     }
 }

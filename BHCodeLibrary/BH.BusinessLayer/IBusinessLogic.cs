@@ -1,24 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using BH.DataAccessLayer;
 
 namespace BH.BusinessLayer
 {
     /// <summary>
-    /// Interface for accessing all business logic
+    /// Interface for accessing business logic
     /// </summary>
-    public interface IBusinessLogic<T>
+    public interface IBusinessLogic
     {
         /// <summary>
-        /// Access to the database tables
+        /// Access to the customer business logic functions
         /// </summary>
-        IDataAccess da { get;}
+        ICustomerLogic customerLogic { get; }
 
         /// <summary>
-        /// Generic search function
+        /// Access to the location business logic functions
         /// </summary>
-        /// <param name="searchCriteria">The search method to execute</param>
-        /// <returns>An enumerable list of type T</returns>
-        IEnumerable<T> Search(Func<T, bool> searchCriteria);
+        ILocationLogic locationLogic { get; }
+
     }
 }

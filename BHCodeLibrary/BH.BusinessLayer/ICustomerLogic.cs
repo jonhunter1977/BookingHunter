@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BH.Domain;
 
 namespace BH.BusinessLayer
@@ -6,7 +7,7 @@ namespace BH.BusinessLayer
     /// <summary>
     /// Customer business logic
     /// </summary>
-    public interface ICustomerLogic : IBusinessLogic<Customer>
+    public interface ICustomerLogic : IGenericLogic<Customer>
     {
         /// <summary>
         /// Logic to create a new customer
@@ -32,6 +33,13 @@ namespace BH.BusinessLayer
         /// <param name="customer">The customer whose address you want to find</param>
         /// <returns>An address object</returns>
         Address GetCustomerAddress(Customer customer);
+
+        /// <summary>
+        /// Find all locations linked to the customer
+        /// </summary>
+        /// <param name="customer">The customer whose locations you want to find</param>
+        /// <returns>A queryable data source</returns>
+        IEnumerable<Location> GetCustomerLocations(Customer customer); 
 
     }
 }

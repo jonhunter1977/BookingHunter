@@ -40,9 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic.cs" />
+    <Compile Include="BLDataAccess.cs" />
+    <Compile Include="FacilityLogic.cs" />
+    <Compile Include="IBusinessLogic.cs" />
+    <Compile Include="IFacilityLogic.cs" />
     <Compile Include="ILocationLogic.cs" />
     <Compile Include="CustomerLogic.cs" />
-    <Compile Include="IBusinessLogic.cs" />
+    <Compile Include="IGenericLogic.cs" />
     <Compile Include="ICustomerLogic.cs" />
     <Compile Include="LocationLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

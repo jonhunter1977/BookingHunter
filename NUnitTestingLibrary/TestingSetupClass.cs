@@ -1,5 +1,6 @@
 ﻿using System;
 using BH.DataAccessLayer;
+using BH.BusinessLayer;
 using BH.Domain;
 using System.Data.SqlClient;
 using NUnit.Framework;
@@ -7,7 +8,7 @@ using NUnit.Framework;
 namespace NUnitTestingLibrary
 {
     [SetUpFixture]
-    internal class BHDataAccess
+    internal class TestingSetupClass
     {
         public static readonly SqlConnectionStringBuilder bookingConnection =
             new SqlConnectionStringBuilder("Data Source=127.0.0.1\\SQLEXPRESS2012;Initial Catalog=sys_booking;User Id=sa;Password=info51987!;");
@@ -25,9 +26,10 @@ namespace NUnitTestingLibrary
            new SqlConnectionStringBuilder("Data Source=127.0.0.1\\SQLEXPRESS2012;Initial Catalog=sys_member;User Id=sa;Password=info51987!;");
 
         internal static DataAccess _da;
+        internal static BusinessLogic _logic;
 
         [SetUp]
-        public void BuildDataAccess()
+        public void Setup()
         {
             _da = new DataAccess
             {
@@ -38,6 +40,16 @@ namespace NUnitTestingLibrary
                 MemberConnectionString = memberConnection.ConnectionString,
                 AccessType = DataAccessType.LinqToSql
             };
+
+            _logic = new BusinessLogic
+             (
+                 DataAccessType.LinqToSql,
+                 TestingSetupClass.cfgConnection.ConnectionString,
+                 TestingSetupClass.contactConnection.ConnectionString,
+                 TestingSetupClass.linksConnection.ConnectionString,
+                 TestingSetupClass.bookingConnection.ConnectionString,
+                 TestingSetupClass.memberConnection.ConnectionString
+             );
         }
 
         //[TearDown]

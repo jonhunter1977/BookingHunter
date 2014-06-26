@@ -6,53 +6,40 @@ using System.Collections.Generic;
 
 namespace BH.BusinessLayer
 {
-    public class CustomerLogic : ICustomerLogic
+    internal class CustomerLogic : ICustomerLogic
     {
-        private DataAccessType _accessType;
-        private string _cfgConnectionString;
-        private string _contactConnectionString;
-        private string _linksConnectionString;
-        private IDataAccess _da;
+        private static CustomerLogic _instance = null;
+        private static Object _mutex = new Object();
+
+        static CustomerLogic() { }
+        CustomerLogic() { }
 
         /// <summary>
-        /// Create access to customer logic using required connection strings and access type
+        /// Return singleton instance of customer logic class
         /// </summary>
-        /// <param name="accessType">The database access type</param>
-        /// <param name="cfgConnectionString">Connection string to use to cfg data source</param>
-        /// <param name="contactConnectionString">Connection string to use to contact data source</param>
-        /// <param name="linksConnectionString">Connection string to use to links data source</param>
-        public CustomerLogic(
-            DataAccessType accessType,
-            string cfgConnectionString,
-            string contactConnectionString,
-            string linksConnectionString)
+        public static CustomerLogic Instance
         {
-            _accessType = accessType;
-            _cfgConnectionString = cfgConnectionString;
-            _contactConnectionString = contactConnectionString;
-            _linksConnectionString = linksConnectionString;
-
-            _da = new DataAccess
+            get
             {
-                ContactConnectionString = _contactConnectionString,
-                CfgConnectionString = _cfgConnectionString,
-                LinksConnectionString = _linksConnectionString,
-                AccessType = _accessType
-            };
-        }
+                if (_instance == null)
+                {
+                    lock (_mutex) //for thread safety
+                    {
+                        if (_instance == null)
+                        {
+                            _instance = new CustomerLogic();
+                        }
+                    }
+                }
 
-        public IDataAccess da
-        {
-            get 
-            {
-                return _da;
+                return _instance;
             }
         }
 
         public void CreateCustomer(ref Customer customer, ref Address address)
         {
             //Save the customer record
-            var insertedRowId = _da.Customer.Insert(customer);
+            var insertedRowId = BLDataAccess.Instance.Customer.Insert(customer);
 
             if (insertedRowId == 0)
             {
@@ -67,7 +54,7 @@ namespace BH.BusinessLayer
             if (address.Id == 0)
             {
                 //Create a new address record
-                insertedRowId = _da.Address.Insert(address);
+                insertedRowId = BLDataAccess.Instance.Address.Insert(address);
 
                 if (insertedRowId == 0)
                 {
@@ -89,16 +76,16 @@ namespace BH.BusinessLayer
             };
 
             //Save the link record
-            insertedRowId = _da.Link.Insert(customerAddressLink);
+            insertedRowId = BLDataAccess.Instance.Link.Insert(customerAddressLink);
 
             if (insertedRowId == 0)
             {
                 //Roll back the inserts as it's failed
                 //Delete the customer record
-                _da.Customer.Delete(customer);
+                BLDataAccess.Instance.Customer.Delete(customer);
 
                 //Delete the address record
-                _da.Address.Delete(address);
+                BLDataAccess.Instance.Address.Delete(address);
 
                 throw new Exception("Failed to create customer address link record, transaction rolled back");
             }
@@ -106,14 +93,14 @@ namespace BH.BusinessLayer
 
         public void UpdateCustomer(ref Customer customer)
         {
-            _da.Customer.Update(customer);            
+            BLDataAccess.Instance.Customer.Update(customer);            
         }
 
         public Customer FindCustomerById(int id)
         {
             try
             {
-                var customer = _da.Customer.GetById(id);
+                var customer = BLDataAccess.Instance.Customer.GetById(id);
                 return customer;
             }
             catch (Exception)
@@ -124,7 +111,7 @@ namespace BH.BusinessLayer
 
         public IEnumerable<Customer> Search(Func<Customer, bool> searchCriteria)
         {
-            var objList = _da.Customer.GetAll();
+            var objList = BLDataAccess.Instance.Customer.GetAll();
             var filteredObjList = objList.Where(searchCriteria);
 
             return filteredObjList;
@@ -132,8 +119,8 @@ namespace BH.BusinessLayer
 
         public Address GetCustomerAddress(Customer customer)
         {
-            var customerAddressLink = 
-                _da.Link.GetChildLinkObjectId
+            var customerAddressLink =
+                BLDataAccess.Instance.Link.GetChildLinkObjectId
                 (
                     LinkType.Customer, 
                     customer.Id, 
@@ -145,9 +132,33 @@ namespace BH.BusinessLayer
             if (linkRecord.ChildLinkId == null)
                 throw new Exception("No address is linked to customer ID : " + customer.Id);
 
-            var address = _da.Address.GetById(linkRecord.ChildLinkId.Value);
+            var address = BLDataAccess.Instance.Address.GetById(linkRecord.ChildLinkId.Value);
 
             return address;
+        }
+
+        public IEnumerable<Location> GetCustomerLocations(Customer customer)
+        {
+            var linkObjs =
+                BLDataAccess.Instance.Link.GetChildLinkObjectId
+                (
+                    LinkType.Customer, 
+                    customer.Id, 
+                    LinkType.Location
+                ).AsEnumerable();
+
+            var locationObjs = BLDataAccess.Instance.Location.GetAll().AsEnumerable();
+
+            //var filteredLocations =
+            //    from location in _da.Location.GetAll().AsEnumerable()
+            //    join link in linkObjs
+            //    on location.Id equals link.ChildLinkId
+            //    select location;
+
+            var filteredLocations =
+                locationObjs.Where(l => linkObjs.Any(x => x.ChildLinkId == l.Id));                
+
+            return filteredLocations.AsEnumerable();
         }
     }
 }

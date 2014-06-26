@@ -160,12 +160,6 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                //switch (AccessType)
-                //{
-                    //case DataAccessType.SqlServer:
-                    //    return new CourtBookingSheetRepositorySqlServer(BookingConnectionString);
-                    //default: throw new NotImplementedException();
-                //}
                 _type = _assembly.GetType(_dataAccessNameSpace + "CourtBookingSheetRepository");
                 return (ICourtBookingSheetRepository)Activator.CreateInstance(_type, BookingConnectionString);
             }
