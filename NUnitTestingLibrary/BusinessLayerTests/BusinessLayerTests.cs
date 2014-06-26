@@ -96,7 +96,7 @@ namespace NUnitTestingLibrary
 
             var locationList = TestingSetupClass._logic.customerLogic.GetCustomerLocations(customer);
 
-            var location = locationList.FirstOrDefault(l => l.LocationDescription == "Neston Cricket Club");
+            var location = locationList.FirstOrDefault(l => l.LocationDescription == "Neston Squash Club");
 
             if (location == null)
                 Assert.Fail("Did not find location linked to customer");

@@ -9,7 +9,7 @@ namespace BH.BusinessLayer
     /// </summary>
     internal sealed class BLDataAccess
     {
-        private static DataAccess _instance = new DataAccess();
+        private static DataAccess _instance = null;
         private static Object _mutex = new Object();
 
         public static DataAccessType accessType;
