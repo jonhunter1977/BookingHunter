@@ -17,5 +17,10 @@ namespace BH.BusinessLayer
         /// </summary>
         ILocationLogic LocationLogic { get; }
 
+        /// <summary>
+        /// Access to the facility business logic functions
+        /// </summary>
+        IFacilityLogic FacilityLogic { get; }
+
     }
 }

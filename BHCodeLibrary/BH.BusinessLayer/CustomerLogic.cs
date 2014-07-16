@@ -87,10 +87,7 @@ namespace BH.BusinessLayer
 
         public IEnumerable<Customer> Search(Func<Customer, bool> searchCriteria)
         {
-            var objList = _da.Value.Customer.GetAll();
-            var filteredObjList = objList.Where(searchCriteria);
-
-            return filteredObjList;
+            return _da.Value.Customer.GetAll().Where(searchCriteria);
         }
 
         public Address GetCustomerAddress(Customer customer)

@@ -13,7 +13,7 @@ namespace NUnitTestingLibrary
     public class BusinessLayerTests
     {
         [Test]
-        public void a_GetApplicationSettings()
+        public void a_Get_Application_Settings()
         {
             //var exeConfigPath = this.GetType().Assembly.Location;
             var bookingConnectionString = DataAccessSettings.BookingConnectionString;
@@ -21,7 +21,7 @@ namespace NUnitTestingLibrary
         }
 
         [Test]
-        public void b_CreateNestonCricketClubAsNewCustomer()
+        public void b_Create_Neston_Cricket_Club_As_New_Customer()
         {
             var customer = new Customer
             {
@@ -59,7 +59,7 @@ namespace NUnitTestingLibrary
         }
 
         [Test]
-        public void c_CreateNestonSquashAsLocationLinkedToNestonCricketClub()
+        public void c_Create_Neston_Squash_As_Location_Linked_To_Neston_Cricket_Club()
         {
             var customerList = TestingSetupClass._logic.CustomerLogic.Search(c => c.CustomerName == "Neston Cricket Club");
             var customerCount = customerList.Count(c => c.CustomerName == "Neston Cricket Club");
@@ -93,7 +93,7 @@ namespace NUnitTestingLibrary
         }
 
         [Test]
-        public void d_CreateSquashFacilityLinkedToNestonSquash()
+        public void d_Create_Squash_Facility_Linked_To_Neston_Squash()
         {
             var customerList = TestingSetupClass._logic.CustomerLogic.Search(c => c.CustomerName == "Neston Cricket Club");
             var customerCount = customerList.Count(c => c.CustomerName == "Neston Cricket Club");
@@ -109,14 +109,45 @@ namespace NUnitTestingLibrary
 
             if (location == null)
                 Assert.Fail("Did not find location linked to customer");
-            else
-                Assert.Pass("Found " + location.LocationDescription);
 
             var facility = new Facility()
             {
                 FacilityBookAheadDays = 14,
                 FacilityDescription = "Squash"
             };
+
+            try
+            {
+                TestingSetupClass._logic.FacilityLogic.CreateFacility(location.Id, ref facility);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("Create facility threw an exception : {0}", ex.Message);
+            }
+            
+            if(facility.Id == 0)
+                Assert.Fail("Facility Id did not get set, it is 0");
+            else
+            {
+                Assert.Pass("Facility created with Id : {0}" , facility.Id);
+            }
+        }
+
+        [Test]
+        public void e_Search_For_Squash_Facility_And_Check_Book_Ahead_Days_Equals_14()
+        {
+            var facilityList = TestingSetupClass._logic.FacilityLogic.Search(f => f.FacilityDescription == "Squash");
+            var facilityCount = facilityList.Count(f => f.FacilityDescription == "Squash");
+
+            if (facilityCount == 0)
+                Assert.Fail("Squash facility was not found");
+
+            var facility = facilityList.First(f => f.FacilityDescription == "Squash");
+
+            if(facility.FacilityBookAheadDays == 14)
+                Assert.Pass("Facility {0} has {1} book ahead days set", facility.FacilityDescription,facility.FacilityBookAheadDays);
+            else
+                Assert.Fail("Facility {0} has {1} book ahead days set", facility.FacilityDescription, facility.FacilityBookAheadDays);          
         }
     }
 }

@@ -58,7 +58,7 @@ namespace BH.BusinessLayer
             }
 
             //Save the address record
-            bool addressCreated = false;
+            var addressCreated = false;
             if (address.Id == 0)
             {
                 //Create a new address record
@@ -107,10 +107,7 @@ namespace BH.BusinessLayer
 
         public IEnumerable<Location> Search(Func<Location, bool> searchCriteria)
         {
-            var objList = _da.Value.Location.GetAll();
-            var filteredObjList = objList.Where(searchCriteria);
-
-            return filteredObjList;
+            return _da.Value.Location.GetAll().Where(searchCriteria);
         }
     }
 }
