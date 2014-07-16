@@ -27,8 +27,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".BookingRecordRepository");
-                return (IBookingRecordRepository)Activator.CreateInstance(_type, AppSettings.BookingConnectionString);
+                _type = DataAccessSettings.Assembly.GetType(DataAccessSettings.DataAccessNameSpace + ".BookingRecordRepository");
+                return (IBookingRecordRepository)Activator.CreateInstance(_type, DataAccessSettings.BookingConnectionString);
             }
         }
 
@@ -39,8 +39,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".CourtBookingSheetRepository");
-                return (ICourtBookingSheetRepository)Activator.CreateInstance(_type, AppSettings.BookingConnectionString);
+                _type = DataAccessSettings.Assembly.GetType(DataAccessSettings.DataAccessNameSpace + ".CourtBookingSheetRepository");
+                return (ICourtBookingSheetRepository)Activator.CreateInstance(_type, DataAccessSettings.BookingConnectionString);
             }
         }
 
@@ -55,8 +55,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".CourtRepository");
-                return (ICourtRepository)Activator.CreateInstance(_type, AppSettings.CfgConnectionString);
+                _type = DataAccessSettings.Assembly.GetType(DataAccessSettings.DataAccessNameSpace + ".CourtRepository");
+                return (ICourtRepository)Activator.CreateInstance(_type, DataAccessSettings.CfgConnectionString);
             }
         }
 
@@ -67,8 +67,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".CustomerRepository");
-                return (ICustomerRepository)Activator.CreateInstance(_type, AppSettings.CfgConnectionString);
+                _type = DataAccessSettings.Assembly.GetType(DataAccessSettings.DataAccessNameSpace + ".CustomerRepository");
+                return (ICustomerRepository)Activator.CreateInstance(_type, DataAccessSettings.CfgConnectionString);
             }
         }
 
@@ -79,8 +79,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".FacilityRepository");
-                return (IFacilityRepository)Activator.CreateInstance(_type, AppSettings.CfgConnectionString);
+                _type = DataAccessSettings.Assembly.GetType(DataAccessSettings.DataAccessNameSpace + ".FacilityRepository");
+                return (IFacilityRepository)Activator.CreateInstance(_type, DataAccessSettings.CfgConnectionString);
             }
         }
 
@@ -91,8 +91,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".FacilityScheduleRepository");
-                return (IFacilityScheduleRepository)Activator.CreateInstance(_type, AppSettings.CfgConnectionString);
+                _type = DataAccessSettings.Assembly.GetType(DataAccessSettings.DataAccessNameSpace + ".FacilityScheduleRepository");
+                return (IFacilityScheduleRepository)Activator.CreateInstance(_type, DataAccessSettings.CfgConnectionString);
             }
         }
 
@@ -103,8 +103,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".LocationRepository");
-                return (ILocationRepository)Activator.CreateInstance(_type, AppSettings.CfgConnectionString);
+                _type = DataAccessSettings.Assembly.GetType(DataAccessSettings.DataAccessNameSpace + ".LocationRepository");
+                return (ILocationRepository)Activator.CreateInstance(_type, DataAccessSettings.CfgConnectionString);
             }
         }
 
@@ -119,8 +119,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".AddressRepository");
-                return (IAddressRepository)Activator.CreateInstance(_type, AppSettings.ContactConnectionString);
+                _type = DataAccessSettings.Assembly.GetType(DataAccessSettings.DataAccessNameSpace + ".AddressRepository");
+                return (IAddressRepository)Activator.CreateInstance(_type, DataAccessSettings.ContactConnectionString);
             }
         }
 
@@ -135,8 +135,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".LinkRepository");
-                return (ILinkRepository)Activator.CreateInstance(_type, AppSettings.LinksConnectionString);
+                _type = DataAccessSettings.Assembly.GetType(DataAccessSettings.DataAccessNameSpace + ".LinkRepository");
+                return (ILinkRepository)Activator.CreateInstance(_type, DataAccessSettings.LinksConnectionString);
             }
         }
 
@@ -151,8 +151,8 @@ namespace BH.DataAccessLayer
         {
             get
             {
-                _type = AppSettings.Assembly.GetType(AppSettings.DataAccessNameSpace + ".MemberRepository");
-                return (IMemberRepository)Activator.CreateInstance(_type, AppSettings.MemberConnectionString);
+                _type = DataAccessSettings.Assembly.GetType(DataAccessSettings.DataAccessNameSpace + ".MemberRepository");
+                return (IMemberRepository)Activator.CreateInstance(_type, DataAccessSettings.MemberConnectionString);
             }
         }
     }

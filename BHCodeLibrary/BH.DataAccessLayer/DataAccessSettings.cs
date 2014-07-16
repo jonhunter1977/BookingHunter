@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Configuration;
 using System.Collections.Specialized;
+using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+
+#if DEBUG
+[assembly: InternalsVisibleTo("NUnitTestingLibrary")]
+#endif
 
 namespace BH.DataAccessLayer
 {
-    internal class AppSettings
+    internal class DataAccessSettings
     {
         /// <summary>
         /// Connection string for the bookings data source
@@ -143,9 +149,19 @@ namespace BH.DataAccessLayer
             }
         }
 
-        static AppSettings()
-        {
-            var config = ConfigurationManager.OpenExeConfiguration(@"C:\BookingHunter\NUnitTestingLibrary\bin\Debug\App.config");
+        static DataAccessSettings()
+        {            
+            var assemblyFolder = Assembly.GetExecutingAssembly().CodeBase;
+            var uri = new UriBuilder(assemblyFolder);
+            var configPath = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path)) + @"\BH.DataAccessLayer.config";
+
+            if (configPath == null)
+                throw new Exception("Could not find BH.DataAccessLayer.config file, add .config in DLL location");
+
+            var fileMap = new ExeConfigurationFileMap();
+            fileMap.ExeConfigFilename = configPath;
+
+            var config = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
             //Connection strings
             _bookingConnectionString = GetAppSetting(config, "BookingDbConnectionString");;
@@ -157,6 +173,10 @@ namespace BH.DataAccessLayer
             //App settings
             _dataAccessNameSpace = GetAppSetting(config, "DataAccessNamespace");
             _dataAccessAssembly = GetAppSetting(config, "DataAccessAssembly"); 
+
+            //Initialise the assembly
+            _assembly = Assembly.LoadFrom(_dataAccessAssembly);
+
         }
 
         static string GetAppSetting(Configuration config, string key)

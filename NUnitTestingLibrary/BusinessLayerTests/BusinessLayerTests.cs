@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System.Data.Common;
 using BH.BusinessLayer;
 using BH.Domain;
+using BH.DataAccessLayer;
 
 namespace NUnitTestingLibrary
 {
@@ -12,7 +13,15 @@ namespace NUnitTestingLibrary
     public class BusinessLayerTests
     {
         [Test]
-        public void a_CreateNestonCricketClubAsNewCustomer()
+        public void a_GetApplicationSettings()
+        {
+            //var exeConfigPath = this.GetType().Assembly.Location;
+            var bookingConnectionString = DataAccessSettings.BookingConnectionString;
+            Assert.AreEqual(bookingConnectionString, @"Data Source=DLTGFST4Q1\SQLEXPRESS;Initial Catalog=sys_booking;User Id=sa;Password=info51987!;");
+        }
+
+        [Test]
+        public void b_CreateNestonCricketClubAsNewCustomer()
         {
             var customer = new Customer
             {
@@ -50,7 +59,7 @@ namespace NUnitTestingLibrary
         }
 
         [Test]
-        public void b_CreateNestonSquashAsLocationLinkedToNestonCricketClub()
+        public void c_CreateNestonSquashAsLocationLinkedToNestonCricketClub()
         {
             var customerList = TestingSetupClass._logic.CustomerLogic.Search(c => c.CustomerName == "Neston Cricket Club");
             var customerCount = customerList.Count(c => c.CustomerName == "Neston Cricket Club");
@@ -84,7 +93,7 @@ namespace NUnitTestingLibrary
         }
 
         [Test]
-        public void c_CreateSquashFacilityLinkedToNestonSquash()
+        public void d_CreateSquashFacilityLinkedToNestonSquash()
         {
             var customerList = TestingSetupClass._logic.CustomerLogic.Search(c => c.CustomerName == "Neston Cricket Club");
             var customerCount = customerList.Count(c => c.CustomerName == "Neston Cricket Club");
