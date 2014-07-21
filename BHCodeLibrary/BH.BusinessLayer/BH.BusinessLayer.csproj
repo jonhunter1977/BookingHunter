@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic.cs" />
+    <Compile Include="FacilityScheduleLogic.cs" />
+    <Compile Include="IFacilityScheduleLogic.cs" />
     <Compile Include="FacilityLogic.cs" />
     <Compile Include="IBusinessLogic.cs" />
     <Compile Include="IFacilityLogic.cs" />

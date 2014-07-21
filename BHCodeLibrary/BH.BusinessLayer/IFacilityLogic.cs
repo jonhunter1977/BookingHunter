@@ -4,7 +4,7 @@ using BH.Domain;
 namespace BH.BusinessLayer
 {
     /// <summary>
-    /// Customer business logic
+    /// Facility business logic
     /// </summary>
     public interface IFacilityLogic : IGenericLogic<Facility>
     {

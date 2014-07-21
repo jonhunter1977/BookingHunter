@@ -9,6 +9,7 @@ namespace BH.BusinessLayer
         private Lazy<CustomerLogic> _customerLogic = new Lazy<CustomerLogic>();
         private Lazy<LocationLogic> _locationLogic = new Lazy<LocationLogic>();
         private Lazy<FacilityLogic> _facilityLogic = new Lazy<FacilityLogic>();
+        private Lazy<FacilityScheduleLogic> _facilityScheduleLogic = new Lazy<FacilityScheduleLogic>();
         
         public ICustomerLogic CustomerLogic
         {
@@ -23,6 +24,11 @@ namespace BH.BusinessLayer
         public IFacilityLogic FacilityLogic
         {
             get { return _facilityLogic.Value; }
+        }
+
+        public IFacilityScheduleLogic FacilityScheduleLogic
+        {
+            get { return _facilityScheduleLogic.Value; }
         }
     }
 }

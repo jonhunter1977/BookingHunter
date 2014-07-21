@@ -22,5 +22,10 @@ namespace BH.BusinessLayer
         /// </summary>
         IFacilityLogic FacilityLogic { get; }
 
+        /// <summary>
+        /// Access to the facility schedule business logic functions
+        /// </summary>
+        IFacilityScheduleLogic FacilityScheduleLogic { get; }
+
     }
 }

@@ -149,5 +149,44 @@ namespace NUnitTestingLibrary
             else
                 Assert.Fail("Facility {0} has {1} book ahead days set", facility.FacilityDescription, facility.FacilityBookAheadDays);          
         }
+
+        [Test]
+        public void f_Create_Facility_Schedule_Master()
+        {
+            var facilitySchedule = new FacilitySchedule()
+                {
+                    FacilityScheduleDescription = "Squash 40 minute slots start at 9am finish at 10pm",
+                    StartMinuteMonday = 540,
+                    EndMinuteMonday = 1320,
+                    MondayFacilityBookLength = 40,
+                    StartMinuteTuesday = 540,
+                    EndMinuteTuesday = 1320,
+                    TuesdayFacilityBookLength = 40,
+                    StartMinuteWednesday = 540,
+                    EndMinuteWednesday = 1320,
+                    WednesdayFacilityBookLength = 40,
+                    StartMinuteThursday = 540,
+                    EndMinuteThursday = 1320,
+                    ThursdayFacilityBookLength = 40,
+                    StartMinuteFriday = 540,
+                    EndMinuteFriday = 1320,
+                    FridayFacilityBookLength = 40,
+                    StartMinuteSaturday = 540,
+                    EndMinuteSaturday = 1320,
+                    SaturdayFacilityBookLength = 40,
+                    StartMinuteSunday = 540,
+                    EndMinuteSunday = 1320,
+                    SundayFacilityBookLength = 40
+                };
+
+            TestingSetupClass._logic.FacilityScheduleLogic.CreateFacilitySchedule(facilitySchedule);
+
+            if(facilitySchedule.Id == 0)
+                Assert.Fail("Facility schedule was not created, ID is 0");
+            else
+                Assert.Pass("Facility schdule created with ID of {0}", facilitySchedule.Id);
+        }
+
+
     }
 }
