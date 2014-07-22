@@ -52,5 +52,30 @@ namespace BH.BusinessLayer
         {
             return _da.Value.Facility.GetAll().Where(searchCriteria);
         }
+
+        public void LinkFacilityScheduleToFacility(int facilityId, int facilityScheduleId)
+        {
+            //Link the facility and facility schedule records
+            var facilityFacilityScheduleLink = new LinkObjectMaster()
+            {
+                MasterLinkId = facilityId,
+                MasterLinkType = LinkType.Facility,
+                ChildLinkId = facilityScheduleId,
+                ChildLinkType = LinkType.FacilitySchedule
+            };
+
+            //Save the link record
+            var insertedRowId = _da.Value.Link.Insert(facilityFacilityScheduleLink);
+
+            if (insertedRowId == 0)
+            {
+                throw new Exception("Failed to link facility schedule id " + facilityScheduleId + " to facility id " + facilityId);
+            }
+        }
+
+        public void CreateCourtAndLinkToFacility(int facilityId, ref Court court)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
