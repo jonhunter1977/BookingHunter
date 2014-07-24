@@ -75,7 +75,38 @@ namespace BH.BusinessLayer
 
         public void CreateCourtAndLinkToFacility(int facilityId, ref Court court)
         {
-            throw new NotImplementedException();
+            //Save the court record
+            var insertedRowId = _da.Value.Court.Insert(court);
+
+            if (insertedRowId == 0)
+            {
+                throw new Exception("Failed to create court record");
+            }
+            else
+            {
+                court.Id = insertedRowId;
+            }
+
+            //Link the court and facility records
+            var facilityCourtLink = new LinkObjectMaster()
+            {
+                MasterLinkId = facilityId,
+                MasterLinkType = LinkType.Facility,
+                ChildLinkId = court.Id,
+                ChildLinkType = LinkType.Court
+            };
+
+            //Save the link record
+            insertedRowId = _da.Value.Link.Insert(facilityCourtLink);
+
+            if (insertedRowId == 0)
+            {
+                //Roll back the inserts as it's failed
+                //Delete the court record
+                _da.Value.Court.Delete(court);
+
+                throw new Exception("Failed to create facility court link record, transaction rolled back");
+            }
         }
     }
 }

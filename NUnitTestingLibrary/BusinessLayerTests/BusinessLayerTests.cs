@@ -239,10 +239,10 @@ namespace NUnitTestingLibrary
                 }
 
                 if (court.Id == 0)
-                    Assert.Fail("Court Id did not get set, it is 0");
+                    Assert.Fail("Court Id did not get set, it is 0");              
             }
+
+            Assert.Pass("All courts created successfully");
         }
-
-
     }
 }
